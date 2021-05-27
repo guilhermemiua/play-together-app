@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from 'react-native-elements';
+
+import { LogBox } from 'react-native';
+
+import 'react-native-gesture-handler';
+
+import Routes from './src/routes';
+import AuthProvider from './src/contexts/AuthContext';
+import theme from './src/styles/theme';
 
 export default function App() {
+  LogBox.ignoreAllLogs();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <NavigationContainer>
+          <StatusBar style="auto" />
+
+          <Routes />
+        </NavigationContainer>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
