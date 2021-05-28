@@ -13,8 +13,8 @@ import TitleComponent from '../../components/Title';
 import Container from '../../components/Container';
 import { METRICS, SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constants';
 
-function InitialPage({ navigation: { navigate, push } }) {
-  const navigateToLogin = () => push('Login');
+function InitialPage({ navigation: { navigate } }) {
+  const navigateToLogin = () => navigate('Login');
 
   return (
     <>

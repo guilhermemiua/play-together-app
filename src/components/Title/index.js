@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as TextElements } from 'react-native-elements';
-import { COLORS, METRICS, normalize } from '../../constants';
+import { COLORS, METRICS } from '../../constants';
 
 function Title({
   h1,

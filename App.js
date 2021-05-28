@@ -6,6 +6,7 @@ import { ThemeProvider } from 'react-native-elements';
 import { LogBox } from 'react-native';
 
 import 'react-native-gesture-handler';
+import './src/internationalization';
 
 import Routes from './src/routes';
 import AuthProvider from './src/contexts/AuthContext';
