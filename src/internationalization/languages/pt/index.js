@@ -7,10 +7,41 @@ export default {
       forgotPassword: 'Esqueceu a senha?',
       forgotPasswordButton: 'Clique aqui!',
       error: {
-        emailType: 'Email precisa ser um email válido',
+        emailType: 'Insira um email válido',
         emailRequired: 'Insira o email',
         passwordRequired: 'Insira a senha',
       },
+    },
+    register: {
+      firstStep: {
+        firstNameLabel: 'Nome',
+        lastNameLabel: 'Sobrenome',
+        ageLabel: 'Idade',
+        genderLabel: 'Gênero',
+        phoneLabel: 'Telefone',
+        submitButton: 'Avançar',
+        error: {
+          firstNameRequired: 'Insira o nome',
+          lastNameRequired: 'Insira o sobrenome',
+          ageRequired: 'Insira a idade',
+          genderRequired: 'Insira o gênero',
+          phoneRequired: 'Insira o celular',
+        },
+      },
+      secondStep: {
+        emailLabel: 'Email',
+        passwordLabel: 'Senha',
+        submitButton: 'Avançar',
+        error: {
+          emailType: 'Insira um email válido',
+          emailRequired: 'Insira um email',
+          passwordRequired: 'Insira uma senha',
+        },
+      },
+    },
+    gender: {
+      male: 'Masculino',
+      female: 'Feminino',
     },
   },
 };

@@ -15,6 +15,7 @@ import { METRICS, SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constants';
 
 function InitialPage({ navigation: { navigate } }) {
   const navigateToLogin = () => navigate('Login');
+  const navigateToRegister = () => navigate('RegisterFirstStep');
 
   return (
     <>
@@ -35,7 +36,11 @@ function InitialPage({ navigation: { navigate } }) {
           Play Together
         </TitleComponent>
 
-        <ButtonComponent title="Register" style={styles.registerButton} />
+        <ButtonComponent
+          title="Register"
+          style={styles.registerButton}
+          onPress={navigateToRegister}
+        />
 
         <View style={styles.loginView}>
           <Text style={styles.loginText}>Already a player? </Text>

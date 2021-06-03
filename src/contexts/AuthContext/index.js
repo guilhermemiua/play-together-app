@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   removeUserFromAsyncStorage,
   setUserToAsyncStorage,
   getUserFromAsyncStorage,
+  setTokenToAsyncStorage,
+  removeTokenFromAsyncStorage,
 } from '../../helpers';
+import { login } from '../../services';
 
 export const AuthContext = React.createContext({});
 
@@ -12,16 +15,24 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedUser, setLoggedUser] = useState();
 
-  const authenticate = (user) => {
-    setUserToAsyncStorage(user);
-    setLoggedUser(user);
-    setIsAuthenticated(true);
+  const authenticate = async (email, password) => {
+    try {
+      const { data } = await login(email, password);
+
+      setTokenToAsyncStorage(data.token);
+      setUserToAsyncStorage(data.user);
+      setLoggedUser(data.user);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setLoggedUser(undefined);
     removeUserFromAsyncStorage();
+    removeTokenFromAsyncStorage();
   };
 
   useEffect(() => {
@@ -53,5 +64,7 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthProvider;

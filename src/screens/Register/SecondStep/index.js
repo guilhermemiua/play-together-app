@@ -1,23 +1,30 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
-import Container from '../../components/Container';
-import InputComponent from '../../components/Input';
-import ButtonComponent from '../../components/Button';
-import { COLORS, METRICS } from '../../constants';
+
+import Container from '../../../components/Container';
+import InputComponent from '../../../components/Input';
+import ButtonComponent from '../../../components/Button';
+import { COLORS } from '../../../constants';
 import schema from './schema';
-import { useAuth } from '../../contexts/AuthContext';
-import InputContainerComponent from '../../components/InputContainer';
-import LabelComponent from '../../components/Label';
-import ErrorMessageComponent from '../../components/ErrorMessage';
+import RegisterSteps from '../../../components/RegisterSteps';
+import LabelComponent from '../../../components/Label';
+import ErrorMessageComponent from '../../../components/ErrorMessage';
+import InputContainerComponent from '../../../components/InputContainer';
+import { notify } from '../../../helpers/showMessage';
+import { register } from '../../../services';
 
-export default function Login({ navigation: { navigate } }) {
+export default function RegisterSecondStep({
+  navigation: { navigate },
+  route,
+}) {
   const { t } = useTranslation();
-  const { authenticate } = useAuth();
 
-  const navigateToForgotPassword = () => navigate('Login');
+  const { first_name, last_name, age, gender, phone } = route.params;
+
+  const navigateToInitialPage = () => navigate('InitialPage');
 
   const {
     handleSubmit,
@@ -32,14 +39,33 @@ export default function Login({ navigation: { navigate } }) {
   });
 
   const submit = async (values) => {
-    await authenticate(values.email, values.password);
+    try {
+      const { email, password } = values;
+
+      await register({
+        first_name,
+        last_name,
+        age,
+        gender,
+        phone,
+        email,
+        password,
+      });
+
+      await navigateToInitialPage();
+    } catch (error) {
+      console.log(error);
+      notify({ message: 'Error', type: 'danger' });
+    }
   };
 
   return (
-    <View style={styles.login}>
+    <View style={styles.register}>
       <Container justifyContent="center">
+        <RegisterSteps currentStep={1} />
+
         <InputContainerComponent>
-          <LabelComponent>{t('login.emailLabel')}</LabelComponent>
+          <LabelComponent>{t('register.secondStep.emailLabel')}</LabelComponent>
           <Controller
             name="email"
             control={control}
@@ -59,16 +85,18 @@ export default function Login({ navigation: { navigate } }) {
         </InputContainerComponent>
 
         <InputContainerComponent>
-          <LabelComponent>{t('login.passwordLabel')}</LabelComponent>
+          <LabelComponent>
+            {t('register.secondStep.passwordLabel')}
+          </LabelComponent>
           <Controller
             name="password"
             control={control}
             render={({ field: { onChange, value, ref } }) => (
               <InputComponent
-                secureTextEntry
                 onChangeText={(text) => onChange(text)}
                 value={value}
                 inputRef={ref}
+                secureTextEntry
               />
             )}
           />
@@ -77,39 +105,18 @@ export default function Login({ navigation: { navigate } }) {
           </ErrorMessageComponent>
         </InputContainerComponent>
 
-        <ButtonComponent title="Login" onPress={handleSubmit(submit)} />
-
-        <View style={styles.forgotPasswordView}>
-          <Text style={styles.forgotPasswordText}>
-            {t('login.forgotPassword')}{' '}
-          </Text>
-          <TouchableOpacity onPress={navigateToForgotPassword}>
-            <Text style={styles.forgotPasswordButton}>
-              {t('login.forgotPasswordButton')}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <ButtonComponent
+          title={t('register.secondStep.submitButton')}
+          onPress={handleSubmit(submit)}
+        />
       </Container>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  login: {
+  register: {
     flex: 1,
     backgroundColor: COLORS.screenBackgroundColor,
-  },
-  forgotPasswordView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: METRICS.margin,
-  },
-  forgotPasswordText: {
-    textAlign: 'center',
-    fontSize: METRICS.fontSize * 0.9,
-    color: COLORS.black,
-  },
-  forgotPasswordButton: {
-    color: COLORS.primary,
   },
 });

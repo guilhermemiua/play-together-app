@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'react-native-elements';
+import FlashMessage from 'react-native-flash-message';
 
 import { LogBox } from 'react-native';
 
@@ -16,14 +17,18 @@ export default function App() {
   LogBox.ignoreAllLogs();
 
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <NavigationContainer>
-          <StatusBar style="auto" />
+    <>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <NavigationContainer>
+            <StatusBar style="auto" />
 
-          <Routes />
-        </NavigationContainer>
-      </AuthProvider>
-    </ThemeProvider>
+            <Routes />
+          </NavigationContainer>
+        </AuthProvider>
+      </ThemeProvider>
+
+      <FlashMessage position="top" />
+    </>
   );
 }
