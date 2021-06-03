@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Avatar } from 'react-native-elements';
 import { COLORS, METRICS } from '../../constants';
 import Container from '../../components/Container';
@@ -10,12 +11,13 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 
 export default function Profile({ navigation: { navigate } }) {
+  const { t } = useTranslation();
   const navigateToSettings = () => navigate('Settings');
 
   return (
     <View style={styles.profile}>
       <Header
-        title="Profile"
+        title={t('profile.title')}
         icons={[
           {
             name: 'settings',
@@ -56,12 +58,12 @@ export default function Profile({ navigation: { navigate } }) {
               alignItems: 'center',
             }}
           >
-            <InfoLabelComponent>Age</InfoLabelComponent>
+            <InfoLabelComponent>{t('profile.age')}</InfoLabelComponent>
             <TextComponent>12</TextComponent>
           </View>
         </View>
 
-        <Button title="Edit profile info" />
+        <Button title={t('profile.editProfileButton')} />
       </Container>
     </View>
   );

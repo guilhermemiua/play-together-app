@@ -36,9 +36,13 @@ function ProfileStackNavigator() {
       <Stack.Screen
         name="Settings"
         component={Settings}
-        options={{
-          ...HEADER_OPTIONS,
-          title: i18next.t('routes.settings'),
+        options={({ route }) => {
+          const title = route?.params?.title || i18next.t('routes.settings');
+
+          return {
+            ...HEADER_OPTIONS,
+            title,
+          };
         }}
       />
     </Stack.Navigator>

@@ -39,6 +39,18 @@ export default {
         },
       },
     },
+    profile: {
+      title: 'Profile',
+      editProfileButton: 'Edit profile',
+      age: 'Age',
+    },
+    settings: {
+      changeLanguage: 'Change language',
+      logout: 'Logout',
+    },
+    changeLanguageModal: {
+      title: 'Change language',
+    },
     gender: {
       male: 'Masculino',
       female: 'Feminino',

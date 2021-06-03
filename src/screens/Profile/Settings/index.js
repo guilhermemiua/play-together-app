@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 
 import { COLORS, METRICS } from '../../../constants';
 import { useAuth } from '../../../contexts/AuthContext';
 import ChangeLanguageModal from './ChangeLanguageModal';
 
-export default function Settings({ navigation: { navigate } }) {
+export default function Settings({ navigation }) {
+  const { t } = useTranslation();
   const { logout } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +20,21 @@ export default function Settings({ navigation: { navigate } }) {
         style={styles.settingsItem}
         onPress={toggleChangeLanguageModal}
       >
-        <Text style={styles.settingsItemText}>Change Language</Text>
+        <Text style={styles.settingsItemText}>
+          {t('settings.changeLanguage')}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.settingsItem} onPress={logout}>
-        <Text style={styles.settingsItemText}>Logout</Text>
+        <Text style={styles.settingsItemText}>{t('settings.logout')}</Text>
       </TouchableOpacity>
 
-      <ChangeLanguageModal isOpen={isOpen} toggle={toggleChangeLanguageModal} />
+      {isOpen && (
+        <ChangeLanguageModal
+          isOpen={isOpen}
+          toggle={toggleChangeLanguageModal}
+          navigation={navigation}
+        />
+      )}
     </View>
   );
 }
