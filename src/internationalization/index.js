@@ -1,18 +1,28 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
-import pt from './languages/pt';
-import en from './languages/en';
+import ptBR from './languages/pt-BR';
+import enUS from './languages/en-US';
+import { getLanguage } from '../helpers';
 
 const i18nextReactNative = {
   init: Function.prototype,
   type: 'languageDetector',
-  detect: () => Localization.locale,
+  async: true,
+  detect: async (callback) => {
+    const lng = await getLanguage();
+
+    if (!lng) {
+      return callback(Localization.locale);
+    }
+
+    return callback(lng);
+  },
   cacheUserLanguage: Function.prototype,
 };
 const resources = {
-  pt,
-  en,
+  'pt-BR': ptBR,
+  'en-US': enUS,
 };
 
 i18n
@@ -21,12 +31,12 @@ i18n
   .init({
     initImmediate: false,
     resources,
-    fallbackLng: 'pt',
+    fallbackLng: 'pt-BR',
     interpolation: {
       escapeValue: false,
     },
     react: {
-      useSuspense: false,
+      useSuspense: true,
     },
   });
 

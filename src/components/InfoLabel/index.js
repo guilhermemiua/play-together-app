@@ -2,17 +2,16 @@ import React from 'react';
 import { Text } from 'react-native';
 import { COLORS, METRICS } from '../../constants';
 
-export default function LabelComponent({ children }) {
+export default function InfoLabelComponent({ children }) {
   return (
     <Text
       style={{
+        fontWeight: 'bold',
         color: COLORS.black,
-        marginBottom: 5,
         fontFamily: METRICS.fontFamilyBold,
-        fontSize: METRICS.fontSize,
       }}
     >
-      {children}
+      {children}:{' '}
     </Text>
   );
 }

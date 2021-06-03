@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
-import { COLORS } from '../../constants';
+import { COLORS, METRICS } from '../../constants';
 
 export default function InputComponent({
   placeholder = '',
@@ -18,7 +18,7 @@ export default function InputComponent({
       renderErrorMessage={false}
       onChangeText={onChangeText}
       inputContainerStyle={{
-        borderColor: COLORS.black,
+        borderBottomWidth: 0,
       }}
       containerStyle={[
         {
@@ -27,6 +27,11 @@ export default function InputComponent({
           marginVertical: 0,
           padding: 0,
           margin: 0,
+          // borderWidth: 1,
+          // borderColor: COLORS.borderColor,
+          borderRadius: METRICS.borderRadius,
+          paddingLeft: 10,
+          backgroundColor: COLORS.white,
         },
         containerStyle,
       ]}

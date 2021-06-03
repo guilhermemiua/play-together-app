@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import InputContainerComponent from '../../components/InputContainer';
 import LabelComponent from '../../components/Label';
 import ErrorMessageComponent from '../../components/ErrorMessage';
+import TextComponent from '../../components/Text';
 
 export default function Login({ navigation: { navigate } }) {
   const { t } = useTranslation();
@@ -80,13 +81,13 @@ export default function Login({ navigation: { navigate } }) {
         <ButtonComponent title="Login" onPress={handleSubmit(submit)} />
 
         <View style={styles.forgotPasswordView}>
-          <Text style={styles.forgotPasswordText}>
+          <TextComponent style={styles.forgotPasswordText}>
             {t('login.forgotPassword')}{' '}
-          </Text>
+          </TextComponent>
           <TouchableOpacity onPress={navigateToForgotPassword}>
-            <Text style={styles.forgotPasswordButton}>
+            <TextComponent style={styles.forgotPasswordButton}>
               {t('login.forgotPasswordButton')}
-            </Text>
+            </TextComponent>
           </TouchableOpacity>
         </View>
       </Container>
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
     marginTop: METRICS.margin,
   },
   forgotPasswordText: {
-    textAlign: 'center',
-    fontSize: METRICS.fontSize * 0.9,
+    textAlign: 'left',
+    fontSize: METRICS.fontSize,
     color: COLORS.black,
   },
   forgotPasswordButton: {

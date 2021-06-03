@@ -1,6 +1,7 @@
 import React from 'react';
 import PickerSelect from 'react-native-picker-select';
 import { Platform } from 'react-native';
+import { normalize } from 'react-native-elements';
 import { COLORS, METRICS } from '../../constants';
 
 const SelectInput = ({ items, value, onValueChange }) => (
@@ -14,20 +15,31 @@ const SelectInput = ({ items, value, onValueChange }) => (
     onValueChange={onValueChange}
     style={{
       inputAndroid: {
-        borderBottomWidth: 1,
+        // borderWidth: 1,
         fontSize: METRICS.fontSize,
         color: COLORS.black,
-        height: 40,
+        height: normalize(40),
+        // borderRadius: METRICS.borderRadius,
+        // borderColor: COLORS.borderColor,
+        fontFamily: METRICS.fontFamilyRegular,
+        paddingLeft: 10,
+        backgroundColor: COLORS.white,
       },
       inputIOS: {
-        borderBottomWidth: 1,
+        borderWidth: 1,
         fontSize: METRICS.fontSize,
         color: COLORS.black,
-        height: 40,
+        height: normalize(40),
+        // borderRadius: METRICS.borderRadius,
+        // borderColor: COLORS.borderColor,
+        fontFamily: METRICS.fontFamilyRegular,
+        paddingLeft: 10,
+        backgroundColor: COLORS.white,
       },
       placeholder: {
         color: COLORS.black,
         fontSize: METRICS.fontSize,
+        fontFamily: METRICS.fontFamilyRegular,
       },
       viewContainer: {
         marginHorizontal: METRICS.padding,

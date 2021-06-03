@@ -8,7 +8,7 @@ function Button({ style, type = 'solid', title, onPress, ...props }) {
     <ButtonElements
       buttonStyle={{
         paddingVertical: METRICS.padding,
-        borderRadius: 0,
+        borderRadius: METRICS.borderRadius,
         ...style,
       }}
       TouchableComponent={TouchableOpacity}
@@ -18,7 +18,7 @@ function Button({ style, type = 'solid', title, onPress, ...props }) {
       titleStyle={{
         fontSize: METRICS.fontSize,
         lineHeight: METRICS.fontSize + 1,
-        fontWeight: 'bold',
+        fontFamily: METRICS.fontFamilyBold,
       }}
       {...props}
     />

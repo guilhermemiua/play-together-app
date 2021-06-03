@@ -43,5 +43,10 @@ export default {
       male: 'Masculino',
       female: 'Feminino',
     },
+    routes: {
+      changeLanguage: 'Alterar idioma',
+      settings: 'Configurações',
+      register: 'Cadastrar',
+    },
   },
 };

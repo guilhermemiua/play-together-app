@@ -3,10 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { View } from 'react-native';
+import i18next from 'i18next';
 import Events from '../../screens/Events';
 import Profile from '../../screens/Profile';
 import Settings from '../../screens/Profile/Settings';
-import { COLORS } from '../../constants';
+import { COLORS, HEADER_OPTIONS } from '../../constants';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,13 +30,16 @@ function ProfileStackNavigator() {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        // options={{ headerShown: false }}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name="Settings"
         component={Settings}
-        // options={{ headerShown: false }}
+        options={{
+          ...HEADER_OPTIONS,
+          title: i18next.t('routes.settings'),
+        }}
       />
     </Stack.Navigator>
   );
@@ -48,53 +52,61 @@ export default function AuthenticatedRoutes() {
         name="EventsTab"
         component={EventsStackNavigator}
         options={{
-          tabBarIcon: () => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="navigation"
               type="feather"
-              color={COLORS.black}
+              color={focused ? COLORS.primary : COLORS.black}
               size={25}
             />
           ),
           tabBarShowLabel: false,
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="EventsHistoryTab"
         component={() => <View />}
         options={{
-          tabBarIcon: () => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="calendar"
               type="feather"
-              color={COLORS.black}
+              color={focused ? COLORS.primary : COLORS.black}
               size={25}
             />
           ),
           tabBarShowLabel: false,
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="ChatsTab"
         component={() => <View />}
         options={{
-          tabBarIcon: () => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="message-circle"
               type="feather"
-              color={COLORS.black}
+              color={focused ? COLORS.primary : COLORS.black}
               size={25}
             />
           ),
           tabBarShowLabel: false,
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="ProfileTab"
         component={ProfileStackNavigator}
         options={{
-          tabBarIcon: () => (
-            <Icon name="user" type="feather" color={COLORS.black} size={25} />
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="user"
+              type="feather"
+              color={focused ? COLORS.primary : COLORS.black}
+              size={25}
+            />
           ),
           tabBarShowLabel: false,
           headerShown: false,

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
-  Text,
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
@@ -11,7 +10,8 @@ import { COLORS } from '../../constants/colors';
 import ButtonComponent from '../../components/Button';
 import TitleComponent from '../../components/Title';
 import Container from '../../components/Container';
-import { METRICS, SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constants';
+import { METRICS } from '../../constants';
+import TextComponent from '../../components/Text';
 
 function InitialPage({ navigation: { navigate } }) {
   const navigateToLogin = () => navigate('Login');
@@ -43,9 +43,11 @@ function InitialPage({ navigation: { navigate } }) {
         />
 
         <View style={styles.loginView}>
-          <Text style={styles.loginText}>Already a player? </Text>
+          <TextComponent style={styles.loginText}>
+            Already a player?{' '}
+          </TextComponent>
           <TouchableOpacity onPress={navigateToLogin}>
-            <Text style={styles.loginButton}>Login</Text>
+            <TextComponent style={styles.loginButton}>Login</TextComponent>
           </TouchableOpacity>
         </View>
       </Container>
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: COLORS.black,
+    backgroundColor: '#000000',
     opacity: 0.5,
     position: 'absolute',
     top: 0,
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     textAlign: 'center',
-    fontSize: METRICS.fontSize * 0.9,
+    fontSize: METRICS.fontSize,
     color: COLORS.white,
   },
   loginButton: {

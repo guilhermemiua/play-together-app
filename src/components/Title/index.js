@@ -20,6 +20,19 @@ function Title({
       h4={h4}
       h1Style={{
         fontSize: METRICS.fontSize * 1.8,
+        fontFamily: METRICS.fontFamilyRegular,
+      }}
+      h2Style={{
+        fontSize: METRICS.fontSize * 1.6,
+        fontFamily: METRICS.fontFamilyBold,
+      }}
+      h3Style={{
+        fontSize: METRICS.fontSize * 1.4,
+        fontFamily: METRICS.fontFamilyBold,
+      }}
+      h4Style={{
+        fontSize: METRICS.fontSize * 1.2,
+        fontFamily: METRICS.fontFamilyBold,
       }}
       style={{
         color: COLORS.white,
