@@ -39,6 +39,17 @@ export default {
         },
       },
     },
+    createEvent: {
+      localLabel: 'Local',
+      dateLabel: 'Date',
+      startTimeLabel: 'Start time',
+      endTimeLabel: 'End time',
+      playersQuantityLabel: 'Players quantity',
+      submitButton: 'Create',
+    },
+    events: {
+      title: 'Events',
+    },
     profile: {
       title: 'Profile',
       editProfileButton: 'Edit profile',
@@ -59,6 +70,8 @@ export default {
       changeLanguage: 'Change language',
       settings: 'Settings',
       register: 'Register',
+      chooseSport: 'Choose sport',
+      createEvent: 'Create event',
     },
   },
 };

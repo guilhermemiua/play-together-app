@@ -17,6 +17,11 @@ export default function InputComponent({
       // errorMessage={errorMessage}
       renderErrorMessage={false}
       onChangeText={onChangeText}
+      inputStyle={{
+        fontFamily: METRICS.fontFamilyRegular,
+        fontSize: METRICS.inputFontSize,
+        color: COLORS.black,
+      }}
       inputContainerStyle={{
         borderBottomWidth: 0,
       }}

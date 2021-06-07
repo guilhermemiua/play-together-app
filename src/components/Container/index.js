@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { METRICS, SCREEN_WIDTH } from '../../constants';
+import { METRICS } from '../../constants';
 
 export default function Container({
   children,
@@ -26,7 +26,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: METRICS.margin,
-    // borderWidth: 1,
-    // borderColor: 'red',
   },
 });

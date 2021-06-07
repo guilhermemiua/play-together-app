@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Icon } from 'react-native-elements';
 import i18next from 'i18next';
 
-import { Icon } from 'react-native-elements';
 import { COLORS, LANGUAGES_ARRAY, METRICS } from '../../../../constants';
 
 import TextComponent from '../../../../components/Text';
@@ -21,6 +21,8 @@ export default function ChangeLanguageModal({ isOpen, toggle, navigation }) {
     await navigation.setParams({
       title: i18next.t('routes.settings'),
     });
+
+    console.log(i18next.language);
   };
 
   return (

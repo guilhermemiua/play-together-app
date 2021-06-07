@@ -6,19 +6,31 @@ import { View } from 'react-native';
 import i18next from 'i18next';
 import Events from '../../screens/Events';
 import Profile from '../../screens/Profile';
+import ChooseSport from '../../screens/Events/ChooseSport';
 import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_OPTIONS } from '../../constants';
+import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function EventsStackNavigator() {
   return (
-    <Stack.Navigator initialRouteName="HomeStack">
+    <Stack.Navigator initialRouteName="Events">
       <Stack.Screen
-        name="HomeStack"
+        name="Events"
         component={Events}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChooseSport"
+        component={ChooseSport}
+        options={{ title: i18next.t('routes.chooseSport') }}
+      />
+      <Stack.Screen
+        name="CreateEvent"
+        component={CreateEvent}
+        options={{ title: i18next.t('routes.createEvent') }}
       />
     </Stack.Navigator>
   );

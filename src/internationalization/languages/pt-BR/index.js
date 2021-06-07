@@ -39,6 +39,17 @@ export default {
         },
       },
     },
+    createEvent: {
+      localLabel: 'Local',
+      dateLabel: 'Data',
+      startTimeLabel: 'Hora de início',
+      endTimeLabel: 'Hora fim',
+      playersQuantityLabel: 'Quantidade de jogadores',
+      submitButton: 'Criar',
+    },
+    events: {
+      title: 'Eventos',
+    },
     profile: {
       title: 'Perfil',
       editProfileButton: 'Editar perfil',
@@ -59,6 +70,8 @@ export default {
       changeLanguage: 'Alterar idioma',
       settings: 'Configurações',
       register: 'Cadastrar',
+      chooseSport: 'Escolha o esporte',
+      createEvent: 'Criar evento',
     },
   },
 };

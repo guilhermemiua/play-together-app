@@ -46,6 +46,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/style-prop-object": "off",
     "no-use-before-define": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "import/no-cycle": "off"
   }
 }
