@@ -10,6 +10,7 @@ function Title({
   style,
   textAlign = 'center',
   children,
+  color = COLORS.white,
   ...props
 }) {
   return (
@@ -31,11 +32,11 @@ function Title({
         fontFamily: METRICS.fontFamilyBold,
       }}
       h4Style={{
-        fontSize: METRICS.fontSize * 1.2,
+        fontSize: METRICS.fontSize * 1.125,
         fontFamily: METRICS.fontFamilyBold,
       }}
       style={{
-        color: COLORS.white,
+        color,
         textAlign,
         ...style,
       }}

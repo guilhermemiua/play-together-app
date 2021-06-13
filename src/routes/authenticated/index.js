@@ -8,11 +8,24 @@ import Events from '../../screens/Events';
 import Profile from '../../screens/Profile';
 import ChooseSport from '../../screens/Events/ChooseSport';
 import Settings from '../../screens/Profile/Settings';
-import { COLORS, HEADER_OPTIONS } from '../../constants';
+import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
+import ViewEvent from '../../screens/Events/ViewEvent';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function HomeStackNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function EventsStackNavigator() {
   return (
@@ -36,6 +49,18 @@ function EventsStackNavigator() {
   );
 }
 
+function ChatsStackNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Chats">
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function ProfileStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Profile">
@@ -52,7 +77,12 @@ function ProfileStackNavigator() {
           const title = route?.params?.title || i18next.t('routes.settings');
 
           return {
-            ...HEADER_OPTIONS,
+            headerTitleStyle: {
+              ...HEADER_TITLE_STYLE,
+            },
+            headerStyle: {
+              ...HEADER_STYLE,
+            },
             title,
           };
         }}
@@ -61,9 +91,25 @@ function ProfileStackNavigator() {
   );
 }
 
-export default function AuthenticatedRoutes() {
+function HomeTabs() {
   return (
     <Tab.Navigator>
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeStackNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="home"
+              type="feather"
+              color={focused ? COLORS.primary : COLORS.black}
+              size={25}
+            />
+          ),
+          tabBarShowLabel: false,
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="EventsTab"
         component={EventsStackNavigator}
@@ -80,25 +126,10 @@ export default function AuthenticatedRoutes() {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="EventsHistoryTab"
-        component={() => <View />}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Icon
-              name="calendar"
-              type="feather"
-              color={focused ? COLORS.primary : COLORS.black}
-              size={25}
-            />
-          ),
-          tabBarShowLabel: false,
-          headerShown: false,
-        }}
-      />
+
       <Tab.Screen
         name="ChatsTab"
-        component={() => <View />}
+        component={ChatsStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <Icon
@@ -129,5 +160,48 @@ export default function AuthenticatedRoutes() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+export default function AuthenticatedRoutes() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={HomeTabs}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="ViewEvent"
+        component={ViewEvent}
+        options={({ route }) => {
+          // const title = route?.params?.sport;
+
+          const title = '';
+
+          return {
+            headerTitleStyle: {
+              ...HEADER_TITLE_STYLE,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerStyle: {
+              ...HEADER_STYLE,
+              backgroundColor: COLORS.black,
+              elevation: 0,
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+            },
+            headerTintColor: COLORS.white,
+            title,
+          };
+        }}
+      />
+    </Stack.Navigator>
   );
 }

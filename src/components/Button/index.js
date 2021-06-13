@@ -6,6 +6,7 @@ import { METRICS } from '../../constants';
 function Button({ style, type = 'solid', title, onPress, ...props }) {
   return (
     <ButtonElements
+      containerStyle={{ flex: 1 }}
       buttonStyle={{
         paddingVertical: METRICS.padding,
         borderRadius: METRICS.borderRadius,

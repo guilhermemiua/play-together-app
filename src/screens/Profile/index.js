@@ -1,14 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Avatar } from 'react-native-elements';
-import { COLORS, METRICS } from '../../constants';
-import Container from '../../components/Container';
-import InfoLabelComponent from '../../components/InfoLabel';
-import TextComponent from '../../components/Text';
+import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
+import ProfileImage from '../../assets/images/Profile.jpg';
 
 export default function Profile({ navigation: { navigate } }) {
   const { t } = useTranslation();
@@ -26,33 +23,15 @@ export default function Profile({ navigation: { navigate } }) {
           },
         ]}
       />
-      <Container justifyContent="flex-start">
-        <Avatar
-          containerStyle={{ alignSelf: 'center' }}
-          size="xlarge"
-          rounded
-          title="+"
-          source={{
-            uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-          }}
-        >
-          <Avatar.Accessory size={35} />
-        </Avatar>
+      <View style={styles.profileContainer}>
+        <View style={styles.profileInfoCard}>
+          <Image source={ProfileImage} style={styles.profileImage} />
 
-        <Title h3 style={{ color: COLORS.black }}>
-          Guilherme Eiti
-        </Title>
+          <Title h3 style={{ color: COLORS.black }}>
+            Guilherme Eiti
+          </Title>
 
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            borderRadius: METRICS.borderRadius,
-            padding: METRICS.padding,
-            // borderColor: COLORS.borderColor,
-            // borderWidth: normalize(1),
-          }}
-        >
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -60,11 +39,11 @@ export default function Profile({ navigation: { navigate } }) {
           >
             <InfoLabelComponent>{t('profile.age')}</InfoLabelComponent>
             <TextComponent>12</TextComponent>
-          </View>
+          </View> */}
         </View>
 
         <Button title={t('profile.editProfileButton')} />
-      </Container>
+      </View>
     </View>
   );
 }
@@ -73,5 +52,23 @@ const styles = StyleSheet.create({
   profile: {
     flex: 1,
     backgroundColor: COLORS.screenBackgroundColor,
+  },
+  profileContainer: {
+    flex: 1,
+    marginHorizontal: METRICS.containerMarginHorizontal,
+    marginVertical: METRICS.containerMarginVertical,
+  },
+  profileImage: {
+    width: normalize(120),
+    height: normalize(120),
+    borderRadius: normalize(120),
+    alignSelf: 'center',
+    marginBottom: normalize(METRICS.margin / 2),
+  },
+  profileInfoCard: {
+    backgroundColor: COLORS.white,
+    borderRadius: METRICS.borderRadius,
+    padding: METRICS.padding,
+    marginBottom: normalize(METRICS.margin / 2),
   },
 });

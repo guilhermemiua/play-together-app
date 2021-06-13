@@ -1,22 +1,30 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Avatar, normalize } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS } from '../../constants';
 import Container from '../../components/Container';
-import InfoLabelComponent from '../../components/InfoLabel';
 import Text from '../../components/Text';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import EventCard from '../../components/EventCard';
 
-export default function Events({ navigation: { navigate } }) {
+const events = [
+  {
+    id: 1,
+  },
+  {
+    id: 2,
+  },
+];
+
+export default function Events({ navigation }) {
   const { t } = useTranslation();
 
-  const navigateToChooseSport = () => navigate('ChooseSport');
+  const navigateToChooseSport = () => navigation.navigate('ChooseSport');
 
   return (
     <View style={styles.events}>
@@ -52,9 +60,20 @@ export default function Events({ navigation: { navigate } }) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.eventList}>
-        <EventCard sport="soccer" />
-      </View>
+      <FlatList
+        style={styles.eventList}
+        data={events}
+        keyExtractor={(item) => item.id}
+        // onRefresh={async () => {
+        //   await dispatch(setRefresh(true));
+        //   await dispatch(fetchBooks());
+        //   await dispatch(setRefresh(false));
+        // }}
+        // refreshing={refreshing}
+        renderItem={({ item }) => (
+          <EventCard sport="soccer" navigation={navigation} />
+        )}
+      />
     </View>
   );
 }
@@ -71,8 +90,8 @@ const styles = StyleSheet.create({
     padding: METRICS.padding,
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: COLORS.borderColor,
-    borderBottomWidth: normalize(1),
+    // borderBottomColor: COLORS.borderColor,
+    // borderBottomWidth: normalize(1),
   },
   subheaderButton: {
     alignItems: 'center',
@@ -90,8 +109,5 @@ const styles = StyleSheet.create({
   },
   eventList: {
     paddingHorizontal: METRICS.containerMarginHorizontal,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
 });

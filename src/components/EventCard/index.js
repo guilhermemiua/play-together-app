@@ -4,67 +4,97 @@ import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../constants';
+import { getSportIcon, getSportName } from '../../helpers/sports';
 import Text from '../Text';
 import Title from '../Title';
 
-export default function EventCard({ sport = '' }) {
+export default function EventCard({ sport = '', navigation }) {
+  const navigateToViewEvent = () => {
+    navigation.navigate('ViewEvent', {
+      sport: getSportName(sport),
+    });
+  };
+
   return (
-    <View style={styles.eventCard}>
-      <TouchableOpacity>
-        <View
-          style={{
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}
-        >
-          <Title h3 style={{ color: COLORS.black, marginRight: normalize(5) }}>
-            Soccer
-          </Title>
+    <View style={styles.card}>
+      <TouchableOpacity style={styles.cardButton} onPress={navigateToViewEvent}>
+        <View style={{ alignItems: 'center', minWidth: normalize(90) }}>
           <Icon
-            name="sports-soccer"
+            name={getSportIcon(sport)}
             type="material"
-            color={COLORS.black}
-            size={25}
+            color={COLORS.primary}
+            size={30}
           />
+
+          <Title h4 color={COLORS.primary} style={{ marginTop: normalize(5) }}>
+            {getSportName(sport)}
+          </Title>
+
+          <View
+            style={[
+              styles.infoItem,
+              {
+                marginTop: normalize(5),
+              },
+            ]}
+          >
+            <Icon name="users" type="feather" color={COLORS.black} size={20} />
+            <Text style={styles.infoItemText}>1/8</Text>
+          </View>
         </View>
 
-        {/* <View style={styles.eventCardDivider} /> */}
+        <View style={styles.divider} />
 
-        <View style={{ alignItems: 'flex-start' }}>
-          <View style={{ alignItems: 'flex-start' }}>
-            <Icon name="user" type="feather" color={COLORS.black} size={30} />
-            <Text>Host: Guilherme Eiti</Text>
-          </View>
-
-          <View>
-            <Text>1/8 players</Text>
-          </View>
-        </View>
-        <View style={styles.eventCardDivider} />
-        <View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.info}>
+          <View
+            style={[
+              styles.infoItem,
+              {
+                marginBottom: normalize(5),
+              },
+            ]}
+          >
             <Icon
               name="map-pin"
               type="feather"
               color={COLORS.black}
               size={20}
             />
-            <Text style={{ marginLeft: normalize(5) }}>
-              Londrina Sport Club
-            </Text>
+            <Text style={styles.infoItemText}>Londrina Sport Club</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+          <View
+            style={[
+              styles.infoItem,
+              {
+                marginBottom: normalize(5),
+              },
+            ]}
+          >
             <Icon
               name="calendar"
               type="feather"
               color={COLORS.black}
               size={20}
             />
-            <Text style={{ marginLeft: normalize(5) }}>20/10/2021</Text>
+            <Text style={styles.infoItemText}>20/10/2021</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+          <View
+            style={[
+              styles.infoItem,
+              {
+                marginBottom: normalize(5),
+              },
+            ]}
+          >
             <Icon name="clock" type="feather" color={COLORS.black} size={20} />
-            <Text style={{ marginLeft: normalize(5) }}>10:00 - 11:00</Text>
+            <Text style={styles.infoItemText}>10:00PM - 11:00PM</Text>
+          </View>
+
+          <View style={[styles.infoItem]}>
+            <Icon name="user" type="feather" color={COLORS.black} size={20} />
+            <Text style={styles.infoItemText}>Guilherme Eiti</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -73,18 +103,33 @@ export default function EventCard({ sport = '' }) {
 }
 
 const styles = StyleSheet.create({
-  eventCard: {
+  card: {
     flexDirection: 'column',
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
     borderRadius: METRICS.borderRadius,
     backgroundColor: COLORS.white,
-    padding: METRICS.padding,
+    paddingHorizontal: METRICS.padding,
+    paddingVertical: normalize(METRICS.padding * 2),
     width: '100%',
+    marginTop: normalize(METRICS.margin / 2),
   },
-  eventCardDivider: {
-    height: 0.5,
+  cardButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  divider: {
+    width: 0.5,
+    height: '100%',
     backgroundColor: COLORS.borderColor,
-    marginVertical: normalize(10),
+  },
+  info: {
+    minWidth: normalize(180),
+  },
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  infoItemText: {
+    marginLeft: normalize(5),
   },
 });

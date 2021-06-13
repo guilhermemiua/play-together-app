@@ -12,6 +12,7 @@ import InputContainer from '../../../../components/InputContainer';
 import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import TimePicker from '../../../../components/TimePicker';
+import Select from '../../../../components/Select';
 
 export default function CreateEvent({ navigation }) {
   const { t } = useTranslation();
@@ -40,6 +41,38 @@ export default function CreateEvent({ navigation }) {
   return (
     <View style={styles.createEvent}>
       <View style={styles.createEventContainer}>
+        <InputContainer>
+          <Label>{t('createEvent.stateLabel')}</Label>
+          <Controller
+            name="state"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                items={[{ label: 'SP', value: 'SP' }]}
+                value={value}
+                onValueChange={(values) => onChange(values)}
+              />
+            )}
+          />
+          <ErrorMessage>{errors?.state?.message}</ErrorMessage>
+        </InputContainer>
+
+        <InputContainer>
+          <Label>{t('createEvent.cityLabel')}</Label>
+          <Controller
+            name="city"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                items={[{ label: 'Mogi das Cruzes', value: 'Mogi das Cruzes' }]}
+                value={value}
+                onValueChange={(values) => onChange(values)}
+              />
+            )}
+          />
+          <ErrorMessage>{errors?.city?.message}</ErrorMessage>
+        </InputContainer>
+
         <InputContainer>
           <Label>{t('createEvent.localLabel')}</Label>
           <Controller
@@ -145,6 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.screenBackgroundColor,
   },
   createEventContainer: {
+    marginVertical: METRICS.containerMarginVertical,
     marginHorizontal: METRICS.containerMarginHorizontal,
     flex: 1,
     justifyContent: 'center',

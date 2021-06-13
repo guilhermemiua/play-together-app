@@ -40,6 +40,8 @@ export default {
       },
     },
     createEvent: {
+      cityLabel: 'Cidade',
+      stateLabel: 'Estado',
       localLabel: 'Local',
       dateLabel: 'Data',
       startTimeLabel: 'Hora de início',
@@ -72,6 +74,9 @@ export default {
       register: 'Cadastrar',
       chooseSport: 'Escolha o esporte',
       createEvent: 'Criar evento',
+    },
+    sports: {
+      soccer: 'Futebol',
     },
   },
 };

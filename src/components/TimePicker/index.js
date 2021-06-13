@@ -53,10 +53,12 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: COLORS.white,
     paddingLeft: normalize(10),
-    borderRadius: METRICS.borderRadius,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    borderWidth: 1,
+    borderRadius: METRICS.borderRadius,
+    borderColor: COLORS.borderColor,
   },
   buttonText: {
     fontFamily: METRICS.fontFamilyRegular,

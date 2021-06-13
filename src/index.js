@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 import 'react-native-gesture-handler';
-import './internationalization';
 
 import {
   useFonts,
@@ -24,6 +23,8 @@ import AppLoading from 'expo-app-loading';
 import Routes from './routes';
 import AuthProvider from './contexts/AuthContext';
 import theme from './styles/theme';
+
+import './internationalization';
 
 export default function App() {
   LogBox.ignoreAllLogs();

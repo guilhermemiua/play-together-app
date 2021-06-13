@@ -34,9 +34,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: METRICS.margin,
     paddingVertical: METRICS.padding,
-    borderBottomColor: COLORS.borderColor,
-    borderBottomWidth: normalize(1),
+    // borderBottomColor: COLORS.borderColor,
+    // borderBottomWidth: normalize(1),
     backgroundColor: COLORS.white,
-    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
 });
