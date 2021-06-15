@@ -1,8 +1,8 @@
 import React from 'react';
-import { Input } from 'react-native-elements';
+import { Input as ElementsInput } from 'react-native-elements';
 import { COLORS, METRICS } from '../../constants';
 
-export default function InputComponent({
+export default function Input({
   placeholder = '',
   leftIcon,
   onChangeText,
@@ -11,7 +11,7 @@ export default function InputComponent({
   ...props
 }) {
   return (
-    <Input
+    <ElementsInput
       placeholder={placeholder}
       leftIcon={leftIcon}
       // errorMessage={errorMessage}

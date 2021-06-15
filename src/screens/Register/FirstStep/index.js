@@ -162,6 +162,7 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
                 onChangeText={(text) => onChange(text)}
                 value={value}
                 inputRef={ref}
+                keyboardType="numeric"
               />
             )}
           />

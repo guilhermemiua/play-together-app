@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { View } from 'react-native';
 import i18next from 'i18next';
 import Events from '../../screens/Events';
 import Profile from '../../screens/Profile';
@@ -11,6 +10,9 @@ import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
 import ViewEvent from '../../screens/Events/ViewEvent';
+import EditProfile from '../../screens/Profile/EditProfile';
+import ChangePassword from '../../screens/Profile/Settings/ChangePassword';
+import ChangeEmail from '../../screens/Profile/Settings/ChangeEmail';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,19 +75,57 @@ function ProfileStackNavigator() {
       <Stack.Screen
         name="Settings"
         component={Settings}
-        options={({ route }) => {
-          const title = route?.params?.title || i18next.t('routes.settings');
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.settings'),
+        })}
+      />
 
-          return {
-            headerTitleStyle: {
-              ...HEADER_TITLE_STYLE,
-            },
-            headerStyle: {
-              ...HEADER_STYLE,
-            },
-            title,
-          };
-        }}
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.editProfile'),
+        })}
+      />
+
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.changePassword'),
+        })}
+      />
+
+      <Stack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.changeEmail'),
+        })}
       />
     </Stack.Navigator>
   );

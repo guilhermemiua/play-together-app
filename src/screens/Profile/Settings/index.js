@@ -14,6 +14,9 @@ export default function Settings({ navigation }) {
 
   const toggleChangeLanguageModal = () => setIsOpen(!isOpen);
 
+  const navigateToChangePassword = () => navigation.navigate('ChangePassword');
+  const navigateToChangeEmail = () => navigation.navigate('ChangeEmail');
+
   return (
     <View style={styles.settings}>
       <TouchableOpacity
@@ -24,6 +27,23 @@ export default function Settings({ navigation }) {
           {t('settings.changeLanguage')}
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.settingsItem}
+        onPress={navigateToChangePassword}
+      >
+        <Text style={styles.settingsItemText}>
+          {t('settings.changePassword')}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.settingsItem}
+        onPress={navigateToChangeEmail}
+      >
+        <Text style={styles.settingsItemText}>{t('settings.changeEmail')}</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.settingsItem} onPress={logout}>
         <Text style={styles.settingsItemText}>{t('settings.logout')}</Text>
       </TouchableOpacity>

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import i18next from 'i18next';
+import i18next from '../../../internationalization';
 
 const schema = yup.object().shape({
   first_name: yup

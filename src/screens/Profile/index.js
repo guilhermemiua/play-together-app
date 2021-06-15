@@ -3,13 +3,18 @@ import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../../components/Title';
+import Text from '../../components/Text';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import ProfileImage from '../../assets/images/Profile.jpg';
+import Divider from '../../components/Divider';
 
 export default function Profile({ navigation: { navigate } }) {
   const { t } = useTranslation();
+
   const navigateToSettings = () => navigate('Settings');
+
+  const navigateToEditProfile = () => navigate('EditProfile');
 
   return (
     <View style={styles.profile}>
@@ -27,22 +32,34 @@ export default function Profile({ navigation: { navigate } }) {
         <View style={styles.profileInfoCard}>
           <Image source={ProfileImage} style={styles.profileImage} />
 
-          <Title h3 style={{ color: COLORS.black }}>
-            Guilherme Eiti
+          <Title h3 color={COLORS.black}>
+            Guilherme Eiti,{' '}
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: METRICS.fontSize * 1.4,
+              }}
+            >
+              20
+            </Text>
           </Title>
 
-          {/* <View
+          <Text
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              alignSelf: 'center',
+              marginTop: normalize(10),
             }}
           >
-            <InfoLabelComponent>{t('profile.age')}</InfoLabelComponent>
-            <TextComponent>12</TextComponent>
-          </View> */}
-        </View>
+            Mogi das Cruzes, SP
+          </Text>
 
-        <Button title={t('profile.editProfileButton')} />
+          <Divider type="horizontal" />
+
+          <Button
+            title={t('profile.editProfileButton')}
+            onPress={navigateToEditProfile}
+          />
+        </View>
       </View>
     </View>
   );

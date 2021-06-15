@@ -39,6 +39,43 @@ export default {
         },
       },
     },
+    editProfile: {
+      firstNameLabel: 'Nome',
+      lastNameLabel: 'Sobrenome',
+      ageLabel: 'Idade',
+      genderLabel: 'Gênero',
+      phoneLabel: 'Telefone',
+      cityLabel: 'Cidade',
+      stateLabel: 'Estado',
+      submitButton: 'Salvar',
+      error: {
+        firstNameRequired: 'Insira o nome',
+        lastNameRequired: 'Insira o sobrenome',
+        ageRequired: 'Insira a idade',
+        genderRequired: 'Insira o gênero',
+        phoneRequired: 'Insira o celular',
+        cityRequired: 'Insira a cidade',
+        stateRequired: 'Insira o estado',
+      },
+    },
+    changePassword: {
+      passwordLabel: 'Nova senha',
+      confirmPasswordLabel: 'Confirmar nova senha',
+      submitButton: 'Salvar',
+      error: {
+        passwordRequired: 'Insira a nova senha',
+        confirmPasswordRequired: 'Insira a confirmação da nova senha',
+        equalPassword: 'As senhas devem ser iguais',
+      },
+    },
+    changeEmail: {
+      emailLabel: 'Novo email',
+      submitButton: 'Salvar',
+      error: {
+        emailRequired: 'Insira o novo email',
+        emailInvalid: 'Email inválido',
+      },
+    },
     createEvent: {
       cityLabel: 'Cidade',
       stateLabel: 'Estado',
@@ -59,6 +96,8 @@ export default {
     },
     settings: {
       changeLanguage: 'Alterar idioma',
+      changeEmail: 'Alterar email',
+      changePassword: 'Alterar senha',
       logout: 'Sair',
     },
     changeLanguageModal: {
@@ -74,6 +113,9 @@ export default {
       register: 'Cadastrar',
       chooseSport: 'Escolha o esporte',
       createEvent: 'Criar evento',
+      editProfile: 'Editar perfil',
+      changePassword: 'Alterar senha',
+      changeEmail: 'Alterar email',
     },
     sports: {
       soccer: 'Futebol',

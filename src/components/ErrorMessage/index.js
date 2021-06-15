@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { METRICS } from '../../constants';
 
-export default function ErrorMessageComponent({ children }) {
+export default function ErrorMessage({ children }) {
   return (
     <Text
       style={{
