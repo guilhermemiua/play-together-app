@@ -61,6 +61,8 @@ export default {
     changeEmail: {
       emailLabel: 'New email',
       submitButton: 'Save',
+      successMessage: 'Email updated successfully!',
+      errorMessage: 'Email update error',
       error: {
         emailRequired: 'Enter new email',
         emailInvalid: 'Email invalid',
@@ -70,6 +72,8 @@ export default {
       passwordLabel: 'New password',
       confirmPasswordLabel: 'Confirm new password',
       submitButton: 'Save',
+      successMessage: 'Password updated successfully!',
+      errorMessage: 'Password update error',
       error: {
         passwordRequired: 'Enter new password',
         confirmPasswordRequired: 'Enter confirm new password',

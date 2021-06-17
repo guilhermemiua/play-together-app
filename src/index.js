@@ -57,7 +57,7 @@ export default function App() {
         </AuthProvider>
       </ThemeProvider>
 
-      <FlashMessage position="top" />
+      <FlashMessage position="top" hideStatusBar />
     </SafeAreaView>
   );
 }

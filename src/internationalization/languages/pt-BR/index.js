@@ -62,6 +62,8 @@ export default {
       passwordLabel: 'Nova senha',
       confirmPasswordLabel: 'Confirmar nova senha',
       submitButton: 'Salvar',
+      successMessage: 'Senha atualizada com sucesso!',
+      errorMessage: 'Erro na atualização da senha',
       error: {
         passwordRequired: 'Insira a nova senha',
         confirmPasswordRequired: 'Insira a confirmação da nova senha',
@@ -71,6 +73,8 @@ export default {
     changeEmail: {
       emailLabel: 'Novo email',
       submitButton: 'Salvar',
+      successMessage: 'Email atualizado com sucesso!',
+      errorMessage: 'Erro na atualização do email',
       error: {
         emailRequired: 'Insira o novo email',
         emailInvalid: 'Email inválido',

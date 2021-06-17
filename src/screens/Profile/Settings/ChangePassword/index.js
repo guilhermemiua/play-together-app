@@ -10,6 +10,8 @@ import schema from './schema';
 import InputContainer from '../../../../components/InputContainer';
 import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
+import { notify } from '../../../../helpers';
+import { updatePassword } from '../../../../services';
 
 export default function ChangePassword({ navigation }) {
   const { t } = useTranslation();
@@ -27,7 +29,17 @@ export default function ChangePassword({ navigation }) {
   });
 
   const submit = async (values) => {
-    console.log(values);
+    try {
+      const { password, confirm_password } = values;
+
+      await updatePassword(password, confirm_password);
+
+      notify({ message: t('changePassword.successMessage'), type: 'success' });
+
+      await navigation.navigate('Settings');
+    } catch (error) {
+      notify({ message: t('changePassword.errorMessage'), type: 'danger' });
+    }
   };
 
   return (

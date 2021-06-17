@@ -10,6 +10,8 @@ import schema from './schema';
 import InputContainer from '../../../../components/InputContainer';
 import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
+import { updateEmail } from '../../../../services';
+import { notify } from '../../../../helpers';
 
 export default function ChangeEmail({ navigation }) {
   const { t } = useTranslation();
@@ -26,7 +28,17 @@ export default function ChangeEmail({ navigation }) {
   });
 
   const submit = async (values) => {
-    console.log(values);
+    try {
+      const { email } = values;
+
+      await updateEmail(email);
+
+      notify({ message: t('changeEmail.successMessage'), type: 'success' });
+
+      await navigation.navigate('Settings');
+    } catch (error) {
+      notify({ message: t('changeEmail.errorMessage'), type: 'danger' });
+    }
   };
 
   return (
@@ -44,7 +56,6 @@ export default function ChangeEmail({ navigation }) {
                 }}
                 value={value}
                 inputRef={ref}
-                secureTextEntry
               />
             )}
           />

@@ -10,6 +10,15 @@ const notify = ({ message, type }) => {
     });
   }
 
+  if (type === 'success') {
+    return showMessage({
+      message,
+      icon: 'success',
+      type: 'success',
+      duration: 4000,
+    });
+  }
+
   return showMessage({
     message,
     icon: 'default',

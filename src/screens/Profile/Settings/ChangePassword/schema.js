@@ -6,7 +6,6 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required(i18next.t('changePassword.error.passwordRequired')),
-  // .min(6, 'A senha deve possuir no mínimo 6 caracteres'),
   confirm_password: yup
     .string()
     .required(i18next.t('changePassword.error.confirmPasswordRequired'))
