@@ -15,9 +15,11 @@ import EventCard from '../../components/EventCard';
 const events = [
   {
     id: 1,
+    sport: 'soccer',
   },
   {
     id: 2,
+    sport: 'football',
   },
 ];
 
@@ -71,7 +73,7 @@ export default function Events({ navigation }) {
         // }}
         // refreshing={refreshing}
         renderItem={({ item }) => (
-          <EventCard sport="soccer" navigation={navigation} />
+          <EventCard sport={item.sport} navigation={navigation} />
         )}
       />
     </View>

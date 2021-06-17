@@ -1,19 +1,15 @@
 import React from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { Icon, normalize } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { COLORS, METRICS } from '../../constants';
+import { COLORS, METRICS, SPORTS } from '../../constants';
+import {
+  getSportIconName,
+  getSportIconType,
+  getSportName,
+} from '../../helpers';
 import Text from '../Text';
-
-const sports = [
-  {
-    id: 1,
-  },
-  {
-    id: 2,
-  },
-];
 
 export default function SportList({ navigate }) {
   const navigateToCreateEvent = (sport) =>
@@ -24,8 +20,8 @@ export default function SportList({ navigate }) {
   return (
     <FlatList
       style={styles.flatList}
-      data={sports}
-      keyExtractor={(item) => item.id}
+      data={SPORTS}
+      keyExtractor={(item) => item}
       // onRefresh={async () => {
       //   await dispatch(setRefresh(true));
       //   await dispatch(fetchBooks());
@@ -37,11 +33,11 @@ export default function SportList({ navigate }) {
           style={styles.sportCard}
           onPress={() => navigateToCreateEvent('tennis')}
         >
-          <Text>Tennis</Text>
+          <Text>{getSportName(item)}</Text>
           <Icon
-            name="sports-soccer"
-            type="material"
-            color={COLORS.black}
+            name={getSportIconName(item)}
+            type={getSportIconType(item)}
+            color={COLORS.primary}
             size={30}
           />
         </TouchableOpacity>

@@ -4,7 +4,11 @@ import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../constants';
-import { getSportIcon, getSportName } from '../../helpers/sports';
+import {
+  getSportIconName,
+  getSportIconType,
+  getSportName,
+} from '../../helpers/sports';
 import Text from '../Text';
 import Title from '../Title';
 
@@ -18,15 +22,24 @@ export default function EventCard({ sport = '', navigation }) {
   return (
     <View style={styles.card}>
       <TouchableOpacity style={styles.cardButton} onPress={navigateToViewEvent}>
-        <View style={{ alignItems: 'center', minWidth: normalize(90) }}>
+        <View
+          style={{
+            alignItems: 'center',
+            width: normalize(90),
+          }}
+        >
           <Icon
-            name={getSportIcon(sport)}
-            type="material"
+            name={getSportIconName(sport)}
+            type={getSportIconType(sport)}
             color={COLORS.primary}
             size={30}
           />
 
-          <Title h4 color={COLORS.primary} style={{ marginTop: normalize(5) }}>
+          <Title
+            h4
+            color={COLORS.primary}
+            style={{ marginTop: normalize(5), flexShrink: 1 }}
+          >
             {getSportName(sport)}
           </Title>
 
@@ -108,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: METRICS.borderRadius,
     backgroundColor: COLORS.white,
     paddingHorizontal: METRICS.padding,
-    paddingVertical: normalize(METRICS.padding * 2),
+    paddingVertical: normalize(METRICS.padding + 5),
     width: '100%',
     marginTop: normalize(METRICS.margin / 2),
   },

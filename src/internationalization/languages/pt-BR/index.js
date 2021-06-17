@@ -123,6 +123,13 @@ export default {
     },
     sports: {
       soccer: 'Futebol',
+      basketball: 'Basquete',
+      tennis: 'Tênis',
+      tableTennis: 'Tênis de mesa',
+      volleyball: 'Vôlei',
+      football: 'Futebol americano',
+      baseball: 'Beisebol',
+      golf: 'Golfe',
     },
   },
 };
