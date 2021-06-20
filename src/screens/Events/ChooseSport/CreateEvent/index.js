@@ -13,9 +13,13 @@ import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import TimePicker from '../../../../components/TimePicker';
 import Select from '../../../../components/Select';
+import { createEvent } from '../../../../services/event';
+import { notify } from '../../../../helpers';
 
-export default function CreateEvent({ navigation }) {
+export default function CreateEvent({ route, navigation }) {
   const { t } = useTranslation();
+
+  const { sport } = route.params;
 
   const {
     handleSubmit,
@@ -23,6 +27,8 @@ export default function CreateEvent({ navigation }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      state: '',
+      city: '',
       local: '',
       date: '',
       start_time: '',
@@ -33,9 +39,34 @@ export default function CreateEvent({ navigation }) {
   });
 
   const submit = async (values) => {
-    console.log(values);
+    try {
+      const {
+        local,
+        state,
+        city,
+        date,
+        start_time,
+        end_time,
+        players_quantity,
+      } = values;
 
-    navigation.navigate('Events');
+      await createEvent({
+        sport,
+        local,
+        state,
+        city,
+        date,
+        start_time,
+        end_time,
+        players_quantity,
+      });
+
+      notify({ message: t('createEvent.successMessage'), type: 'success' });
+
+      await navigation.navigate('Events');
+    } catch (error) {
+      notify({ message: t('createEvent.errorMessage'), type: 'danger' });
+    }
   };
 
   return (

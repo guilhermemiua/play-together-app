@@ -8,7 +8,7 @@ import InputComponent from '../../components/Input';
 import ButtonComponent from '../../components/Button';
 import { COLORS, METRICS } from '../../constants';
 import schema from './schema';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks';
 import InputContainerComponent from '../../components/InputContainer';
 import LabelComponent from '../../components/Label';
 import ErrorMessageComponent from '../../components/ErrorMessage';

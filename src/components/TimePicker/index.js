@@ -28,7 +28,7 @@ export default function TimePicker({ value, onChange }) {
   return (
     <>
       <TouchableOpacity onPress={showTimepicker} style={styles.button}>
-        <Icon name="map-pin" type="feather" color={COLORS.black} size={20} />
+        <Icon name="clock" type="feather" color={COLORS.black} size={20} />
         <Text style={styles.buttonText}>
           {value ? formatTimeToLocale(value) : ''}
         </Text>

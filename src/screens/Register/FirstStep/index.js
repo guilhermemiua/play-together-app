@@ -18,19 +18,12 @@ import InputContainerComponent from '../../../components/InputContainer';
 export default function RegisterFirstStep({ navigation: { navigate } }) {
   const { t } = useTranslation();
 
-  const navigateToSecondStep = ({
-    first_name,
-    last_name,
-    age,
-    gender,
-    phone,
-  }) =>
+  const navigateToSecondStep = ({ first_name, last_name, age, gender }) =>
     navigate('RegisterSecondStep', {
       first_name,
       last_name,
       age,
       gender,
-      phone,
     });
 
   const {
@@ -43,20 +36,18 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
       last_name: '',
       age: '',
       gender: '',
-      phone: '',
     },
     resolver: yupResolver(schema),
   });
 
   const submit = async (values) => {
-    const { first_name, last_name, age, gender, phone } = values;
+    const { first_name, last_name, age, gender } = values;
 
     navigateToSecondStep({
       first_name,
       last_name,
       age,
       gender,
-      phone,
     });
   };
 
@@ -151,25 +142,6 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
             </ErrorMessageComponent>
           </InputContainerComponent>
         </View>
-
-        <InputContainerComponent>
-          <LabelComponent>{t('register.firstStep.phoneLabel')}</LabelComponent>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field: { onChange, value, ref } }) => (
-              <InputComponent
-                onChangeText={(text) => onChange(text)}
-                value={value}
-                inputRef={ref}
-                keyboardType="numeric"
-              />
-            )}
-          />
-          <ErrorMessageComponent>
-            {errors?.phone?.message}
-          </ErrorMessageComponent>
-        </InputContainerComponent>
 
         <ButtonComponent
           title={t('register.firstStep.submitButton')}

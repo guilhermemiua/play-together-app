@@ -58,13 +58,12 @@ const AuthProvider = ({ children }) => {
         logout,
         isAuthenticated,
         isLoading,
+        setLoggedUser,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);
 
 export default AuthProvider;

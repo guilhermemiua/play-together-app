@@ -1,16 +1,20 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Avatar } from 'react-native-elements';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../../components/Title';
 import Text from '../../components/Text';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
-import ProfileImage from '../../assets/images/Profile.jpg';
+import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import Divider from '../../components/Divider';
+import { useAuth } from '../../hooks';
+import { getImage } from '../../helpers';
 
 export default function Profile({ navigation: { navigate } }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
 
   const navigateToSettings = () => navigate('Settings');
 
@@ -30,17 +34,28 @@ export default function Profile({ navigation: { navigate } }) {
       />
       <View style={styles.profileContainer}>
         <View style={styles.profileInfoCard}>
-          <Image source={ProfileImage} style={styles.profileImage} />
+          <Avatar
+            source={
+              loggedUser?.profile_image
+                ? {
+                    uri: getImage(loggedUser.profile_image),
+                  }
+                : DefaultProfileImage
+            }
+            rounded
+            size={150}
+            containerStyle={styles.profileImage}
+          />
 
           <Title h3 color={COLORS.black}>
-            Guilherme Eiti,{' '}
+            {loggedUser?.first_name} {loggedUser?.last_name},{' '}
             <Text
               style={{
                 fontWeight: 'bold',
                 fontSize: METRICS.fontSize * 1.4,
               }}
             >
-              20
+              {loggedUser?.age}
             </Text>
           </Title>
 
@@ -76,9 +91,6 @@ const styles = StyleSheet.create({
     marginVertical: METRICS.containerMarginVertical,
   },
   profileImage: {
-    width: normalize(120),
-    height: normalize(120),
-    borderRadius: normalize(120),
     alignSelf: 'center',
     marginBottom: normalize(METRICS.margin / 2),
   },

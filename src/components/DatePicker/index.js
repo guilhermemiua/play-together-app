@@ -29,7 +29,7 @@ export default function DatePicker({ value, onChange }) {
   return (
     <>
       <TouchableOpacity onPress={showDatepicker} style={styles.button}>
-        <Icon name="clock" type="feather" color={COLORS.black} size={20} />
+        <Icon name="calendar" type="feather" color={COLORS.black} size={20} />
         <Text style={styles.buttonText}>
           {value && formatDateToLocale(value)}
         </Text>

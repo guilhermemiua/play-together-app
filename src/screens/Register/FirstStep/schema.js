@@ -13,9 +13,6 @@ const schema = yup.object().shape({
   gender: yup
     .string()
     .required(i18next.t('register.firstStep.error.genderRequired')),
-  phone: yup
-    .string()
-    .required(i18next.t('register.firstStep.error.phoneRequired')),
 });
 
 export default schema;

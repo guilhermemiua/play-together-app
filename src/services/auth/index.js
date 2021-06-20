@@ -11,7 +11,6 @@ export const register = async ({
   last_name,
   age,
   gender,
-  phone,
   email,
   password,
 }) =>
@@ -20,7 +19,6 @@ export const register = async ({
     last_name,
     age,
     gender,
-    phone,
     email,
     password,
   });

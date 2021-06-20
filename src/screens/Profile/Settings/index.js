@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 
 import { COLORS, METRICS } from '../../../constants';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../../hooks';
 import ChangeLanguageModal from './ChangeLanguageModal';
 
 export default function Settings({ navigation }) {
