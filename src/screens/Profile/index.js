@@ -65,7 +65,7 @@ export default function Profile({ navigation: { navigate } }) {
               marginTop: normalize(10),
             }}
           >
-            Mogi das Cruzes, SP
+            {loggedUser?.city?.name}, {loggedUser?.state?.name}
           </Text>
 
           <Divider type="horizontal" />

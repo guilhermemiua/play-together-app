@@ -22,7 +22,8 @@ export default function RegisterSecondStep({
 }) {
   const { t } = useTranslation();
 
-  const { first_name, last_name, age, gender } = route.params;
+  const { first_name, last_name, age, gender, state_id, city_id } =
+    route.params;
 
   const navigateToInitialPage = () => navigate('InitialPage');
 
@@ -49,12 +50,15 @@ export default function RegisterSecondStep({
         gender,
         email,
         password,
+        state_id,
+        city_id,
       });
+
+      notify({ message: t('register.successMessage'), type: 'success' });
 
       await navigateToInitialPage();
     } catch (error) {
-      console.log(error);
-      notify({ message: 'Error', type: 'danger' });
+      notify({ message: t('register.errorMessage'), type: 'danger' });
     }
   };
 

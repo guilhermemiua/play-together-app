@@ -13,6 +13,8 @@ export default {
       },
     },
     register: {
+      successMessage: 'Cadastro realizado com sucesso!',
+      errorMessage: 'Erro no cadastro',
       firstStep: {
         firstNameLabel: 'Nome',
         lastNameLabel: 'Sobrenome',
@@ -24,6 +26,8 @@ export default {
           lastNameRequired: 'Insira o sobrenome',
           ageRequired: 'Insira a idade',
           genderRequired: 'Insira o gênero',
+          cityRequired: 'Insira a cidade',
+          stateRequired: 'Insira o estado',
         },
       },
       secondStep: {
@@ -47,6 +51,8 @@ export default {
       submitButton: 'Salvar',
       successMessage: 'Perfil atualizado com sucesso!',
       errorMessage: 'Erro na atualização do perfil',
+      mediaPermissionErrorMessage:
+        'Precisamos da permissão da câmera para alterar a imagem do perfil',
       error: {
         firstNameRequired: 'Insira o nome',
         lastNameRequired: 'Insira o sobrenome',

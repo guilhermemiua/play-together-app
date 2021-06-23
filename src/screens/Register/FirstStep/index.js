@@ -5,49 +5,67 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 
 import Container from '../../../components/Container';
-import InputComponent from '../../../components/Input';
-import SelectComponent from '../../../components/Select';
-import ButtonComponent from '../../../components/Button';
+import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+import Button from '../../../components/Button';
 import { COLORS, METRICS } from '../../../constants';
 import schema from './schema';
 import RegisterSteps from '../../../components/RegisterSteps';
-import LabelComponent from '../../../components/Label';
-import ErrorMessageComponent from '../../../components/ErrorMessage';
-import InputContainerComponent from '../../../components/InputContainer';
+import Label from '../../../components/Label';
+import ErrorMessage from '../../../components/ErrorMessage';
+import InputContainer from '../../../components/InputContainer';
+import SelectCity from '../../../components/SelectCity';
+import SelectStates from '../../../components/SelectStates';
 
 export default function RegisterFirstStep({ navigation: { navigate } }) {
   const { t } = useTranslation();
-
-  const navigateToSecondStep = ({ first_name, last_name, age, gender }) =>
-    navigate('RegisterSecondStep', {
-      first_name,
-      last_name,
-      age,
-      gender,
-    });
 
   const {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: {
       first_name: '',
       last_name: '',
       age: '',
       gender: '',
+      state_id: '',
+      city_id: '',
     },
     resolver: yupResolver(schema),
   });
 
+  const watchStateId = watch('state_id');
+
+  const navigateToSecondStep = ({
+    first_name,
+    last_name,
+    age,
+    gender,
+    state_id,
+    city_id,
+  }) =>
+    navigate('RegisterSecondStep', {
+      first_name,
+      last_name,
+      age,
+      gender,
+      state_id,
+      city_id,
+    });
+
   const submit = async (values) => {
-    const { first_name, last_name, age, gender } = values;
+    const { first_name, last_name, age, gender, state_id, city_id } = values;
 
     navigateToSecondStep({
       first_name,
       last_name,
       age,
       gender,
+      state_id,
+      city_id,
     });
   };
 
@@ -56,15 +74,13 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
       <Container justifyContent="center">
         <RegisterSteps currentStep={0} />
 
-        <InputContainerComponent>
-          <LabelComponent>
-            {t('register.firstStep.firstNameLabel')}
-          </LabelComponent>
+        <InputContainer>
+          <Label>{t('register.firstStep.firstNameLabel')}</Label>
           <Controller
             name="first_name"
             control={control}
             render={({ field: { onChange, value, ref } }) => (
-              <InputComponent
+              <Input
                 onChangeText={(text) => {
                   onChange(text);
                 }}
@@ -73,41 +89,33 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
               />
             )}
           />
-          <ErrorMessageComponent>
-            {errors?.first_name?.message}
-          </ErrorMessageComponent>
-        </InputContainerComponent>
+          <ErrorMessage>{errors?.first_name?.message}</ErrorMessage>
+        </InputContainer>
 
-        <InputContainerComponent>
-          <LabelComponent>
-            {t('register.firstStep.lastNameLabel')}
-          </LabelComponent>
+        <InputContainer>
+          <Label>{t('register.firstStep.lastNameLabel')}</Label>
           <Controller
             name="last_name"
             control={control}
             render={({ field: { onChange, value, ref } }) => (
-              <InputComponent
+              <Input
                 onChangeText={(text) => onChange(text)}
                 value={value}
                 inputRef={ref}
               />
             )}
           />
-          <ErrorMessageComponent>
-            {errors?.last_name?.message}
-          </ErrorMessageComponent>
-        </InputContainerComponent>
+          <ErrorMessage>{errors?.last_name?.message}</ErrorMessage>
+        </InputContainer>
 
         <View style={{ flexDirection: 'row' }}>
-          <InputContainerComponent
-            style={{ flex: 1, marginRight: METRICS.margin }}
-          >
-            <LabelComponent>{t('register.firstStep.ageLabel')}</LabelComponent>
+          <InputContainer style={{ flex: 1, marginRight: METRICS.margin }}>
+            <Label>{t('register.firstStep.ageLabel')}</Label>
             <Controller
               name="age"
               control={control}
               render={({ field: { onChange, value, ref } }) => (
-                <InputComponent
+                <Input
                   onChangeText={(text) => onChange(text)}
                   value={value}
                   inputRef={ref}
@@ -115,19 +123,15 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
                 />
               )}
             />
-            <ErrorMessageComponent>
-              {errors?.age?.message}
-            </ErrorMessageComponent>
-          </InputContainerComponent>
-          <InputContainerComponent style={{ flex: 1 }}>
-            <LabelComponent>
-              {t('register.firstStep.genderLabel')}
-            </LabelComponent>
+            <ErrorMessage>{errors?.age?.message}</ErrorMessage>
+          </InputContainer>
+          <InputContainer style={{ flex: 1 }}>
+            <Label>{t('register.firstStep.genderLabel')}</Label>
             <Controller
               name="gender"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <SelectComponent
+                <Select
                   items={[
                     { label: t('gender.male'), value: 'male' },
                     { label: t('gender.female'), value: 'female' },
@@ -137,13 +141,39 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
                 />
               )}
             />
-            <ErrorMessageComponent>
-              {errors?.gender?.message}
-            </ErrorMessageComponent>
-          </InputContainerComponent>
+            <ErrorMessage>{errors?.gender?.message}</ErrorMessage>
+          </InputContainer>
         </View>
 
-        <ButtonComponent
+        <InputContainer>
+          <Label>{t('editProfile.stateLabel')}</Label>
+          <Controller
+            name="state_id"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SelectStates onChange={onChange} value={value} />
+            )}
+          />
+          <ErrorMessage>{errors?.state_id?.message}</ErrorMessage>
+        </InputContainer>
+
+        <InputContainer>
+          <Label>{t('editProfile.cityLabel')}</Label>
+          <Controller
+            name="city_id"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SelectCity
+                onChange={onChange}
+                stateId={watchStateId}
+                value={value}
+              />
+            )}
+          />
+          <ErrorMessage>{errors?.city_id?.message}</ErrorMessage>
+        </InputContainer>
+
+        <Button
           title={t('register.firstStep.submitButton')}
           onPress={handleSubmit(submit)}
         />

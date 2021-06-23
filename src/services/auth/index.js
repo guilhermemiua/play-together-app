@@ -13,6 +13,8 @@ export const register = async ({
   gender,
   email,
   password,
+  state_id,
+  city_id,
 }) =>
   api.post('/register', {
     first_name,
@@ -21,4 +23,6 @@ export const register = async ({
     gender,
     email,
     password,
+    state_id,
+    city_id,
   });

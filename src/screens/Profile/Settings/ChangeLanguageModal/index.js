@@ -21,8 +21,6 @@ export default function ChangeLanguageModal({ isOpen, toggle, navigation }) {
     await navigation.setParams({
       title: i18next.t('routes.settings'),
     });
-
-    console.log(i18next.language);
   };
 
   return (

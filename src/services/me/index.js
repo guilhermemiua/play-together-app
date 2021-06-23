@@ -5,7 +5,7 @@ export const updateEmail = async (email) => {
   const token = await getToken();
 
   return api.put(
-    '/update-email',
+    '/me/update-email',
     {
       email,
     },
@@ -21,7 +21,7 @@ export const updatePassword = async (password, confirm_password) => {
   const token = await getToken();
 
   return api.put(
-    '/update-password',
+    '/me/update-password',
     {
       password,
       confirm_password,
@@ -39,8 +39,8 @@ export const updateProfile = async ({
   last_name,
   age,
   gender,
-  state,
-  city,
+  state_id,
+  city_id,
   profile_image,
 }) => {
   const token = await getToken();
@@ -51,8 +51,8 @@ export const updateProfile = async ({
   data.append('last_name', last_name);
   data.append('age', age);
   data.append('gender', gender);
-  data.append('state', state);
-  data.append('city', city);
+  data.append('state_id', state_id);
+  data.append('city_id', city_id);
 
   if (profile_image) {
     const fileName = profile_image.split('/').pop();
@@ -65,10 +65,20 @@ export const updateProfile = async ({
     });
   }
 
-  return api.put('/user', data, {
+  return api.put('/me', data, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const getLoggedUser = async () => {
+  const token = await getToken();
+
+  return api.get('/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
 };

@@ -13,6 +13,12 @@ const schema = yup.object().shape({
   gender: yup
     .string()
     .required(i18next.t('register.firstStep.error.genderRequired')),
+  state_id: yup
+    .string()
+    .required(i18next.t('register.firstStep.error.stateRequired')),
+  city_id: yup
+    .string()
+    .required(i18next.t('register.firstStep.error.cityRequired')),
 });
 
 export default schema;

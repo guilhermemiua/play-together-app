@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   removeUserFromAsyncStorage,
   setUserToAsyncStorage,
@@ -6,7 +6,7 @@ import {
   setTokenToAsyncStorage,
   removeTokenFromAsyncStorage,
 } from '../../helpers';
-import { login } from '../../services';
+import { login, getLoggedUser } from '../../services';
 
 export const AuthContext = React.createContext({});
 
@@ -19,9 +19,10 @@ const AuthProvider = ({ children }) => {
     try {
       const { data } = await login(email, password);
 
-      setTokenToAsyncStorage(data.token);
-      setUserToAsyncStorage(data.user);
-      setLoggedUser(data.user);
+      await setTokenToAsyncStorage(data.token);
+
+      await getAndSetLoggedUser();
+
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error);
@@ -33,6 +34,13 @@ const AuthProvider = ({ children }) => {
     setLoggedUser(undefined);
     removeUserFromAsyncStorage();
     removeTokenFromAsyncStorage();
+  };
+
+  const getAndSetLoggedUser = async () => {
+    const { data } = await getLoggedUser();
+
+    setUserToAsyncStorage(data);
+    setLoggedUser(data);
   };
 
   useEffect(() => {
@@ -59,6 +67,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         isLoading,
         setLoggedUser,
+        getAndSetLoggedUser,
       }}
     >
       {children}

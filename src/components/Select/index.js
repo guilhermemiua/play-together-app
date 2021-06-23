@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { normalize } from 'react-native-elements';
 import { COLORS, METRICS } from '../../constants';
 
-const Select = ({ items, value, onValueChange, selectRef, ...props }) => (
+const Select = ({ items, value = '', onValueChange, selectRef, ...props }) => (
   <PickerSelect
     {...props}
     ref={selectRef}

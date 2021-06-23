@@ -16,11 +16,14 @@ import Select from '../../../components/Select';
 import { useAuth } from '../../../hooks';
 import DefaultProfileImage from '../../../assets/images/DefaultProfile.png';
 import { updateProfile } from '../../../services';
-import { getImage, notify, setUserToAsyncStorage } from '../../../helpers';
+import { getImage, notify } from '../../../helpers';
+import SelectStates from '../../../components/SelectStates';
+import SelectCity from '../../../components/SelectCity';
 
 export default function EditProfile({ navigation }) {
   const { t } = useTranslation();
-  const { loggedUser, setLoggedUser } = useAuth();
+  const { loggedUser, getAndSetLoggedUser } = useAuth();
+
   const [image, setImage] = useState(null);
 
   const {
@@ -28,39 +31,42 @@ export default function EditProfile({ navigation }) {
     control,
     formState: { errors },
     setValue,
+    watch,
   } = useForm({
     defaultValues: {
       first_name: '',
       last_name: '',
       age: '',
       gender: '',
-      state: '',
-      city: '',
+      state_id: '',
+      city_id: '',
     },
     resolver: yupResolver(schema),
   });
 
+  const watchStateId = watch('state_id');
+
   const submit = async (values) => {
     try {
-      const { first_name, last_name, age, gender, state, city } = values;
+      const { first_name, last_name, age, gender, state_id, city_id } = values;
 
-      const { data } = await updateProfile({
+      await updateProfile({
         first_name,
         last_name,
         age,
         gender,
-        state,
-        city,
+        state_id: parseInt(state_id, 10),
+        city_id: parseInt(city_id, 10),
         profile_image: image,
       });
 
-      notify({ message: t('editProfile.successMessage'), type: 'success' });
+      await getAndSetLoggedUser();
 
-      setLoggedUser(data);
-      await setUserToAsyncStorage(data);
+      notify({ message: t('editProfile.successMessage'), type: 'success' });
 
       await navigation.navigate('Profile');
     } catch (error) {
+      console.log(error);
       notify({ message: t('editProfile.errorMessage'), type: 'danger' });
     }
   };
@@ -83,8 +89,12 @@ export default function EditProfile({ navigation }) {
       if (Platform.OS !== 'web') {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
+
         if (status !== 'granted') {
-          // alert('Sorry, we need camera roll permissions to make this work!');
+          notify({
+            message: t('editProfile.mediaPermissionErrorMessage'),
+            type: 'danger',
+          });
         }
       }
     })();
@@ -96,8 +106,8 @@ export default function EditProfile({ navigation }) {
       setValue('last_name', loggedUser?.last_name);
       setValue('age', loggedUser?.age?.toString());
       setValue('gender', loggedUser?.gender);
-      setValue('state', loggedUser?.state);
-      setValue('city', loggedUser?.city);
+      setValue('state_id', loggedUser?.state_id);
+      setValue('city_id', loggedUser?.city_id);
 
       if (loggedUser.profile_image) {
         setImage(getImage(loggedUser.profile_image));
@@ -205,33 +215,29 @@ export default function EditProfile({ navigation }) {
         <InputContainer>
           <Label>{t('editProfile.stateLabel')}</Label>
           <Controller
-            name="state"
+            name="state_id"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Select
-                items={[{ label: 'SP', value: 'SP' }]}
-                value={value}
-                onValueChange={(values) => onChange(values)}
-              />
+              <SelectStates onChange={onChange} value={value} />
             )}
           />
-          <ErrorMessage>{errors?.state?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.state_id?.message}</ErrorMessage>
         </InputContainer>
 
         <InputContainer>
           <Label>{t('editProfile.cityLabel')}</Label>
           <Controller
-            name="city"
+            name="city_id"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Select
-                items={[{ label: 'Mogi das Cruzes', value: 'Mogi das Cruzes' }]}
+              <SelectCity
+                onChange={onChange}
+                stateId={watchStateId}
                 value={value}
-                onValueChange={(values) => onChange(values)}
               />
             )}
           />
-          <ErrorMessage>{errors?.city?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.city_id?.message}</ErrorMessage>
         </InputContainer>
 
         <Button

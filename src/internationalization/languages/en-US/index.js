@@ -13,6 +13,8 @@ export default {
       },
     },
     register: {
+      successMessage: 'Registered successfully!',
+      errorMessage: 'Register error',
       firstStep: {
         firstNameLabel: 'Name',
         lastNameLabel: 'Last name',
@@ -24,6 +26,8 @@ export default {
           lastNameRequired: 'Enter a last name',
           ageRequired: 'Enter an age',
           genderRequired: 'Enter a gender',
+          cityRequired: 'Enter a city',
+          stateRequired: 'Enter a state',
         },
       },
       secondStep: {
@@ -47,6 +51,8 @@ export default {
       submitButton: 'Save',
       successMessage: 'Profile updated successfully!',
       errorMessage: 'Profile update error',
+      mediaPermissionErrorMessage:
+        'We need camera permission to alter profile image',
       error: {
         firstNameRequired: 'Enter a name',
         lastNameRequired: 'Enter a last name',
