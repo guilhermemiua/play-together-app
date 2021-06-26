@@ -13,12 +13,12 @@ export default function TimePicker({ value, onChange }) {
   const [show, setShow] = useState(false);
 
   const onChangeTimePicker = (event, selectedDate) => {
+    // Must be here for not opening it twice
+    setShow(Platform.OS === 'ios');
+
     if (selectedDate) {
       onChange(selectedDate);
     }
-
-    // setShow(false);
-    setShow(Platform.OS === 'ios');
   };
 
   const showTimepicker = () => {

@@ -93,9 +93,31 @@ export default {
       endTimeLabel: 'End time',
       playersQuantityLabel: 'Players quantity',
       submitButton: 'Create',
+      successMessage: 'Event created successfully!',
+      errorMessage: 'Create event error',
+      error: {
+        cityRequired: 'Enter a city',
+        stateRequired: 'Enter a state',
+        localRequired: 'Enter a local',
+        dateRequired: 'Enter a date',
+        startTimeRequired: 'Enter start time',
+        endTimeRequired: 'Enter end time',
+        playersQuantityRequired: 'Enter players quantity',
+        startTimeGreaterThanCurrentTime:
+          'Start time should be greather than current time',
+        endTimeGreaterThanStartTime:
+          'End time should be greather than start time',
+      },
     },
     events: {
       title: 'Events',
+    },
+    viewEvent: {
+      settings: {
+        editEvent: 'Edit event',
+        deleteEvent: 'Delete event',
+        leftEvent: 'Left event',
+      },
     },
     profile: {
       title: 'Profile',

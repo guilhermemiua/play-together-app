@@ -12,9 +12,10 @@ import InputContainer from '../../../../components/InputContainer';
 import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import TimePicker from '../../../../components/TimePicker';
-import Select from '../../../../components/Select';
 import { createEvent } from '../../../../services/event';
 import { notify } from '../../../../helpers';
+import SelectStates from '../../../../components/SelectStates';
+import SelectCity from '../../../../components/SelectCity';
 
 export default function CreateEvent({ route, navigation }) {
   const { t } = useTranslation();
@@ -25,25 +26,28 @@ export default function CreateEvent({ route, navigation }) {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: {
-      state: '',
-      city: '',
+      state_id: '',
+      city_id: '',
       local: '',
-      date: '',
-      start_time: '',
-      end_time: '',
+      date: null,
+      start_time: null,
+      end_time: null,
       players_quantity: '',
     },
     resolver: yupResolver(schema),
   });
 
+  const watchStateId = watch('state_id');
+
   const submit = async (values) => {
     try {
       const {
         local,
-        state,
-        city,
+        state_id,
+        city_id,
         date,
         start_time,
         end_time,
@@ -53,8 +57,8 @@ export default function CreateEvent({ route, navigation }) {
       await createEvent({
         sport,
         local,
-        state,
-        city,
+        state_id,
+        city_id,
         date,
         start_time,
         end_time,
@@ -75,33 +79,29 @@ export default function CreateEvent({ route, navigation }) {
         <InputContainer>
           <Label>{t('createEvent.stateLabel')}</Label>
           <Controller
-            name="state"
+            name="state_id"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Select
-                items={[{ label: 'SP', value: 'SP' }]}
-                value={value}
-                onValueChange={(values) => onChange(values)}
-              />
+              <SelectStates onChange={onChange} value={value} />
             )}
           />
-          <ErrorMessage>{errors?.state?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.state_id?.message}</ErrorMessage>
         </InputContainer>
 
         <InputContainer>
           <Label>{t('createEvent.cityLabel')}</Label>
           <Controller
-            name="city"
+            name="city_id"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Select
-                items={[{ label: 'Mogi das Cruzes', value: 'Mogi das Cruzes' }]}
+              <SelectCity
+                onChange={onChange}
+                stateId={watchStateId}
                 value={value}
-                onValueChange={(values) => onChange(values)}
               />
             )}
           />
-          <ErrorMessage>{errors?.city?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.city_id?.message}</ErrorMessage>
         </InputContainer>
 
         <InputContainer>

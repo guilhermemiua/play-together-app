@@ -3,10 +3,17 @@ import { TouchableOpacity } from 'react-native';
 import { Button as ButtonElements } from 'react-native-elements';
 import { METRICS } from '../../constants';
 
-function Button({ style, type = 'solid', title, onPress, ...props }) {
+function Button({
+  style,
+  type = 'solid',
+  title,
+  onPress,
+  containerStyle,
+  ...props
+}) {
   return (
     <ButtonElements
-      containerStyle={{ width: '100%' }}
+      containerStyle={{ width: '100%', ...containerStyle }}
       buttonStyle={{
         paddingVertical: METRICS.padding,
         borderRadius: METRICS.borderRadius,

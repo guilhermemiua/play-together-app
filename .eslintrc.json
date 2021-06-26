@@ -47,6 +47,7 @@
     "react/style-prop-object": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "warn",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "no-shadow": "off"
   }
 }

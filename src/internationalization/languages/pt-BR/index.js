@@ -90,14 +90,34 @@ export default {
       localLabel: 'Local',
       dateLabel: 'Data',
       startTimeLabel: 'Hora de início',
-      endTimeLabel: 'Hora fim',
+      endTimeLabel: 'Hora de término',
       playersQuantityLabel: 'Quantidade de jogadores',
       submitButton: 'Criar',
       successMessage: 'Evento criado com sucesso!',
       errorMessage: 'Erro na criação do evento',
+      error: {
+        cityRequired: 'Insira a cidade',
+        stateRequired: 'Insira o estado',
+        localRequired: 'Insira o local',
+        dateRequired: 'Insira a data',
+        startTimeRequired: 'Insira a hora de início',
+        endTimeRequired: 'Insira a hora de término',
+        playersQuantityRequired: 'Insira a quantidade de jogadores',
+        startTimeGreaterThanCurrentTime:
+          'Hora de início deve ser maior que a hora atual',
+        endTimeGreaterThanStartTime:
+          'Hora de término deve ser maior que hora de início',
+      },
     },
     events: {
       title: 'Eventos',
+    },
+    viewEvent: {
+      settings: {
+        editEvent: 'Editar evento',
+        deleteEvent: 'Deletar evento',
+        leftEvent: 'Sair do evento',
+      },
     },
     profile: {
       title: 'Perfil',

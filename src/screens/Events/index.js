@@ -1,32 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Avatar, normalize } from 'react-native-elements';
+import { normalize } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS } from '../../constants';
-import Container from '../../components/Container';
 import Text from '../../components/Text';
-import Title from '../../components/Title';
-import Button from '../../components/Button';
 import Header from '../../components/Header';
 import EventCard from '../../components/EventCard';
-
-const events = [
-  {
-    id: 1,
-    sport: 'soccer',
-  },
-  {
-    id: 2,
-    sport: 'football',
-  },
-];
+import { getEvents } from '../../services';
 
 export default function Events({ navigation }) {
   const { t } = useTranslation();
 
+  const [events, setEvents] = useState([]);
+
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
+
+  const getAndSetEvents = async () => {
+    const { data } = await getEvents({});
+
+    setEvents(data);
+  };
+
+  useEffect(() => {
+    getAndSetEvents();
+  }, []);
 
   return (
     <View style={styles.events}>
@@ -73,7 +72,7 @@ export default function Events({ navigation }) {
         // }}
         // refreshing={refreshing}
         renderItem={({ item }) => (
-          <EventCard sport={item.sport} navigation={navigation} />
+          <EventCard event={item} navigation={navigation} />
         )}
       />
     </View>

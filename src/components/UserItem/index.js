@@ -1,66 +1,56 @@
 import React from 'react';
 
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../constants';
-import ProfileImage from '../../assets/images/Profile.jpg';
+import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import Title from '../Title';
+import { getImage } from '../../helpers';
 
-export default function UserItem({ user = {} }) {
+export default function UserItem({ user = {}, owner = false }) {
   return (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: METRICS.containerMarginHorizontal,
-        paddingVertical: METRICS.padding,
-      }}
-    >
-      <Image
-        source={ProfileImage}
+    <TouchableOpacity style={styles.touchableOpacity}>
+      <View
         style={{
-          width: normalize(45),
-          height: normalize(45),
-          borderRadius: normalize(45),
-          marginRight: normalize(10),
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
-      />
+      >
+        <Image
+          source={
+            user?.profile_image
+              ? {
+                  uri: getImage(user.profile_image),
+                }
+              : DefaultProfileImage
+          }
+          style={styles.profileImage}
+        />
 
-      <Title h4 color={COLORS.black}>
-        {user.name}
+        <Title h4 color={COLORS.black}>
+          {user.first_name} {user.last_name}
+        </Title>
+      </View>
+
+      <Title h4 color={COLORS.primary}>
+        {owner && 'Host'}
       </Title>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'column',
-    borderRadius: METRICS.borderRadius,
-    backgroundColor: COLORS.white,
-    paddingHorizontal: METRICS.padding,
-    paddingVertical: normalize(METRICS.padding * 2),
-    width: '100%',
-    marginTop: normalize(METRICS.margin / 2),
-  },
-  cardButton: {
+  touchableOpacity: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    marginHorizontal: METRICS.containerMarginHorizontal,
+    paddingVertical: METRICS.padding,
+    justifyContent: 'space-between',
   },
-  divider: {
-    width: 0.5,
-    height: '100%',
-    backgroundColor: COLORS.borderColor,
-  },
-  info: {
-    minWidth: normalize(180),
-  },
-  infoItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  infoItemText: {
-    marginLeft: normalize(5),
+  profileImage: {
+    width: normalize(45),
+    height: normalize(45),
+    borderRadius: normalize(45),
+    marginRight: normalize(10),
   },
 });

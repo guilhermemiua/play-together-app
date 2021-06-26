@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../constants';
+import { formatDateToLocale, formatTimeToLocale } from '../../helpers';
 import {
   getSportIconName,
   getSportIconType,
@@ -12,10 +13,10 @@ import {
 import Text from '../Text';
 import Title from '../Title';
 
-export default function EventCard({ sport = '', navigation }) {
+export default function EventCard({ event = {}, navigation }) {
   const navigateToViewEvent = () => {
     navigation.navigate('ViewEvent', {
-      sport: getSportName(sport),
+      eventId: event?.id,
     });
   };
 
@@ -29,8 +30,8 @@ export default function EventCard({ sport = '', navigation }) {
           }}
         >
           <Icon
-            name={getSportIconName(sport)}
-            type={getSportIconType(sport)}
+            name={getSportIconName(event?.sport)}
+            type={getSportIconType(event?.sport)}
             color={COLORS.primary}
             size={30}
           />
@@ -40,7 +41,7 @@ export default function EventCard({ sport = '', navigation }) {
             color={COLORS.primary}
             style={{ marginTop: normalize(5), flexShrink: 1 }}
           >
-            {getSportName(sport)}
+            {getSportName(event?.sport)}
           </Title>
 
           <View
@@ -52,7 +53,9 @@ export default function EventCard({ sport = '', navigation }) {
             ]}
           >
             <Icon name="users" type="feather" color={COLORS.black} size={20} />
-            <Text style={styles.infoItemText}>1/8</Text>
+            <Text style={styles.infoItemText}>
+              {event?.users?.length + 1 || 1}/{event?.players_quantity}
+            </Text>
           </View>
         </View>
 
@@ -73,7 +76,7 @@ export default function EventCard({ sport = '', navigation }) {
               color={COLORS.black}
               size={20}
             />
-            <Text style={styles.infoItemText}>Londrina Sport Club</Text>
+            <Text style={styles.infoItemText}>{event?.local}</Text>
           </View>
 
           <View
@@ -90,7 +93,9 @@ export default function EventCard({ sport = '', navigation }) {
               color={COLORS.black}
               size={20}
             />
-            <Text style={styles.infoItemText}>20/10/2021</Text>
+            <Text style={styles.infoItemText}>
+              {event?.date && formatDateToLocale(event.date)}
+            </Text>
           </View>
 
           <View
@@ -102,12 +107,17 @@ export default function EventCard({ sport = '', navigation }) {
             ]}
           >
             <Icon name="clock" type="feather" color={COLORS.black} size={20} />
-            <Text style={styles.infoItemText}>10:00PM - 11:00PM</Text>
+            <Text style={styles.infoItemText}>
+              {event?.start_time && formatTimeToLocale(event.start_time)} -
+              {event?.end_time && formatTimeToLocale(event.end_time)}
+            </Text>
           </View>
 
           <View style={[styles.infoItem]}>
             <Icon name="user" type="feather" color={COLORS.black} size={20} />
-            <Text style={styles.infoItemText}>Guilherme Eiti</Text>
+            <Text style={styles.infoItemText}>
+              {event?.user?.first_name} {event?.user?.last_name}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

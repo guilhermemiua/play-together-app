@@ -10,6 +10,7 @@ import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
 import ViewEvent from '../../screens/Events/ViewEvent';
+import ViewEventSettings from '../../screens/Events/ViewEvent/Settings';
 import EditProfile from '../../screens/Profile/EditProfile';
 import ChangePassword from '../../screens/Profile/Settings/ChangePassword';
 import ChangeEmail from '../../screens/Profile/Settings/ChangeEmail';
@@ -241,6 +242,20 @@ export default function AuthenticatedRoutes() {
             title,
           };
         }}
+      />
+
+      <Stack.Screen
+        name="ViewEventSettings"
+        component={ViewEventSettings}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.settings'),
+        })}
       />
     </Stack.Navigator>
   );

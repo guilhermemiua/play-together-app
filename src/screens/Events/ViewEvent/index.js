@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -8,20 +8,68 @@ import Title from '../../../components/Title';
 import Text from '../../../components/Text';
 import UserItem from '../../../components/UserItem';
 import Button from '../../../components/Button';
+import { useAuth } from '../../../hooks/useAuth';
+import {
+  formatDateToLocale,
+  formatTimeToLocale,
+  getSportName,
+  notify,
+} from '../../../helpers';
+import { getEvent, joinEvent } from '../../../services';
 
-const users = [
-  {
-    id: 1,
-    name: 'Guilherme Eiti',
-  },
-  {
-    id: 2,
-    name: 'Bruno Ricardo',
-  },
-];
-
-export default function ViewEvent({ navigation: { navigate } }) {
+export default function ViewEvent({ navigation, route }) {
   const { t } = useTranslation();
+
+  const { eventId } = route.params;
+
+  const [event, setEvent] = useState(null);
+  const [participants, setParticipants] = useState([]);
+  const [isParticipant, setIsParticipant] = useState(false);
+
+  const { loggedUser } = useAuth();
+
+  const navigateToSettings = () =>
+    navigation.navigate('ViewEventSettings', {
+      event,
+    });
+
+  const handleJoinButton = async () => {
+    try {
+      await joinEvent(eventId);
+
+      setIsParticipant(true);
+
+      setParticipants((currentParticipants) => [
+        ...currentParticipants,
+        loggedUser,
+      ]);
+
+      notify({ type: 'success', message: 'You joined the event!' });
+    } catch (error) {
+      notify({ type: 'danger', message: 'Error joining event' });
+    }
+  };
+
+  const fetchAndSetEvent = async () => {
+    const { data: eventData } = await getEvent(eventId);
+
+    setEvent(eventData);
+    setParticipants([eventData.user, ...eventData.users]);
+
+    if (loggedUser.id === eventData.user_id) {
+      setIsParticipant(true);
+    } else {
+      setIsParticipant(
+        eventData.users.some((participant) => participant.id === loggedUser.id)
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (eventId) {
+      fetchAndSetEvent();
+    }
+  }, [eventId]);
 
   return (
     <>
@@ -40,12 +88,16 @@ export default function ViewEvent({ navigation: { navigate } }) {
             textAlign="left"
             style={{ marginBottom: normalize(10) }}
           >
-            Soccer
+            {getSportName(event?.sport)}
           </Title>
           <Text color={COLORS.white} style={{ marginBottom: normalize(5) }}>
-            11/05/2021 10:OOAM - 11:00AM
+            {event?.date && formatDateToLocale(event.date)}{' '}
+            {event?.start_time && formatTimeToLocale(event.start_time)} -
+            {event?.end_time && formatTimeToLocale(event.end_time)}
           </Text>
-          <Text color={COLORS.white}>Kosmos Clube - Mogi das Cruzes/SP</Text>
+          <Text color={COLORS.white}>
+            {event?.local} - {event?.city?.name}/{event?.state?.name}
+          </Text>
         </View>
 
         <View
@@ -58,9 +110,10 @@ export default function ViewEvent({ navigation: { navigate } }) {
           }}
         >
           <Title h4 color={COLORS.black}>
-            Players (2/8)
+            Players ({participants.length}/{event?.players_quantity})
           </Title>
           <TouchableOpacity>
+            {/* TODO: REMOVER E COLOCAR APENAS O X NO CANTO QUANDO FOR OWNER E FOR PRA REMOVER */}
             <Title h4 color={COLORS.black}>
               Manage
             </Title>
@@ -68,23 +121,42 @@ export default function ViewEvent({ navigation: { navigate } }) {
         </View>
 
         <View style={{ backgroundColor: COLORS.white }}>
-          {users.map((user) => (
-            <UserItem user={user} key={user.id} />
+          {participants.map((participant) => (
+            <UserItem
+              user={participant}
+              key={participant.id}
+              owner={participant.id === event?.user_id}
+            />
           ))}
         </View>
       </ScrollView>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: COLORS.white,
-          paddingHorizontal: METRICS.containerMarginHorizontal,
-          paddingVertical: METRICS.containerMarginVertical,
-          alignContent: 'center',
-        }}
-      >
-        <Button title="Game Chat" />
+      <View style={styles.buttonsContainer}>
+        {isParticipant && (
+          <>
+            <Button
+              title="Game Chat"
+              containerStyle={{ flex: 1 }}
+              style={{ marginRight: normalize(5) }}
+            />
+            <Button
+              title="Settings"
+              containerStyle={{ flex: 1 }}
+              style={{ marginLeft: normalize(5) }}
+              type="outline"
+              onPress={navigateToSettings}
+            />
+          </>
+        )}
+
+        {!isParticipant && (
+          <Button
+            title="Join"
+            containerStyle={{ flex: 1 }}
+            type="solid"
+            onPress={handleJoinButton}
+          />
+        )}
       </View>
     </>
   );
@@ -94,5 +166,13 @@ const styles = StyleSheet.create({
   viewEvent: {
     flex: 1,
     backgroundColor: COLORS.screenBackgroundColor,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.white,
+    paddingHorizontal: METRICS.containerMarginHorizontal,
+    paddingVertical: METRICS.containerMarginVertical,
+    alignContent: 'center',
   },
 });
