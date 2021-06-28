@@ -33,6 +33,41 @@ export const createEvent = async ({
   );
 };
 
+export const editEvent = async (
+  eventId,
+  { local, state_id, city_id, date, start_time, end_time, players_quantity }
+) => {
+  const token = await getToken();
+
+  return api.put(
+    `/event/${eventId}`,
+    {
+      local,
+      state_id,
+      city_id,
+      date,
+      start_time,
+      end_time,
+      players_quantity,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const deleteEvent = async (eventId) => {
+  const token = await getToken();
+
+  return api.delete(`/event/${eventId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const joinEvent = async (eventId) => {
   const token = await getToken();
 

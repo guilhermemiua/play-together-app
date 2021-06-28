@@ -17,6 +17,7 @@ export default function Events({ navigation }) {
 
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
 
+  // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
     const { data } = await getEvents({});
 
@@ -26,6 +27,13 @@ export default function Events({ navigation }) {
   useEffect(() => {
     getAndSetEvents();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getAndSetEvents();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.events}>
@@ -61,6 +69,7 @@ export default function Events({ navigation }) {
         </TouchableOpacity>
       </View>
 
+      {/* TODO: APPLY INFINITE */}
       <FlatList
         style={styles.eventList}
         data={events}

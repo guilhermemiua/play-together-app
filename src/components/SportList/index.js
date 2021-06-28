@@ -31,7 +31,7 @@ export default function SportList({ navigate }) {
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.sportCard}
-          onPress={() => navigateToCreateEvent('tennis')}
+          onPress={() => navigateToCreateEvent(item)}
         >
           <Text>{getSportName(item)}</Text>
           <Icon

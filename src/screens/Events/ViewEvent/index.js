@@ -44,9 +44,12 @@ export default function ViewEvent({ navigation, route }) {
         loggedUser,
       ]);
 
-      notify({ type: 'success', message: 'You joined the event!' });
+      notify({
+        type: 'success',
+        message: t('viewEvent.joinEventSuccessMessage'),
+      });
     } catch (error) {
-      notify({ type: 'danger', message: 'Error joining event' });
+      notify({ type: 'danger', message: t('viewEvent.joinEventErrorMessage') });
     }
   };
 
@@ -71,6 +74,15 @@ export default function ViewEvent({ navigation, route }) {
     }
   }, [eventId]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (eventId) {
+        fetchAndSetEvent();
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <>
       <ScrollView style={styles.viewEvent}>
@@ -92,7 +104,7 @@ export default function ViewEvent({ navigation, route }) {
           </Title>
           <Text color={COLORS.white} style={{ marginBottom: normalize(5) }}>
             {event?.date && formatDateToLocale(event.date)}{' '}
-            {event?.start_time && formatTimeToLocale(event.start_time)} -
+            {event?.start_time && formatTimeToLocale(event.start_time)} -{' '}
             {event?.end_time && formatTimeToLocale(event.end_time)}
           </Text>
           <Text color={COLORS.white}>
@@ -110,7 +122,8 @@ export default function ViewEvent({ navigation, route }) {
           }}
         >
           <Title h4 color={COLORS.black}>
-            Players ({participants.length}/{event?.players_quantity})
+            {t('viewEvent.participantsText')} ({participants.length}/
+            {event?.players_quantity})
           </Title>
           <TouchableOpacity>
             {/* TODO: REMOVER E COLOCAR APENAS O X NO CANTO QUANDO FOR OWNER E FOR PRA REMOVER */}
@@ -140,7 +153,7 @@ export default function ViewEvent({ navigation, route }) {
               style={{ marginRight: normalize(5) }}
             />
             <Button
-              title="Settings"
+              title={t('viewEvent.settingsText')}
               containerStyle={{ flex: 1 }}
               style={{ marginLeft: normalize(5) }}
               type="outline"
@@ -151,7 +164,7 @@ export default function ViewEvent({ navigation, route }) {
 
         {!isParticipant && (
           <Button
-            title="Join"
+            title={t('viewEvent.joinText')}
             containerStyle={{ flex: 1 }}
             type="solid"
             onPress={handleJoinButton}

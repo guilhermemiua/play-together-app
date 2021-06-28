@@ -5,7 +5,7 @@ import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 import { COLORS, METRICS } from '../../../../constants';
 import { notify } from '../../../../helpers';
 import { useAuth } from '../../../../hooks/useAuth';
-import { disjoinEvent } from '../../../../services';
+import { deleteEvent, disjoinEvent } from '../../../../services';
 
 export default function Settings({ route, navigation }) {
   const { t } = useTranslation();
@@ -14,21 +14,44 @@ export default function Settings({ route, navigation }) {
 
   const { loggedUser } = useAuth();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const navigateToEditEvent = () =>
+    navigation.navigate('EditEvent', {
+      event,
+    });
 
-  const toggleChangeLanguageModal = () => setIsOpen(!isOpen);
-
-  const navigateToChangePassword = () => navigation.navigate('ChangePassword');
-
-  const handleDisjoinButton = async () => {
+  const handleDisjoin = async () => {
     try {
       await disjoinEvent(event?.id);
 
       await navigation.navigate('Events');
 
-      notify({ type: 'success', message: 'You left the event!' });
+      notify({
+        type: 'success',
+        message: t('viewEvent.settings.leftSuccessMessage'),
+      });
     } catch (error) {
-      notify({ type: 'danger', message: 'Error lefting event' });
+      notify({
+        type: 'danger',
+        message: t('viewEvent.settings.leftErrorMessage'),
+      });
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteEvent(event?.id);
+
+      await navigation.navigate('Events');
+
+      notify({
+        type: 'success',
+        message: t('viewEvent.settings.deleteSuccessMessage'),
+      });
+    } catch (error) {
+      notify({
+        type: 'danger',
+        message: t('viewEvent.settings.deleteErrorMessage'),
+      });
     }
   };
 
@@ -38,17 +61,14 @@ export default function Settings({ route, navigation }) {
         <>
           <TouchableOpacity
             style={styles.settingsItem}
-            onPress={toggleChangeLanguageModal}
+            onPress={navigateToEditEvent}
           >
             <Text style={styles.settingsItemText}>
               {t('viewEvent.settings.editEvent')}
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.settingsItem}
-            onPress={navigateToChangePassword}
-          >
+          <TouchableOpacity style={styles.settingsItem} onPress={handleDelete}>
             <Text style={styles.settingsItemText}>
               {t('viewEvent.settings.deleteEvent')}
             </Text>
@@ -57,10 +77,7 @@ export default function Settings({ route, navigation }) {
       )}
 
       {event?.user_id !== loggedUser.id && (
-        <TouchableOpacity
-          style={styles.settingsItem}
-          onPress={handleDisjoinButton}
-        >
+        <TouchableOpacity style={styles.settingsItem} onPress={handleDisjoin}>
           <Text style={styles.settingsItemText}>
             {t('viewEvent.settings.leftEvent')}
           </Text>

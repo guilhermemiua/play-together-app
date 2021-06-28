@@ -7,21 +7,21 @@ import i18next from 'i18next';
 const schema = yup.object().shape({
   state_id: yup
     .string()
-    .required(i18next.t('createEvent.error.stateRequired'))
+    .required(i18next.t('editEvent.error.stateRequired'))
     .nullable(),
-  city_id: yup.string().required(i18next.t('createEvent.error.cityRequired')),
-  local: yup.string().required(i18next.t('createEvent.error.localRequired')),
+  city_id: yup.string().required(i18next.t('editEvent.error.cityRequired')),
+  local: yup.string().required(i18next.t('editEvent.error.localRequired')),
   date: yup
     .date()
-    .required(i18next.t('createEvent.error.dateRequired'))
+    .required(i18next.t('editEvent.error.dateRequired'))
     .nullable(),
   start_time: yup
     .date()
-    .required(i18next.t('createEvent.error.startTimeRequired'))
+    .required(i18next.t('editEvent.error.startTimeRequired'))
     .nullable()
     .test(
       'is-greater',
-      i18next.t('createEvent.error.startTimeGreaterThanCurrentTime'),
+      i18next.t('editEvent.error.startTimeGreaterThanCurrentTime'),
       (startTime, context) => {
         const { date } = context.parent;
 
@@ -34,7 +34,7 @@ const schema = yup.object().shape({
     ),
   end_time: yup
     .date()
-    .required(i18next.t('createEvent.error.endTimeRequired'))
+    .required(i18next.t('editEvent.error.endTimeRequired'))
     .nullable(),
   // .when(
   //   'start_time',
@@ -42,13 +42,13 @@ const schema = yup.object().shape({
   //     startTime &&
   //     schema.min(
   //       startTime,
-  //       i18next.t('createEvent.error.endTimeGreaterThanStartTime')
+  //       i18next.t('editEvent.error.endTimeGreaterThanStartTime')
   //     )
   // ),
   // TODO: MIN 2 PLAYERS
   players_quantity: yup
     .string()
-    .required(i18next.t('createEvent.error.playersQuantityRequired')),
+    .required(i18next.t('editEvent.error.playersQuantityRequired')),
 });
 
 export default schema;

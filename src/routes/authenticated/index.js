@@ -9,6 +9,7 @@ import ChooseSport from '../../screens/Events/ChooseSport';
 import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
+import EditEvent from '../../screens/Events/EditEvent';
 import ViewEvent from '../../screens/Events/ViewEvent';
 import ViewEventSettings from '../../screens/Events/ViewEvent/Settings';
 import EditProfile from '../../screens/Profile/EditProfile';
@@ -256,6 +257,11 @@ export default function AuthenticatedRoutes() {
           },
           title: i18next.t('routes.settings'),
         })}
+      />
+      <Stack.Screen
+        name="EditEvent"
+        component={EditEvent}
+        options={{ title: i18next.t('routes.editEvent') }}
       />
     </Stack.Navigator>
   );

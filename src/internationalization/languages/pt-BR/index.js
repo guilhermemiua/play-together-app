@@ -109,14 +109,48 @@ export default {
           'Hora de término deve ser maior que hora de início',
       },
     },
+    editEvent: {
+      cityLabel: 'Cidade',
+      stateLabel: 'Estado',
+      localLabel: 'Local',
+      dateLabel: 'Data',
+      startTimeLabel: 'Hora de início',
+      endTimeLabel: 'Hora de término',
+      playersQuantityLabel: 'Quantidade de jogadores',
+      submitButton: 'Salvar',
+      successMessage: 'Evento editado com sucesso!',
+      errorMessage: 'Erro na edição do evento',
+      error: {
+        cityRequired: 'Insira a cidade',
+        stateRequired: 'Insira o estado',
+        localRequired: 'Insira o local',
+        dateRequired: 'Insira a data',
+        startTimeRequired: 'Insira a hora de início',
+        endTimeRequired: 'Insira a hora de término',
+        playersQuantityRequired: 'Insira a quantidade de jogadores',
+        startTimeGreaterThanCurrentTime:
+          'Hora de início deve ser maior que a hora atual',
+        endTimeGreaterThanStartTime:
+          'Hora de término deve ser maior que hora de início',
+      },
+    },
     events: {
       title: 'Eventos',
     },
     viewEvent: {
+      participantsText: 'Participantes',
+      settingsText: 'Configurações',
+      joinText: 'Participar',
+      joinEventSuccessMessage: 'Você agora é um participante do evento!',
+      joinEventErrorMessage: 'Erro ao tentar participar do evento',
       settings: {
         editEvent: 'Editar evento',
         deleteEvent: 'Deletar evento',
         leftEvent: 'Sair do evento',
+        deleteSuccessMessage: 'Evento deletado com sucesso!',
+        deleteErrorMessage: 'Erro ao deletar o evento',
+        leftSuccessMessage: 'Você saiu do evento com sucesso!',
+        leftErrorMessage: 'Erro ao sair do evento',
       },
     },
     profile: {
@@ -146,6 +180,7 @@ export default {
       editProfile: 'Editar perfil',
       changePassword: 'Alterar senha',
       changeEmail: 'Alterar email',
+      editEvent: 'Editar evento',
     },
     sports: {
       soccer: 'Futebol',

@@ -109,14 +109,48 @@ export default {
           'End time should be greather than start time',
       },
     },
+    editEvent: {
+      cityLabel: 'City',
+      stateLabel: 'State',
+      localLabel: 'Local',
+      dateLabel: 'Date',
+      startTimeLabel: 'Start time',
+      endTimeLabel: 'End time',
+      playersQuantityLabel: 'Players quantity',
+      submitButton: 'Edit',
+      successMessage: 'Event edited successfully!',
+      errorMessage: 'Edit event error',
+      error: {
+        cityRequired: 'Enter a city',
+        stateRequired: 'Enter a state',
+        localRequired: 'Enter a local',
+        dateRequired: 'Enter a date',
+        startTimeRequired: 'Enter start time',
+        endTimeRequired: 'Enter end time',
+        playersQuantityRequired: 'Enter players quantity',
+        startTimeGreaterThanCurrentTime:
+          'Start time should be greather than current time',
+        endTimeGreaterThanStartTime:
+          'End time should be greather than start time',
+      },
+    },
     events: {
       title: 'Events',
     },
     viewEvent: {
+      participantsText: 'Participants',
+      settingsText: 'Settings',
+      joinText: 'Join',
+      joinEventSuccessMessage: 'You joined the event!',
+      joinEventErrorMessage: 'Erro joining event',
       settings: {
         editEvent: 'Edit event',
         deleteEvent: 'Delete event',
         leftEvent: 'Left event',
+        deleteSuccessMessage: 'Event deleted successfully"',
+        deleteErrorMessage: 'Delete event error',
+        leftSuccessMessage: 'You left the event',
+        leftErrorMessage: 'Left event error',
       },
     },
     profile: {
@@ -146,6 +180,7 @@ export default {
       editProfile: 'Edit profile',
       changePassword: 'Change password',
       changeEmail: 'Change email',
+      editEvent: 'Edit event',
     },
     sports: {
       soccer: 'Soccer',

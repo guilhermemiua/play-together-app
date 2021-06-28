@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     paddingVertical: normalize(METRICS.padding + 5),
     width: '100%',
     marginTop: normalize(METRICS.margin / 2),
+    height: 500,
   },
   cardButton: {
     flexDirection: 'row',
