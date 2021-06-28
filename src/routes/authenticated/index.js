@@ -11,6 +11,7 @@ import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
 import EditEvent from '../../screens/Events/EditEvent';
 import ViewEvent from '../../screens/Events/ViewEvent';
+import EventChat from '../../screens/Events/ViewEvent/Chat';
 import ViewEventSettings from '../../screens/Events/ViewEvent/Settings';
 import EditProfile from '../../screens/Profile/EditProfile';
 import ChangePassword from '../../screens/Profile/Settings/ChangePassword';
@@ -42,12 +43,28 @@ function EventsStackNavigator() {
       <Stack.Screen
         name="ChooseSport"
         component={ChooseSport}
-        options={{ title: i18next.t('routes.chooseSport') }}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.chooseSport'),
+        }}
       />
       <Stack.Screen
         name="CreateEvent"
         component={CreateEvent}
-        options={{ title: i18next.t('routes.createEvent') }}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.createEvent'),
+        }}
       />
     </Stack.Navigator>
   );
@@ -219,29 +236,23 @@ export default function AuthenticatedRoutes() {
       <Stack.Screen
         name="ViewEvent"
         component={ViewEvent}
-        options={({ route }) => {
-          // const title = route?.params?.sport;
-
-          const title = '';
-
-          return {
-            headerTitleStyle: {
-              ...HEADER_TITLE_STYLE,
-              elevation: 0,
-              shadowOpacity: 0,
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+            backgroundColor: COLORS.black,
+            elevation: 0,
+            shadowOffset: {
+              width: 0,
+              height: 0,
             },
-            headerStyle: {
-              ...HEADER_STYLE,
-              backgroundColor: COLORS.black,
-              elevation: 0,
-              shadowOffset: {
-                width: 0,
-                height: 0,
-              },
-            },
-            headerTintColor: COLORS.white,
-            title,
-          };
+          },
+          headerTintColor: COLORS.white,
+          title: '',
         }}
       />
 
@@ -261,7 +272,28 @@ export default function AuthenticatedRoutes() {
       <Stack.Screen
         name="EditEvent"
         component={EditEvent}
-        options={{ title: i18next.t('routes.editEvent') }}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.editEvent'),
+        }}
+      />
+      <Stack.Screen
+        name="EventChat"
+        component={EventChat}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.eventChat'),
+        }}
       />
     </Stack.Navigator>
   );

@@ -10,6 +10,7 @@ const COLORS = {
   // screenBackgroundColor: '#F7F7F7',
   screenBackgroundColor: '#f5f6f8',
   borderColor: '#dadbdb',
+  danger: '#DC3545',
 };
 
 export { COLORS };

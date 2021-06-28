@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import Title from '../../../components/Title';
 import Text from '../../../components/Text';
-import UserItem from '../../../components/UserItem';
+import EventUserItem from '../../../components/EventUserItem';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../hooks/useAuth';
 import {
@@ -15,7 +15,7 @@ import {
   getSportName,
   notify,
 } from '../../../helpers';
-import { getEvent, joinEvent } from '../../../services';
+import { getEvent, joinEvent, removeUserFromEvent } from '../../../services';
 
 export default function ViewEvent({ navigation, route }) {
   const { t } = useTranslation();
@@ -30,6 +30,11 @@ export default function ViewEvent({ navigation, route }) {
 
   const navigateToSettings = () =>
     navigation.navigate('ViewEventSettings', {
+      event,
+    });
+
+  const navigateToChat = () =>
+    navigation.navigate('EventChat', {
       event,
     });
 
@@ -50,6 +55,24 @@ export default function ViewEvent({ navigation, route }) {
       });
     } catch (error) {
       notify({ type: 'danger', message: t('viewEvent.joinEventErrorMessage') });
+    }
+  };
+
+  const handleRemoveUserFromEvent = async (userId) => {
+    try {
+      await removeUserFromEvent(eventId, userId);
+
+      await fetchAndSetEvent();
+
+      notify({
+        type: 'success',
+        message: t('viewEvent.removeUserFromEventSuccessMessage'),
+      });
+    } catch (error) {
+      notify({
+        type: 'danger',
+        message: t('viewEvent.removeUserFromEventErrorMessage'),
+      });
     }
   };
 
@@ -135,10 +158,12 @@ export default function ViewEvent({ navigation, route }) {
 
         <View style={{ backgroundColor: COLORS.white }}>
           {participants.map((participant) => (
-            <UserItem
+            <EventUserItem
               user={participant}
               key={participant.id}
               owner={participant.id === event?.user_id}
+              canDelete={event?.user_id === loggedUser?.id}
+              handleDelete={() => handleRemoveUserFromEvent(participant?.id)}
             />
           ))}
         </View>
@@ -148,9 +173,10 @@ export default function ViewEvent({ navigation, route }) {
         {isParticipant && (
           <>
             <Button
-              title="Game Chat"
+              title="Chat"
               containerStyle={{ flex: 1 }}
               style={{ marginRight: normalize(5) }}
+              onPress={navigateToChat}
             />
             <Button
               title={t('viewEvent.settingsText')}
@@ -186,6 +212,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     paddingHorizontal: METRICS.containerMarginHorizontal,
     paddingVertical: METRICS.containerMarginVertical,
-    alignContent: 'center',
+    alignItems: 'center',
   },
 });

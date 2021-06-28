@@ -68,6 +68,16 @@ export const deleteEvent = async (eventId) => {
   });
 };
 
+export const removeUserFromEvent = async (eventId, userId) => {
+  const token = await getToken();
+
+  return api.delete(`/event/${eventId}/user/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const joinEvent = async (eventId) => {
   const token = await getToken();
 

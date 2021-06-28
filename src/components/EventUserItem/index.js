@@ -2,12 +2,20 @@ import React from 'react';
 
 import { StyleSheet, Image, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../constants';
 import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import Title from '../Title';
 import { getImage } from '../../helpers';
 
-export default function UserItem({ user = {}, owner = false }) {
+export default function EventUserItem({
+  user = {},
+  owner = false,
+  canDelete = false,
+  handleDelete,
+}) {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity style={styles.touchableOpacity}>
       <View
@@ -32,9 +40,19 @@ export default function UserItem({ user = {}, owner = false }) {
         </Title>
       </View>
 
-      <Title h4 color={COLORS.primary}>
-        {owner && 'Host'}
-      </Title>
+      {owner && (
+        <Title h4 color={COLORS.primary}>
+          {t('viewEvent.userItem.hostLabel')}
+        </Title>
+      )}
+
+      {canDelete && !owner && (
+        <TouchableOpacity onPress={handleDelete}>
+          <Title h4 color={COLORS.danger}>
+            {t('viewEvent.userItem.removeLabel')}
+          </Title>
+        </TouchableOpacity>
+      )}
     </TouchableOpacity>
   );
 }

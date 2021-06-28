@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 
 import { COLORS, METRICS } from '../../../../constants';
 import { notify } from '../../../../helpers';
 import { useAuth } from '../../../../hooks/useAuth';
 import { deleteEvent, disjoinEvent } from '../../../../services';
+import Text from '../../../../components/Text';
 
 export default function Settings({ route, navigation }) {
   const { t } = useTranslation();

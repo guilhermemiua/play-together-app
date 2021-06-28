@@ -143,6 +143,12 @@ export default {
       joinText: 'Join',
       joinEventSuccessMessage: 'You joined the event!',
       joinEventErrorMessage: 'Erro joining event',
+      removeUserFromEventSuccessMessage: 'User removed successfully!',
+      removeUserFromEventErrorMessage: 'Remove user from event error',
+      userItem: {
+        hostLabel: 'Host',
+        removeLabel: 'Remove',
+      },
       settings: {
         editEvent: 'Edit event',
         deleteEvent: 'Delete event',
@@ -181,6 +187,7 @@ export default {
       changePassword: 'Change password',
       changeEmail: 'Change email',
       editEvent: 'Edit event',
+      eventChat: 'Event chat',
     },
     sports: {
       soccer: 'Soccer',

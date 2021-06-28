@@ -14,7 +14,6 @@ export default function Input({
     <ElementsInput
       placeholder={placeholder}
       leftIcon={leftIcon}
-      // errorMessage={errorMessage}
       renderErrorMessage={false}
       onChangeText={onChangeText}
       inputStyle={{
