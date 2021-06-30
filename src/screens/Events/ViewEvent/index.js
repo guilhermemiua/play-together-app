@@ -148,12 +148,6 @@ export default function ViewEvent({ navigation, route }) {
             {t('viewEvent.participantsText')} ({participants.length}/
             {event?.players_quantity})
           </Title>
-          <TouchableOpacity>
-            {/* TODO: REMOVER E COLOCAR APENAS O X NO CANTO QUANDO FOR OWNER E FOR PRA REMOVER */}
-            <Title h4 color={COLORS.black}>
-              Manage
-            </Title>
-          </TouchableOpacity>
         </View>
 
         <View style={{ backgroundColor: COLORS.white }}>

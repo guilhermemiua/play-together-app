@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 import i18next from 'i18next';
 import Events from '../../screens/Events';
 import Profile from '../../screens/Profile';
+import Home from '../../screens/Home';
 import ChooseSport from '../../screens/Events/ChooseSport';
 import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
@@ -16,6 +17,8 @@ import ViewEventSettings from '../../screens/Events/ViewEvent/Settings';
 import EditProfile from '../../screens/Profile/EditProfile';
 import ChangePassword from '../../screens/Profile/Settings/ChangePassword';
 import ChangeEmail from '../../screens/Profile/Settings/ChangeEmail';
+import Calendar from '../../screens/Home/Calendar';
+import EventHistory from '../../screens/Home/EventHistory';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,9 +27,35 @@ function HomeStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
-        name="Profile"
-        component={Profile}
+        name="Home"
+        component={Home}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={Calendar}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.calendar'),
+        }}
+      />
+      <Stack.Screen
+        name="EventHistory"
+        component={EventHistory}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.eventHistory'),
+        }}
       />
     </Stack.Navigator>
   );

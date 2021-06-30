@@ -188,6 +188,8 @@ export default {
       changeEmail: 'Change email',
       editEvent: 'Edit event',
       eventChat: 'Event chat',
+      calendar: 'Calendar',
+      eventHistory: 'Event history',
     },
     sports: {
       soccer: 'Soccer',
