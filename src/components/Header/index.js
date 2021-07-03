@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { normalize } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
-import { COLORS, METRICS } from '../../constants';
+import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../Title';
 
 export default function Header({ style, title = '', icons = [] }) {
@@ -11,7 +10,7 @@ export default function Header({ style, title = '', icons = [] }) {
       <Title h3 style={{ color: COLORS.black }}>
         {title}
       </Title>
-      <View>
+      <View style={{ flexDirection: 'row' }}>
         {icons.map((icon) => (
           <Icon
             key={icon.name}
@@ -20,6 +19,7 @@ export default function Header({ style, title = '', icons = [] }) {
             color={COLORS.black}
             size={25}
             onPress={icon.onPress}
+            containerStyle={{ marginLeft: normalize(20) }}
           />
         ))}
       </View>

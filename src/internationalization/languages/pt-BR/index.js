@@ -164,6 +164,15 @@ export default {
       editProfileButton: 'Editar perfil',
       age: 'Idade',
     },
+    viewUser: {
+      ageLabel: 'Idade',
+      cityStateLabel: 'Cidade/Estado',
+      sendFriendRequestButton: 'Enviar solicitação de amizade',
+    },
+    addFriend: {
+      nameLabel: 'Nome',
+      nameInputPlaceholder: 'Pesquisar..',
+    },
     settings: {
       changeLanguage: 'Alterar idioma',
       changeEmail: 'Alterar email',
@@ -190,6 +199,8 @@ export default {
       eventChat: 'Chat do evento',
       calendar: 'Calendário',
       eventHistory: 'Histórico de eventos',
+      addFriend: 'Adicionar amigo',
+      notifications: 'Notificações',
     },
     sports: {
       soccer: 'Futebol',

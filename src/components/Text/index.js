@@ -6,13 +6,14 @@ export default function TextComponent({
   children,
   style,
   color = COLORS.black,
+  bold,
 }) {
   return (
     <Text
       style={[
         {
           color,
-          fontFamily: METRICS.fontFamilyRegular,
+          fontFamily: bold ? METRICS.fontFamilyBold : METRICS.fontFamilyRegular,
           fontSize: METRICS.fontSize,
         },
         style,

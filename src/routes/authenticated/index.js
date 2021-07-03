@@ -19,6 +19,12 @@ import ChangePassword from '../../screens/Profile/Settings/ChangePassword';
 import ChangeEmail from '../../screens/Profile/Settings/ChangeEmail';
 import Calendar from '../../screens/Home/Calendar';
 import EventHistory from '../../screens/Home/EventHistory';
+import Chats from '../../screens/Chats';
+import ChatsSettings from '../../screens/Chats/Settings';
+import Friends from '../../screens/Friends';
+import AddFriend from '../../screens/Friends/AddFriend';
+import ViewUser from '../../screens/ViewUser';
+import Notifications from '../../screens/Friends/Notifications';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -103,9 +109,60 @@ function ChatsStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Chats">
       <Stack.Screen
-        name="Profile"
-        component={Profile}
+        name="Chats"
+        component={Chats}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChatsSettings"
+        component={ChatsSettings}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.settings'),
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function FriendsStackNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Friends">
+      <Stack.Screen
+        name="Friends"
+        component={Friends}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddFriend"
+        component={AddFriend}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.addFriend'),
+        })}
+      />
+      <Stack.Screen
+        name="FriendsNotifications"
+        component={Notifications}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.notifications'),
+        })}
       />
     </Stack.Navigator>
   );
@@ -231,6 +288,24 @@ function HomeTabs() {
           headerShown: false,
         }}
       />
+
+      <Tab.Screen
+        name="FriendsTab"
+        component={FriendsStackNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="users"
+              type="feather"
+              color={focused ? COLORS.primary : COLORS.black}
+              size={25}
+            />
+          ),
+          tabBarShowLabel: false,
+          headerShown: false,
+        }}
+      />
+
       <Tab.Screen
         name="ProfileTab"
         component={ProfileStackNavigator}
@@ -322,6 +397,24 @@ export default function AuthenticatedRoutes() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.eventChat'),
+        }}
+      />
+
+      <Stack.Screen
+        name="ViewUser"
+        component={ViewUser}
+        options={({ route }) => {
+          const { title = '' } = route.params;
+
+          return {
+            headerTitleStyle: {
+              ...HEADER_TITLE_STYLE,
+            },
+            headerStyle: {
+              ...HEADER_STYLE,
+            },
+            title,
+          };
         }}
       />
     </Stack.Navigator>
