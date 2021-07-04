@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
-import { getEvents } from '../../services';
-import { useAuth } from '../../hooks';
+import { getMyFriends } from '../../services';
 import UserItem from '../../components/UserItem';
 
 export default function Friends({ navigation }) {
-  const { t } = useTranslation();
-  const { loggedUser } = useAuth();
-
-  const [events, setEvents] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [myFriends, setMyFriends] = useState([]);
 
   const navigateToNotifications = () =>
     navigation.navigate('FriendsNotifications');
   const navigateToAddFriend = () => navigation.navigate('AddFriend');
 
   // TODO: ADD PAGINATION
-  const getAndSetEvents = async () => {
-    const { data } = await getEvents({});
+  const handleGetMyFriends = async () => {
+    const { data } = await getMyFriends({ offset, limit });
 
-    setEvents(data);
+    setMyFriends(data?.results);
   };
 
   useEffect(() => {
-    getAndSetEvents();
+    handleGetMyFriends();
   }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getAndSetEvents();
+      handleGetMyFriends();
     });
     return unsubscribe;
   }, [navigation]);
@@ -55,25 +52,10 @@ export default function Friends({ navigation }) {
 
       {/* TODO: APPLY INFINITE */}
       <FlatList
-        data={[
-          {
-            id: 1,
-            name: 'Guilherme Eiti',
-          },
-          {
-            id: 2,
-            name: 'Basquete',
-          },
-        ]}
+        data={myFriends}
         keyExtractor={(item) => item.id}
-        // onRefresh={async () => {
-        //   await dispatch(setRefresh(true));
-        //   await dispatch(fetchBooks());
-        //   await dispatch(setRefresh(false));
-        // }}
-        // refreshing={refreshing}
         renderItem={({ item, index }) => (
-          <UserItem user={item} borderTop={index === 0} />
+          <UserItem user={item?.friend} borderTop={index === 0} />
         )}
       />
     </View>

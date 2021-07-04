@@ -17,7 +17,7 @@ export default function AddFriend({ navigation }) {
   const [users, setUsers] = useState([]);
 
   const searchUsers = async () => {
-    const { data } = await getUsers({ name, offset, limit });
+    const { data } = await getUsers({ name, offset, limit, notFriends: '1' });
 
     setUsers(data.results);
   };

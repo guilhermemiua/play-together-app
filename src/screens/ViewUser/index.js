@@ -15,8 +15,7 @@ export default function ViewUser({ navigation, route }) {
 
   const handleSendFriendRequest = async () => {
     try {
-      const { data } = await sendFriendRequest(user.id);
-      console.log(data);
+      await sendFriendRequest(user.id);
     } catch (error) {
       console.log(error);
     }

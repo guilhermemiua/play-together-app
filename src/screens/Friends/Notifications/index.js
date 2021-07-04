@@ -9,7 +9,10 @@ import DefaultProfileImage from '../../../assets/images/DefaultProfile.png';
 
 import { COLORS, METRICS } from '../../../constants';
 import { getImage } from '../../../helpers';
-import { getReceivedFriendRequests } from '../../../services';
+import {
+  acceptFriendRequest,
+  getReceivedFriendRequests,
+} from '../../../services';
 import Button from '../../../components/Button';
 
 export default function Notifications({ navigation }) {
@@ -21,6 +24,18 @@ export default function Notifications({ navigation }) {
     const { data } = await getReceivedFriendRequests({ offset, limit });
 
     setFriendRequestsReceived(data.results);
+  };
+
+  const handleAcceptFriendRequest = async (friendRequestId) => {
+    try {
+      const { data } = await acceptFriendRequest(friendRequestId);
+
+      setFriendRequestsReceived(data.results);
+
+      await handleGetReceivedFriendRequests();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -70,6 +85,7 @@ export default function Notifications({ navigation }) {
               <Button
                 title="Accept"
                 containerStyle={{ flex: 1, marginRight: normalize(5) }}
+                onPress={() => handleAcceptFriendRequest(item.id)}
               />
               <Button
                 title="Decline"
