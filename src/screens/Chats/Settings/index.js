@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 
 import { COLORS, METRICS } from '../../../constants';
-import { useAuth } from '../../../hooks';
 
 export default function Settings({ navigation }) {
   const { t } = useTranslation();
-  const { logout } = useAuth();
 
-  const navigateToChangePassword = () => navigation.navigate('ChangePassword');
+  const navigateToNewChat = () => navigation.navigate('NewChat');
   const navigateToChangeEmail = () => navigation.navigate('ChangeEmail');
 
   return (
     <View style={styles.settings}>
-      <TouchableOpacity
-        style={styles.settingsItem}
-        onPress={navigateToChangePassword}
-      >
+      <TouchableOpacity style={styles.settingsItem} onPress={navigateToNewChat}>
         <Text style={styles.settingsItemText}>
-          {t('settings.changePassword')}
+          {t('chatsSettings.newChat')}
         </Text>
       </TouchableOpacity>
 
@@ -27,11 +22,9 @@ export default function Settings({ navigation }) {
         style={styles.settingsItem}
         onPress={navigateToChangeEmail}
       >
-        <Text style={styles.settingsItemText}>{t('settings.changeEmail')}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.settingsItem} onPress={logout}>
-        <Text style={styles.settingsItemText}>{t('settings.logout')}</Text>
+        <Text style={styles.settingsItemText}>
+          {t('chatsSettings.newGroupChat')}
+        </Text>
       </TouchableOpacity>
     </View>
   );

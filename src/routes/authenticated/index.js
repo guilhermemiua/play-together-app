@@ -25,6 +25,8 @@ import Friends from '../../screens/Friends';
 import AddFriend from '../../screens/Friends/AddFriend';
 import ViewUser from '../../screens/ViewUser';
 import Notifications from '../../screens/Friends/Notifications';
+import NewChat from '../../screens/Chats/Settings/NewChat';
+import FriendChat from '../../screens/Chats/FriendChat';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -124,6 +126,20 @@ function ChatsStackNavigator() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.settings'),
+        })}
+      />
+
+      <Stack.Screen
+        name="NewChat"
+        component={NewChat}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.newChat'),
         })}
       />
     </Stack.Navigator>
@@ -403,6 +419,24 @@ export default function AuthenticatedRoutes() {
       <Stack.Screen
         name="ViewUser"
         component={ViewUser}
+        options={({ route }) => {
+          const { title = '' } = route.params;
+
+          return {
+            headerTitleStyle: {
+              ...HEADER_TITLE_STYLE,
+            },
+            headerStyle: {
+              ...HEADER_STYLE,
+            },
+            title,
+          };
+        }}
+      />
+
+      <Stack.Screen
+        name="FriendChat"
+        component={FriendChat}
         options={({ route }) => {
           const { title = '' } = route.params;
 

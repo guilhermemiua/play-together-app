@@ -159,6 +159,10 @@ export default {
         leftErrorMessage: 'Erro ao sair do evento',
       },
     },
+    chatsSettings: {
+      newChat: 'Novo chat',
+      newGroupChat: 'Novo chat em grupo',
+    },
     profile: {
       title: 'Perfil',
       editProfileButton: 'Editar perfil',
@@ -201,6 +205,8 @@ export default {
       eventHistory: 'Histórico de eventos',
       addFriend: 'Adicionar amigo',
       notifications: 'Notificações',
+      newChat: 'Novo chat',
+      newGroupChat: 'Novo chat em grupo',
     },
     sports: {
       soccer: 'Futebol',
@@ -211,6 +217,9 @@ export default {
       football: 'Futebol americano',
       baseball: 'Beisebol',
       golf: 'Golfe',
+    },
+    chatMessageInput: {
+      messageLabel: 'Mensagem...',
     },
   },
 };
