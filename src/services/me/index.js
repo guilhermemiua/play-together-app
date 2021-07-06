@@ -97,3 +97,19 @@ export const getMyFriends = async ({ offset, limit }) => {
     },
   });
 };
+
+export const getMyEvents = async ({ offset, limit, type }) => {
+  const token = await getToken();
+
+  const params = new URLSearchParams('');
+
+  if (offset || offset === 0) params.append('offset', offset);
+  if (limit) params.append('limit', limit);
+  if (type) params.append('type', type);
+
+  return api.get(`/me/event${params && `?${params.toString()}`}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

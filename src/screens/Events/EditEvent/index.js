@@ -62,7 +62,7 @@ export default function EditEvent({ route, navigation }) {
         date,
         start_time,
         end_time,
-        players_quantity,
+        players_quantity: players_quantity - 1,
       });
 
       notify({ message: t('editEvent.successMessage'), type: 'success' });
@@ -83,7 +83,10 @@ export default function EditEvent({ route, navigation }) {
       setValue('date', event?.date && new Date(event.date));
       setValue('start_time', event?.start_time && new Date(event.start_time));
       setValue('end_time', event?.end_time && new Date(event.end_time));
-      setValue('players_quantity', event?.players_quantity?.toString());
+      setValue(
+        'players_quantity',
+        event?.players_quantity ? `${event.players_quantity + 1}` : ''
+      );
     }
   }, [event]);
 

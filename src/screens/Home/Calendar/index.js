@@ -8,30 +8,34 @@ import { COLORS, METRICS } from '../../../constants';
 import Text from '../../../components/Text';
 import Header from '../../../components/Header';
 import EventCard from '../../../components/EventCard';
-import { getEvents } from '../../../services';
+import { getMyEvents } from '../../../services';
 
 export default function Calendar({ navigation }) {
   const { t } = useTranslation();
 
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
   const [events, setEvents] = useState([]);
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
-    const { data } = await getEvents({});
+    const { data } = await getMyEvents({ offset, limit, type: 'upcoming' });
 
-    setEvents(data);
+    setEvents(data.results);
   };
 
   useEffect(() => {
-    getAndSetEvents();
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    if ((offset || offset === 0) && limit) {
       getAndSetEvents();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    }
+  }, [offset, limit]);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     getAndSetEvents();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <View style={styles.calendar}>

@@ -140,6 +140,7 @@ export default {
     viewEvent: {
       participantsText: 'Participants',
       settingsText: 'Settings',
+      reviewUsersText: 'Review users',
       joinText: 'Join',
       joinEventSuccessMessage: 'You joined the event!',
       joinEventErrorMessage: 'Erro joining event',

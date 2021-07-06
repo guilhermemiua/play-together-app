@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import Title from '../../../components/Title';
 import Text from '../../../components/Text';
@@ -20,7 +19,7 @@ import { getEvent, joinEvent, removeUserFromEvent } from '../../../services';
 export default function ViewEvent({ navigation, route }) {
   const { t } = useTranslation();
 
-  const { eventId } = route.params;
+  const { eventId, type } = route.params;
 
   const [event, setEvent] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -146,7 +145,7 @@ export default function ViewEvent({ navigation, route }) {
         >
           <Title h4 color={COLORS.black}>
             {t('viewEvent.participantsText')} ({participants.length}/
-            {event?.players_quantity})
+            {event?.players_quantity && event?.players_quantity + 1})
           </Title>
         </View>
 
@@ -172,13 +171,23 @@ export default function ViewEvent({ navigation, route }) {
               style={{ marginRight: normalize(5) }}
               onPress={navigateToChat}
             />
-            <Button
-              title={t('viewEvent.settingsText')}
-              containerStyle={{ flex: 1 }}
-              style={{ marginLeft: normalize(5) }}
-              type="outline"
-              onPress={navigateToSettings}
-            />
+            {type === 'past' ? (
+              <Button
+                title={t('viewEvent.reviewUsersText')}
+                containerStyle={{ flex: 1 }}
+                style={{ marginLeft: normalize(5) }}
+                type="outline"
+                onPress={navigateToSettings}
+              />
+            ) : (
+              <Button
+                title={t('viewEvent.settingsText')}
+                containerStyle={{ flex: 1 }}
+                style={{ marginLeft: normalize(5) }}
+                type="outline"
+                onPress={navigateToSettings}
+              />
+            )}
           </>
         )}
 

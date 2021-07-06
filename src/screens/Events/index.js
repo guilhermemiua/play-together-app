@@ -13,27 +13,31 @@ import { getEvents } from '../../services';
 export default function Events({ navigation }) {
   const { t } = useTranslation();
 
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
   const [events, setEvents] = useState([]);
 
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
-    const { data } = await getEvents({});
+    const { data } = await getEvents({ offset, limit, type: 'upcoming' });
 
-    setEvents(data);
+    setEvents(data?.results);
   };
 
   useEffect(() => {
-    getAndSetEvents();
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    if ((offset || offset === 0) && limit) {
       getAndSetEvents();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    }
+  }, [offset, limit]);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     getAndSetEvents();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <View style={styles.events}>

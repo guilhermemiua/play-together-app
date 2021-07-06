@@ -110,13 +110,14 @@ export const disjoinEvent = async (eventId) => {
   );
 };
 
-export const getEvents = async ({ offset, limit }) => {
+export const getEvents = async ({ offset, limit, type }) => {
   const token = await getToken();
 
   const params = new URLSearchParams('');
 
   if (offset || offset === 0) params.append('offset', offset);
   if (limit) params.append('limit', limit);
+  if (type) params.append('type', type);
 
   return api.get(`/event${params && `?${params.toString()}`}`, {
     headers: {

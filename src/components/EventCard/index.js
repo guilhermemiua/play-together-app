@@ -13,10 +13,11 @@ import {
 import Text from '../Text';
 import Title from '../Title';
 
-export default function EventCard({ event = {}, navigation }) {
+export default function EventCard({ event = {}, navigation, type }) {
   const navigateToViewEvent = () => {
     navigation.navigate('ViewEvent', {
       eventId: event?.id,
+      type,
     });
   };
 
@@ -54,7 +55,7 @@ export default function EventCard({ event = {}, navigation }) {
           >
             <Icon name="users" type="feather" color={COLORS.black} size={20} />
             <Text style={styles.infoItemText}>
-              {event?.users?.length + 1 || 1}/{event?.players_quantity}
+              {event?.users?.length + 1 || 1}/{event?.players_quantity + 1}
             </Text>
           </View>
         </View>

@@ -62,7 +62,7 @@ export default function CreateEvent({ route, navigation }) {
         date,
         start_time,
         end_time,
-        players_quantity,
+        players_quantity: players_quantity - 1,
       });
 
       notify({ message: t('createEvent.successMessage'), type: 'success' });
