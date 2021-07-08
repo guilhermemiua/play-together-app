@@ -73,7 +73,7 @@ const messages = [
   },
 ];
 
-export default function FriendChat({ route, navigation }) {
+export default function GroupChat({ route, navigation }) {
   const { t } = useTranslation();
 
   const { friend } = route.params;

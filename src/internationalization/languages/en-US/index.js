@@ -51,8 +51,6 @@ export default {
       submitButton: 'Save',
       successMessage: 'Profile updated successfully!',
       errorMessage: 'Profile update error',
-      mediaPermissionErrorMessage:
-        'We need camera permission to alter profile image',
       error: {
         firstNameRequired: 'Enter a name',
         lastNameRequired: 'Enter a last name',
@@ -160,9 +158,37 @@ export default {
         leftErrorMessage: 'Left event error',
       },
     },
+    eventChat: {
+      errorMessage: 'Send message error',
+    },
     chatsSettings: {
       newChat: 'New chat',
       newGroupChat: 'New group chat',
+    },
+    newGroupChat: {
+      nameLabel: 'Name',
+      submitButton: 'Save',
+      successMessage: 'Group created successfully!',
+      errorMessage: 'Create group error',
+      error: {
+        nameRequired: 'Enter a name',
+      },
+    },
+    editGroupChat: {
+      nameLabel: 'Name',
+      submitButton: 'Save',
+      successMessage: 'Group updated successfully!',
+      errorMessage: 'Update group error',
+      error: {
+        nameRequired: 'Enter a name',
+      },
+    },
+    viewGroup: {
+      settings: {
+        editGroup: 'Edit group',
+        deleteGroup: 'Delete group',
+        leftGroup: 'Left group',
+      },
     },
     profile: {
       title: 'Profile',
@@ -208,6 +234,7 @@ export default {
       notifications: 'Notifications',
       newChat: 'New chat',
       newGroupChat: 'New group chat',
+      reviewPlayers: 'Review players',
     },
     sports: {
       soccer: 'Soccer',
@@ -222,5 +249,7 @@ export default {
     chatMessageInput: {
       messageLabel: 'Message...',
     },
+    mediaPermissionErrorMessage:
+      'We need camera permission to alter profile image',
   },
 };

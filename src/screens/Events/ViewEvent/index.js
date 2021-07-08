@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { COLORS, METRICS, normalize } from '../../../constants';
@@ -36,6 +36,12 @@ export default function ViewEvent({ navigation, route }) {
     navigation.navigate('EventChat', {
       event,
     });
+
+  const navigateToReviewPlayers = () => {
+    navigation.navigate('ReviewPlayers', {
+      event,
+    });
+  };
 
   const handleJoinButton = async () => {
     try {
@@ -107,7 +113,7 @@ export default function ViewEvent({ navigation, route }) {
 
   return (
     <>
-      <ScrollView style={styles.viewEvent}>
+      <View style={styles.viewEvent}>
         <View
           style={{
             backgroundColor: COLORS.black,
@@ -160,7 +166,7 @@ export default function ViewEvent({ navigation, route }) {
             />
           ))}
         </View>
-      </ScrollView>
+      </View>
 
       <View style={styles.buttonsContainer}>
         {isParticipant && (
@@ -177,7 +183,7 @@ export default function ViewEvent({ navigation, route }) {
                 containerStyle={{ flex: 1 }}
                 style={{ marginLeft: normalize(5) }}
                 type="outline"
-                onPress={navigateToSettings}
+                onPress={navigateToReviewPlayers}
               />
             ) : (
               <Button

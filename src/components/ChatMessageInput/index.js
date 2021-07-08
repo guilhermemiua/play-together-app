@@ -19,8 +19,15 @@ export default function ChatMessageInput({ onSubmitMessage }) {
           width: '90%',
         }}
         onChangeText={(text) => setMessage(text)}
+        value={message}
       />
-      <TouchableOpacity onPress={() => onSubmitMessage(message)}>
+      <TouchableOpacity
+        onPress={() => {
+          if (message === '') return;
+          onSubmitMessage(message);
+          setMessage('');
+        }}
+      >
         <Icon name="play" type="feather" color={COLORS.primary} size={25} />
       </TouchableOpacity>
     </View>

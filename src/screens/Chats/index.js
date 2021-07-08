@@ -5,7 +5,7 @@ import { COLORS } from '../../constants';
 import Header from '../../components/Header';
 import { getEvents } from '../../services';
 import { useAuth } from '../../hooks';
-import UserItem from '../../components/UserItem';
+import ChatItem from '../../components/ChatItem';
 
 export default function Chats({ navigation }) {
   const { t } = useTranslation();
@@ -13,8 +13,17 @@ export default function Chats({ navigation }) {
 
   const [events, setEvents] = useState([]);
 
-  const navigateToEventHistory = () => {};
   const navigateToChatsSettings = () => navigation.navigate('ChatsSettings');
+  const navigateToFriendChat = (friend) =>
+    navigation.navigate('FriendChat', {
+      title: `${friend?.first_name} ${friend?.last_name}`,
+      user: friend,
+    });
+  const navigateToGroupChat = (group) =>
+    navigation.navigate('GroupChat', {
+      title: group.name,
+      group,
+    });
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
@@ -57,11 +66,14 @@ export default function Chats({ navigation }) {
         data={[
           {
             id: 1,
-            name: 'Guilherme Eiti',
+            first_name: 'Guilherme',
+            last_name: 'Eiti',
+            type: 'friend',
           },
           {
             id: 2,
             name: 'Basquete',
+            type: 'group',
           },
         ]}
         keyExtractor={(item) => item.id}
@@ -72,8 +84,16 @@ export default function Chats({ navigation }) {
         // }}
         // refreshing={refreshing}
         renderItem={({ item, index }) => (
-          // TODO: CRIAR CHAT ITEM
-          <UserItem user={item} borderTop={index === 0} />
+          <ChatItem
+            type={item.type}
+            item={item}
+            borderTop={index === 0}
+            onPress={
+              item.type === 'group'
+                ? () => navigateToGroupChat(item)
+                : () => navigateToFriendChat(item)
+            }
+          />
         )}
       />
     </View>

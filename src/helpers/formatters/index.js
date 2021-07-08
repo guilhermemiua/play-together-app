@@ -19,11 +19,10 @@ export const formatDateToLocale = (date) => {
 };
 
 export const formatTimeToLocale = (date) => {
-  // if (!(date instanceof Date)) {
-  //   return undefined;
-  // }
-
   initializeLocale();
 
   return dayjs(date).format('LT');
 };
+
+export const formatFullName = (user) =>
+  `${user?.first_name} ${user?.last_name}`;

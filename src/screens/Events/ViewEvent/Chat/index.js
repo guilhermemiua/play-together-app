@@ -1,34 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet } from 'react-native';
 
-import { Icon, normalize } from 'react-native-elements';
-import Input from '../../../../components/Input';
-import Text from '../../../../components/Text';
-import { COLORS, METRICS } from '../../../../constants';
+import ChatMessageInput from '../../../../components/ChatMessageInput';
+import ChatMessage from '../../../../components/ChatMessage';
+import { COLORS, METRICS, normalize } from '../../../../constants';
 import { useAuth } from '../../../../hooks/useAuth';
-
-const messages = [
-  {
-    id: 1,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-  },
-  {
-    id: 2,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-  },
-];
+import { sendEventMessage } from '../../../../services';
+import { formatFullName, notify } from '../../../../helpers';
+import { firebaseDB } from '../../../../services/firebase';
 
 export default function Chat({ route, navigation }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
 
   const { event } = route.params;
 
-  const { loggedUser } = useAuth();
+  const [messages, setMessages] = useState([]);
+
+  let listener;
+
+  const submitMessage = async (message) => {
+    try {
+      await sendEventMessage({
+        message,
+        senderId: loggedUser.id,
+        senderName: formatFullName(loggedUser),
+        chatRoomId: `event-${event.id}`,
+      });
+    } catch (error) {
+      console.log(error);
+      notify({ type: 'danger', message: t('eventChat.errorMessage') });
+    }
+  };
+
+  const getMessages = async () => {
+    listener = firebaseDB
+      .collection(`event-${event?.id}`)
+      .orderBy('created_at', 'desc')
+      .onSnapshot((snap) => {
+        const messageList = [];
+
+        snap.forEach((doc) => {
+          messageList.push({
+            id: doc.id,
+            user_name: doc.data().sender_name,
+            type: loggedUser.id === doc.data().sender_id ? 'sent' : 'received',
+            content: doc.data().message,
+            time: new Date(doc.data().created_at * 1000),
+          });
+        });
+
+        setMessages(messageList);
+      });
+  };
+
+  useEffect(() => {
+    if (event) {
+      getMessages();
+    }
+
+    return () => {
+      listener();
+    };
+  }, [event]);
 
   return (
     <>
@@ -37,28 +72,11 @@ export default function Chat({ route, navigation }) {
           style={styles.messages}
           data={messages}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={[styles.message, styles.sentMessage]}>
-              <Text color={COLORS.primary} style={styles.messageUser}>
-                Guilherme Eiti
-              </Text>
-              <Text>{item.content}</Text>
-              <Text style={styles.messageHour}>23h32</Text>
-            </View>
-          )}
+          renderItem={({ item }) => <ChatMessage message={item} />}
+          inverted
         />
       </View>
-      <View style={styles.inputContainer}>
-        <Input
-          placeholder="Message..."
-          containerStyle={{
-            width: '90%',
-          }}
-        />
-        <TouchableOpacity>
-          <Icon name="play" type="feather" color={COLORS.primary} size={25} />
-        </TouchableOpacity>
-      </View>
+      <ChatMessageInput onSubmitMessage={submitMessage} />
     </>
   );
 }
@@ -77,31 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: METRICS.containerMarginVertical,
   },
   messages: {
+    marginTop: normalize(METRICS.margin / 2),
     paddingHorizontal: METRICS.containerMarginHorizontal,
-  },
-  message: {
-    backgroundColor: COLORS.white,
-    paddingHorizontal: normalize(10),
-    paddingVertical: normalize(10),
-    borderColor: COLORS.borderColor,
-    borderWidth: normalize(1),
-    borderRadius: METRICS.borderRadius,
-    maxWidth: '90%',
-    marginBottom: normalize(METRICS.margin / 2),
-  },
-  receivedMessage: {
-    alignSelf: 'flex-start',
-  },
-  sentMessage: {
-    alignSelf: 'flex-end',
-  },
-  messageUser: {
-    textAlign: 'left',
-    marginBottom: normalize(5),
-  },
-  messageHour: {
-    textAlign: 'right',
-    fontSize: normalize(10),
-    marginTop: normalize(5),
   },
 });

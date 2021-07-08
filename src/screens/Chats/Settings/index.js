@@ -8,7 +8,7 @@ export default function Settings({ navigation }) {
   const { t } = useTranslation();
 
   const navigateToNewChat = () => navigation.navigate('NewChat');
-  const navigateToChangeEmail = () => navigation.navigate('ChangeEmail');
+  const navigateToNewGroupChat = () => navigation.navigate('NewGroupChat');
 
   return (
     <View style={styles.settings}>
@@ -20,7 +20,7 @@ export default function Settings({ navigation }) {
 
       <TouchableOpacity
         style={styles.settingsItem}
-        onPress={navigateToChangeEmail}
+        onPress={navigateToNewGroupChat}
       >
         <Text style={styles.settingsItemText}>
           {t('chatsSettings.newGroupChat')}

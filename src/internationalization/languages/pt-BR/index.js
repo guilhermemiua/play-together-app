@@ -51,8 +51,6 @@ export default {
       submitButton: 'Salvar',
       successMessage: 'Perfil atualizado com sucesso!',
       errorMessage: 'Erro na atualização do perfil',
-      mediaPermissionErrorMessage:
-        'Precisamos da permissão da câmera para alterar a imagem do perfil',
       error: {
         firstNameRequired: 'Insira o nome',
         lastNameRequired: 'Insira o sobrenome',
@@ -160,9 +158,37 @@ export default {
         leftErrorMessage: 'Erro ao sair do evento',
       },
     },
+    eventChat: {
+      errorMessage: 'Erro ao enviar a mensagem',
+    },
     chatsSettings: {
       newChat: 'Novo chat',
       newGroupChat: 'Novo chat em grupo',
+    },
+    newGroupChat: {
+      nameLabel: 'Nome',
+      submitButton: 'Salvar',
+      successMessage: 'Grupo criado com sucesso!',
+      errorMessage: 'Erro na criação do grupo',
+      error: {
+        nameRequired: 'Insira o nome',
+      },
+    },
+    editGroupChat: {
+      nameLabel: 'Nome',
+      submitButton: 'Salvar',
+      successMessage: 'Grupo editado com sucesso!',
+      errorMessage: 'Erro na edição do grupo',
+      error: {
+        nameRequired: 'Insira o nome',
+      },
+    },
+    viewGroup: {
+      settings: {
+        editGroup: 'Editar grupo',
+        deleteGroup: 'Deletar grupo',
+        leftGroup: 'Sair do grupo',
+      },
     },
     profile: {
       title: 'Perfil',
@@ -208,6 +234,7 @@ export default {
       notifications: 'Notificações',
       newChat: 'Novo chat',
       newGroupChat: 'Novo chat em grupo',
+      reviewPlayers: 'Avaliar participantes',
     },
     sports: {
       soccer: 'Futebol',
@@ -222,5 +249,7 @@ export default {
     chatMessageInput: {
       messageLabel: 'Mensagem...',
     },
+    mediaPermissionErrorMessage:
+      'Precisamos da permissão da câmera para alterar a imagem do perfil',
   },
 };

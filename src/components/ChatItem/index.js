@@ -7,37 +7,59 @@ import { COLORS, METRICS } from '../../constants';
 import { getImage } from '../../helpers';
 import Title from '../Title';
 
-export default function UserItem({ user, onPress, borderTop }) {
+export default function ChatItem({ type, item, onPress, borderTop }) {
   return (
     <TouchableOpacity
       style={[
-        styles.user,
+        styles.chat,
         borderTop && {
           borderColor: COLORS.borderColor,
+
           borderTopWidth: normalize(1),
         },
       ]}
       onPress={onPress}
     >
-      <Image
-        source={
-          user?.profile_image
-            ? {
-                uri: getImage(user.profile_image),
-              }
-            : DefaultProfileImage
-        }
-        style={styles.userImage}
-      />
-      <Title h4 color={COLORS.black} textAlign="left">
-        {user.first_name} {user.last_name}
-      </Title>
+      {type === 'friend' && (
+        <>
+          <Image
+            source={
+              item?.profile_image
+                ? {
+                    uri: getImage(item.profile_image),
+                  }
+                : DefaultProfileImage
+            }
+            style={styles.chatImage}
+          />
+          <Title h4 color={COLORS.black} textAlign="left">
+            {item?.first_name} {item?.last_name}
+          </Title>
+        </>
+      )}
+      {type === 'group' && (
+        <>
+          <Image
+            source={
+              item?.group_image
+                ? {
+                    uri: getImage(item.group_image),
+                  }
+                : DefaultProfileImage
+            }
+            style={styles.chatImage}
+          />
+          <Title h4 color={COLORS.black} textAlign="left">
+            {item?.name}
+          </Title>
+        </>
+      )}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  user: {
+  chat: {
     backgroundColor: COLORS.white,
     paddingVertical: METRICS.padding,
     paddingHorizontal: METRICS.padding,
@@ -47,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: METRICS.borderRadius,
     borderBottomWidth: normalize(1),
   },
-  userImage: {
+  chatImage: {
     width: normalize(45),
     height: normalize(45),
     borderRadius: normalize(45),

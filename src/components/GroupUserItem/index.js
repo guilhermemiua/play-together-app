@@ -9,7 +9,7 @@ import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import Title from '../Title';
 import { getImage } from '../../helpers';
 
-export default function EventUserItem({
+export default function GroupUserItem({
   user = {},
   owner = false,
   canDelete = false,

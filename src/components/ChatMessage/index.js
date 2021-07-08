@@ -6,13 +6,16 @@ import { normalize } from 'react-native-elements';
 
 import Text from '../Text';
 import { COLORS, METRICS } from '../../constants';
+import { formatTimeToLocale } from '../../helpers';
 
-export default function ChatMessage({ type = 'received', message }) {
-  if (type === 'sent') {
+export default function ChatMessage({ message }) {
+  if (message?.type === 'sent') {
     return (
       <View style={[styles.message, styles.sentMessage]}>
         <Text>{message?.content}</Text>
-        <Text style={styles.messageHour}>{message?.time}</Text>
+        <Text style={styles.messageHour}>
+          {message?.time && formatTimeToLocale(message.time)}
+        </Text>
       </View>
     );
   }
@@ -20,10 +23,12 @@ export default function ChatMessage({ type = 'received', message }) {
   return (
     <View style={[styles.message, styles.receivedMessage]}>
       <Text color={COLORS.primary} style={styles.messageUser}>
-        {message?.user?.name}
+        {message?.user_name}
       </Text>
       <Text>{message?.content}</Text>
-      <Text style={styles.messageHour}>{message?.time}</Text>
+      <Text style={styles.messageHour}>
+        {message?.time && formatTimeToLocale(message.time)}
+      </Text>
     </View>
   );
 }
@@ -36,6 +41,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.borderColor,
     borderWidth: normalize(1),
     borderRadius: METRICS.borderRadius,
+    minWidth: '50%',
     maxWidth: '90%',
     marginBottom: normalize(METRICS.margin / 2),
   },

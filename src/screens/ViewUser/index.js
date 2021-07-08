@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../constants';
@@ -9,7 +9,7 @@ import Divider from '../../components/Divider';
 import { getImage } from '../../helpers';
 import { sendFriendRequest } from '../../services';
 
-export default function ViewUser({ navigation, route }) {
+export default function ViewUser({ route }) {
   const { t } = useTranslation();
   const { user } = route.params;
 
@@ -20,6 +20,10 @@ export default function ViewUser({ navigation, route }) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (user) console.log(user);
+  }, [user]);
 
   return (
     <View style={styles.viewUser}>

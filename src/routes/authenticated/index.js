@@ -27,6 +27,12 @@ import ViewUser from '../../screens/ViewUser';
 import Notifications from '../../screens/Friends/Notifications';
 import NewChat from '../../screens/Chats/Settings/NewChat';
 import FriendChat from '../../screens/Chats/FriendChat';
+import ReviewPlayers from '../../screens/Home/EventHistory/ReviewPlayers';
+import NewGroupChat from '../../screens/Chats/Settings/NewGroupChat';
+import GroupChatHeader from '../../components/GroupChatHeader';
+import ViewGroup from '../../screens/Chats/ViewGroup';
+import GroupChat from '../../screens/Chats/GroupChat';
+import GroupSettings from '../../screens/Chats/ViewGroup/Settings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,6 +69,19 @@ function HomeStackNavigator() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.eventHistory'),
+        }}
+      />
+      <Stack.Screen
+        name="ReviewPlayers"
+        component={ReviewPlayers}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.reviewPlayers'),
         }}
       />
     </Stack.Navigator>
@@ -140,6 +159,20 @@ function ChatsStackNavigator() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.newChat'),
+        })}
+      />
+
+      <Stack.Screen
+        name="NewGroupChat"
+        component={NewGroupChat}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.newGroupChat'),
         })}
       />
     </Stack.Navigator>
@@ -450,6 +483,56 @@ export default function AuthenticatedRoutes() {
             title,
           };
         }}
+      />
+
+      <Stack.Screen
+        name="GroupChat"
+        component={GroupChat}
+        options={({ route }) => {
+          const { title = '', group } = route.params;
+
+          return {
+            headerTitle: (props) => (
+              <GroupChatHeader {...props} title={title} group={group} />
+            ),
+            headerStyle: {
+              ...HEADER_STYLE,
+            },
+          };
+        }}
+      />
+
+      <Stack.Screen
+        name="ViewGroup"
+        component={ViewGroup}
+        options={({ route }) => {
+          const { title = '' } = route.params;
+
+          return {
+            headerTitleStyle: {
+              ...HEADER_TITLE_STYLE,
+            },
+
+            headerStyle: {
+              ...HEADER_STYLE,
+            },
+            title,
+          };
+        }}
+      />
+
+      <Stack.Screen
+        name="GroupSettings"
+        component={GroupSettings}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.settings'),
+        })}
       />
     </Stack.Navigator>
   );

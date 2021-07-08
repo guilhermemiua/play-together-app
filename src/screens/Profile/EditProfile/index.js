@@ -92,7 +92,7 @@ export default function EditProfile({ navigation }) {
 
         if (status !== 'granted') {
           notify({
-            message: t('editProfile.mediaPermissionErrorMessage'),
+            message: t('mediaPermissionErrorMessage'),
             type: 'danger',
           });
         }

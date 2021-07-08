@@ -26,18 +26,18 @@ export default function Events({ navigation }) {
     setEvents(data?.results);
   };
 
-  useEffect(() => {
-    if ((offset || offset === 0) && limit) {
-      getAndSetEvents();
-    }
-  }, [offset, limit]);
-
   // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
+  //   if ((offset || offset === 0) && limit) {
   //     getAndSetEvents();
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  //   }
+  // }, [offset, limit]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getAndSetEvents();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.events}>
