@@ -33,6 +33,7 @@ import GroupChatHeader from '../../components/GroupChatHeader';
 import ViewGroup from '../../screens/Chats/ViewGroup';
 import GroupChat from '../../screens/Chats/GroupChat';
 import GroupSettings from '../../screens/Chats/ViewGroup/Settings';
+import EditGroup from '../../screens/Chats/ViewGroup/Settings/EditGroup';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -532,6 +533,20 @@ export default function AuthenticatedRoutes() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.settings'),
+        })}
+      />
+
+      <Stack.Screen
+        name="EditGroup"
+        component={EditGroup}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.editGroup'),
         })}
       />
     </Stack.Navigator>

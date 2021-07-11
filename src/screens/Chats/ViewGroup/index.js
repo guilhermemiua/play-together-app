@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../../constants';
@@ -7,15 +7,26 @@ import { getImage } from '../../../helpers';
 import Title from '../../../components/Title';
 import Button from '../../../components/Button';
 import EventUserItem from '../../../components/EventUserItem';
+import { useAuth } from '../../../hooks/useAuth';
 
 export default function ViewGroup({ route, navigation }) {
-  const { t } = useTranslation();
   const { group } = route.params;
+
+  const { loggedUser } = useAuth();
+  const { t } = useTranslation();
+
+  const [participants, setParticipants] = useState([]);
 
   const navigateToSettings = () =>
     navigation.navigate('GroupSettings', {
       group,
     });
+
+  useEffect(() => {
+    if (group && loggedUser) {
+      setParticipants([loggedUser, ...group.users]);
+    }
+  }, [group, loggedUser]);
 
   return (
     <>
@@ -50,7 +61,7 @@ export default function ViewGroup({ route, navigation }) {
         </View>
 
         <View style={{ backgroundColor: COLORS.white }}>
-          {[].map((participant) => (
+          {participants.map((participant) => (
             <EventUserItem
               user={participant}
               key={participant.id}

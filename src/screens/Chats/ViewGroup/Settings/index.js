@@ -23,7 +23,7 @@ export default function Settings({ route, navigation }) {
     try {
       await disjoinGroup(group?.id);
 
-      await navigation.navigate('Groups');
+      await navigation.navigate('Chats');
 
       notify({
         type: 'success',
@@ -41,7 +41,7 @@ export default function Settings({ route, navigation }) {
     try {
       await deleteGroup(group?.id);
 
-      await navigation.navigate('Groups');
+      await navigation.navigate('Chats');
 
       notify({
         type: 'success',

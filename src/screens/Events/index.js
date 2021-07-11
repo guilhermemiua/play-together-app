@@ -9,13 +9,20 @@ import Text from '../../components/Text';
 import Header from '../../components/Header';
 import EventCard from '../../components/EventCard';
 import { getEvents } from '../../services';
+import SelectCityModal from './SelectCityModal';
+import { useAuth } from '../../hooks';
 
 export default function Events({ navigation }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const [events, setEvents] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const toggleSelectCityModal = () => setIsOpen(!isOpen);
 
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
 
@@ -39,13 +46,22 @@ export default function Events({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
+  useEffect(() => {
+    if (loggedUser) {
+      setSelectedCity(loggedUser?.city?.name);
+    }
+  }, [loggedUser]);
+
   return (
     <View style={styles.events}>
       <Header title={t('events.title')} />
 
       <View style={styles.subHeader}>
-        <TouchableOpacity style={styles.subheaderButton}>
-          <Text style={styles.locationText}>Londrina</Text>
+        <TouchableOpacity
+          style={styles.subheaderButton}
+          onPress={toggleSelectCityModal}
+        >
+          <Text style={styles.locationText}>{selectedCity}</Text>
           <Icon
             name="chevron-down"
             type="feather"
@@ -59,7 +75,7 @@ export default function Events({ navigation }) {
           onPress={navigateToChooseSport}
         >
           <Icon name="plus" type="feather" color={COLORS.black} size={20} />
-          <Text style={styles.newEventText}>Create Event</Text>
+          <Text style={styles.newEventText}>{t('events.createEvent')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.subheaderButton}>
@@ -69,7 +85,7 @@ export default function Events({ navigation }) {
             color={COLORS.black}
             size={20}
           />
-          <Text style={styles.filtersText}>Filters</Text>
+          <Text style={styles.filtersText}>{t('events.filters')}</Text>
         </TouchableOpacity>
       </View>
 
@@ -88,6 +104,15 @@ export default function Events({ navigation }) {
           <EventCard event={item} navigation={navigation} />
         )}
       />
+
+      {isOpen && (
+        <SelectCityModal
+          isOpen={isOpen}
+          toggle={toggleSelectCityModal}
+          navigation={navigation}
+          setSelectedCity={setSelectedCity}
+        />
+      )}
     </View>
   );
 }

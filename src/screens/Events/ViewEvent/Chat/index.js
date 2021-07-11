@@ -10,7 +10,7 @@ import { sendEventMessage } from '../../../../services';
 import { formatFullName, notify } from '../../../../helpers';
 import { firebaseDB } from '../../../../services/firebase';
 
-export default function Chat({ route, navigation }) {
+export default function Chat({ route }) {
   const { t } = useTranslation();
   const { loggedUser } = useAuth();
 

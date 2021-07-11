@@ -134,6 +134,8 @@ export default {
     },
     events: {
       title: 'Events',
+      createEvent: 'Create event',
+      filters: 'Filters',
     },
     viewEvent: {
       participantsText: 'Participants',
@@ -188,6 +190,10 @@ export default {
         editGroup: 'Edit group',
         deleteGroup: 'Delete group',
         leftGroup: 'Left group',
+        deleteSuccessMessage: 'Group deleted successfully"',
+        deleteErrorMessage: 'Delete group error',
+        leftSuccessMessage: 'You left the group',
+        leftErrorMessage: 'Left group error',
       },
     },
     profile: {
@@ -235,6 +241,7 @@ export default {
       newChat: 'New chat',
       newGroupChat: 'New group chat',
       reviewPlayers: 'Review players',
+      editGroup: 'Edit group',
     },
     sports: {
       soccer: 'Soccer',
@@ -248,6 +255,20 @@ export default {
     },
     chatMessageInput: {
       messageLabel: 'Message...',
+    },
+    selectCity: {
+      placeholder: 'Search city...',
+    },
+    selectCityModal: {
+      title: 'Select city',
+      stateLabel: 'State',
+      cityLabel: 'City',
+      submitButton: 'Save',
+      errorMessage: 'Select city error',
+      error: {
+        cityRequired: 'Enter a city',
+        stateRequired: 'Enter a state',
+      },
     },
     mediaPermissionErrorMessage:
       'We need camera permission to alter profile image',

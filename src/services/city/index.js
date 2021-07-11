@@ -8,3 +8,5 @@ export const getCities = async ({ name = '', stateId = 1 }) => {
 
   return api.get(`/city${params && `?${params.toString()}`}`);
 };
+
+export const getCityById = async (id) => api.get(`/city/${id}`);

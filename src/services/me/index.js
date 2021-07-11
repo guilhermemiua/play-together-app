@@ -113,3 +113,18 @@ export const getMyEvents = async ({ offset, limit, type }) => {
     },
   });
 };
+
+export const getMyGroups = async ({ offset, limit }) => {
+  const token = await getToken();
+
+  const params = new URLSearchParams('');
+
+  if (offset || offset === 0) params.append('offset', offset);
+  if (limit) params.append('limit', limit);
+
+  return api.get(`/me/group${params && `?${params.toString()}`}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

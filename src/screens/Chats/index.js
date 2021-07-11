@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
-import { getEvents } from '../../services';
+import { getMyGroups } from '../../services';
 import { useAuth } from '../../hooks';
 import ChatItem from '../../components/ChatItem';
 
@@ -11,7 +11,9 @@ export default function Chats({ navigation }) {
   const { t } = useTranslation();
   const { loggedUser } = useAuth();
 
-  const [events, setEvents] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [chats, setChats] = useState([]);
 
   const navigateToChatsSettings = () => navigation.navigate('ChatsSettings');
   const navigateToFriendChat = (friend) =>
@@ -26,19 +28,20 @@ export default function Chats({ navigation }) {
     });
 
   // TODO: ADD PAGINATION
-  const getAndSetEvents = async () => {
-    const { data } = await getEvents({});
+  const handleGetGroups = async () => {
+    const { data } = await getMyGroups({ offset, limit });
 
-    setEvents(data);
+    setChats(
+      data.results.map((group) => ({
+        ...group,
+        type: 'group',
+      }))
+    );
   };
 
   useEffect(() => {
-    getAndSetEvents();
-  }, []);
-
-  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getAndSetEvents();
+      handleGetGroups();
     });
     return unsubscribe;
   }, [navigation]);
@@ -63,19 +66,7 @@ export default function Chats({ navigation }) {
 
       {/* TODO: APPLY INFINITE */}
       <FlatList
-        data={[
-          {
-            id: 1,
-            first_name: 'Guilherme',
-            last_name: 'Eiti',
-            type: 'friend',
-          },
-          {
-            id: 2,
-            name: 'Basquete',
-            type: 'group',
-          },
-        ]}
+        data={chats}
         keyExtractor={(item) => item.id}
         // onRefresh={async () => {
         //   await dispatch(setRefresh(true));

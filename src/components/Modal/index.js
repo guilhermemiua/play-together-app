@@ -15,8 +15,11 @@ export default function Modal({
     <Overlay
       isVisible={isOpen}
       onBackdropPress={toggle}
+      // fullScreen
       overlayStyle={{
         width: `${widthPercentage}%`,
+        // justifyContent: 'center',
+        // height: 300,
       }}
     >
       <View

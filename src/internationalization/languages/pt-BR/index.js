@@ -134,6 +134,8 @@ export default {
     },
     events: {
       title: 'Eventos',
+      createEvent: 'Criar evento',
+      filters: 'Filtros',
     },
     viewEvent: {
       participantsText: 'Participantes',
@@ -188,6 +190,10 @@ export default {
         editGroup: 'Editar grupo',
         deleteGroup: 'Deletar grupo',
         leftGroup: 'Sair do grupo',
+        deleteSuccessMessage: 'Grupo deletado com sucesso!',
+        deleteErrorMessage: 'Erro ao deletar o grupo',
+        leftSuccessMessage: 'Você saiu do grupo com sucesso!',
+        leftErrorMessage: 'Erro ao sair do grupo',
       },
     },
     profile: {
@@ -235,6 +241,7 @@ export default {
       newChat: 'Novo chat',
       newGroupChat: 'Novo chat em grupo',
       reviewPlayers: 'Avaliar participantes',
+      editGroup: 'Editar grupo',
     },
     sports: {
       soccer: 'Futebol',
@@ -248,6 +255,20 @@ export default {
     },
     chatMessageInput: {
       messageLabel: 'Mensagem...',
+    },
+    selectCity: {
+      placeholder: 'Buscar cidade...',
+    },
+    selectCityModal: {
+      title: 'Selecionar cidade',
+      stateLabel: 'Estado',
+      cityLabel: 'Cidade',
+      submitButton: 'Salvar',
+      errorMessage: 'Erro ao selecionar a cidade',
+      error: {
+        cityRequired: 'Insira a cidade',
+        stateRequired: 'Insira o estado',
+      },
     },
     mediaPermissionErrorMessage:
       'Precisamos da permissão da câmera para alterar a imagem do perfil',

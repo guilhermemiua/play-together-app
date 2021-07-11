@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View, StyleSheet } from 'react-native';
 
@@ -6,79 +6,64 @@ import ChatMessageInput from '../../../components/ChatMessageInput';
 import ChatMessage from '../../../components/ChatMessage';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import { useAuth } from '../../../hooks/useAuth';
+import { sendGroupMessage } from '../../../services';
+import { formatFullName, notify } from '../../../helpers';
+import { firebaseDB } from '../../../services/firebase';
 
-const messages = [
-  {
-    id: 1,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'sent',
-    time: '23h32',
-  },
-  {
-    id: 2,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 3,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 4,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 5,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 6,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-];
+export default function GroupChat({ route }) {
+  const { group } = route.params;
 
-export default function GroupChat({ route, navigation }) {
   const { t } = useTranslation();
-
-  const { friend } = route.params;
-
   const { loggedUser } = useAuth();
+
+  const [messages, setMessages] = useState([]);
+
+  let listener;
+
+  const submitMessage = async (message) => {
+    try {
+      await sendGroupMessage({
+        message,
+        senderId: loggedUser.id,
+        senderName: formatFullName(loggedUser),
+        chatRoomId: `group-${group.id}`,
+      });
+    } catch (error) {
+      console.log(error);
+      notify({ type: 'danger', message: t('groupChat.errorMessage') });
+    }
+  };
+
+  const getMessages = async () => {
+    listener = firebaseDB
+      .collection(`group-${group?.id}`)
+      .orderBy('created_at', 'desc')
+      .onSnapshot((snap) => {
+        const messageList = [];
+
+        snap.forEach((doc) => {
+          messageList.push({
+            id: doc.id,
+            user_name: doc.data().sender_name,
+            type: loggedUser.id === doc.data().sender_id ? 'sent' : 'received',
+            content: doc.data().message,
+            time: new Date(doc.data().created_at * 1000),
+          });
+        });
+
+        setMessages(messageList);
+      });
+  };
+
+  useEffect(() => {
+    if (group) {
+      getMessages();
+    }
+
+    return () => {
+      listener();
+    };
+  }, [group]);
 
   return (
     <>
@@ -92,7 +77,7 @@ export default function GroupChat({ route, navigation }) {
           )}
         />
       </View>
-      <ChatMessageInput />
+      <ChatMessageInput onSubmitMessage={submitMessage} />
     </>
   );
 }

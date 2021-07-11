@@ -4,10 +4,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
-import { Avatar } from 'react-native-elements/dist/avatar/Avatar';
+import { Avatar } from 'react-native-elements';
 import Input from '../../../../../components/Input';
 import Button from '../../../../../components/Button';
-import { COLORS, METRICS } from '../../../../../constants';
+import { COLORS, METRICS, normalize } from '../../../../../constants';
 import schema from './schema';
 import InputContainer from '../../../../../components/InputContainer';
 import Label from '../../../../../components/Label';
@@ -47,9 +47,10 @@ export default function EditGroup({ route, navigation }) {
 
       notify({ message: t('editGroupChat.successMessage'), type: 'success' });
 
-      await navigation.goback();
-      await navigation.goback();
+      await navigation.goBack();
+      await navigation.goBack();
     } catch (error) {
+      console.log(error);
       notify({ message: t('editGroupChat.errorMessage'), type: 'danger' });
     }
   };
@@ -70,7 +71,6 @@ export default function EditGroup({ route, navigation }) {
   useEffect(() => {
     if (group) {
       setValue('name', group?.name);
-      // setValue('city_id', group?.city_id);
 
       if (group.group_image) {
         setImage(getImage(group.group_image));
@@ -123,7 +123,7 @@ export default function EditGroup({ route, navigation }) {
             name="name"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Input onChange={onChange} value={value} />
+              <Input onChangeText={(text) => onChange(text)} value={value} />
             )}
           />
           <ErrorMessage>{errors?.name?.message}</ErrorMessage>
@@ -148,5 +148,10 @@ const styles = StyleSheet.create({
     marginHorizontal: METRICS.containerMarginHorizontal,
     flex: 1,
     justifyContent: 'center',
+  },
+  groupImage: {
+    alignSelf: 'center',
+    marginBottom: normalize(METRICS.margin / 2),
+    backgroundColor: COLORS.white,
   },
 });

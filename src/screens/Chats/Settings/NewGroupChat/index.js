@@ -43,7 +43,8 @@ export default function NewGroupChat({ navigation }) {
 
       notify({ message: t('newGroupChat.successMessage'), type: 'success' });
 
-      await navigation.navigate('Profile');
+      await navigation.goBack();
+      await navigation.goBack();
     } catch (error) {
       console.log(error);
       notify({ message: t('newGroupChat.errorMessage'), type: 'danger' });
