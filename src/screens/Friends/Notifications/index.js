@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, View, StyleSheet, FlatList } from 'react-native';
 import { normalize } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 import Title from '../../../components/Title';
 import Text from '../../../components/Text';
 import Divider from '../../../components/Divider';
@@ -16,6 +17,8 @@ import {
 import Button from '../../../components/Button';
 
 export default function Notifications({ navigation }) {
+  const { t } = useTranslation();
+
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const [friendRequestsReceived, setFriendRequestsReceived] = useState([]);
@@ -75,7 +78,7 @@ export default function Notifications({ navigation }) {
                   {item?.sender?.first_name} {item?.sender?.last_name}
                 </Title>
 
-                <Text>Sent you a friend request.</Text>
+                <Text>{t('friendsNotifications.sentFriendRequest')}</Text>
               </View>
             </TouchableOpacity>
 

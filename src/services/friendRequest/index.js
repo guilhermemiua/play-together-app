@@ -81,3 +81,19 @@ export const declineFriendRequest = async (friendRequestId) => {
     }
   );
 };
+
+export const cancelFriendRequest = async (friendRequestId) => {
+  const token = await getToken();
+
+  return api.post(
+    '/friend-request/cancel',
+    {
+      friend_request_id: friendRequestId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

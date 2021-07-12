@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, Header } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import i18next from 'i18next';
@@ -199,19 +199,6 @@ function FriendsStackNavigator() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.addFriend'),
-        })}
-      />
-      <Stack.Screen
-        name="FriendsNotifications"
-        component={Notifications}
-        options={() => ({
-          headerTitleStyle: {
-            ...HEADER_TITLE_STYLE,
-          },
-          headerStyle: {
-            ...HEADER_STYLE,
-          },
-          title: i18next.t('routes.notifications'),
         })}
       />
     </Stack.Navigator>
@@ -547,6 +534,20 @@ export default function AuthenticatedRoutes() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.editGroup'),
+        })}
+      />
+
+      <Stack.Screen
+        name="FriendsNotifications"
+        component={Notifications}
+        options={() => ({
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.notifications'),
         })}
       />
     </Stack.Navigator>

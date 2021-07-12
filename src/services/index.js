@@ -6,3 +6,4 @@ export * from './city';
 export * from './user';
 export * from './friendRequest';
 export * from './group';
+export * from './friend';

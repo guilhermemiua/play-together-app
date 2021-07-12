@@ -33,7 +33,7 @@ export default {
       secondStep: {
         emailLabel: 'Email',
         passwordLabel: 'Senha',
-        submitButton: 'Avançar',
+        submitButton: 'Cadastrar',
         error: {
           emailType: 'Insira um email válido',
           emailRequired: 'Insira um email',
@@ -205,10 +205,23 @@ export default {
       ageLabel: 'Idade',
       cityStateLabel: 'Cidade/Estado',
       sendFriendRequestButton: 'Enviar solicitação de amizade',
+      answerFriendRequestButton: 'Responder solicitação de amizade',
+      removeFriendButton: 'Remover amizade',
+      cancelFriendRequestButton: 'Cancelar solicitação de amizade',
+      sendFriendRequestSuccess: 'Solicitação de amizade enviada com sucesso!',
+      sendFriendRequestError: 'Erro ao enviar solicitação de amizade',
+      removeFriendSuccess: 'Amizade removida com sucesso!',
+      removeFriendError: 'Erro ao remover amizade',
+      cancelFriendRequestSuccess:
+        'Solicitação de amizade cancelada com sucesso!',
+      cancelFriendRequestError: 'Erro ao cancelar solicitação de amizade',
     },
     addFriend: {
       nameLabel: 'Nome',
       nameInputPlaceholder: 'Pesquisar..',
+    },
+    friendsNotifications: {
+      sentFriendRequest: 'Enviou uma solicitação de amizade.',
     },
     settings: {
       changeLanguage: 'Alterar idioma',

@@ -13,6 +13,12 @@ export default function Friends({ navigation }) {
   const navigateToNotifications = () =>
     navigation.navigate('FriendsNotifications');
   const navigateToAddFriend = () => navigation.navigate('AddFriend');
+  const navigateToViewUser = (user) => {
+    navigation.navigate('ViewUser', {
+      title: `${user?.first_name} ${user?.last_name}`,
+      user,
+    });
+  };
 
   // TODO: ADD PAGINATION
   const handleGetMyFriends = async () => {
@@ -55,7 +61,11 @@ export default function Friends({ navigation }) {
         data={myFriends}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          <UserItem user={item?.friend} borderTop={index === 0} />
+          <UserItem
+            user={item?.friend}
+            borderTop={index === 0}
+            onPress={() => navigateToViewUser(item?.friend)}
+          />
         )}
       />
     </View>

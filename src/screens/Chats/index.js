@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
-import { getMyGroups } from '../../services';
+import { getMyFriends, getMyGroups } from '../../services';
 import { useAuth } from '../../hooks';
 import ChatItem from '../../components/ChatItem';
 
@@ -13,13 +13,15 @@ export default function Chats({ navigation }) {
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [friendsOffset, setFriendsOffset] = useState(0);
+  const [friendsLimit, setFriendsLimit] = useState(10);
   const [chats, setChats] = useState([]);
 
   const navigateToChatsSettings = () => navigation.navigate('ChatsSettings');
   const navigateToFriendChat = (friend) =>
     navigation.navigate('FriendChat', {
       title: `${friend?.first_name} ${friend?.last_name}`,
-      user: friend,
+      friend,
     });
   const navigateToGroupChat = (group) =>
     navigation.navigate('GroupChat', {
@@ -28,20 +30,28 @@ export default function Chats({ navigation }) {
     });
 
   // TODO: ADD PAGINATION
-  const handleGetGroups = async () => {
-    const { data } = await getMyGroups({ offset, limit });
+  const handleGetChats = async () => {
+    const { data: groupsData } = await getMyGroups({ offset, limit });
+    const { data: friendsData } = await getMyFriends({
+      offset: friendsOffset,
+      limit: friendsLimit,
+    });
 
-    setChats(
-      data.results.map((group) => ({
+    setChats([
+      ...groupsData.results.map((group) => ({
         ...group,
         type: 'group',
-      }))
-    );
+      })),
+      ...friendsData.results.map((friend) => ({
+        ...friend.friend,
+        type: 'friend',
+      })),
+    ]);
   };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      handleGetGroups();
+      handleGetChats();
     });
     return unsubscribe;
   }, [navigation]);

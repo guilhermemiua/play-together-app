@@ -9,7 +9,6 @@ import InputComponent from '../../../components/Input';
 import ButtonComponent from '../../../components/Button';
 import { COLORS } from '../../../constants';
 import schema from './schema';
-import RegisterSteps from '../../../components/RegisterSteps';
 import LabelComponent from '../../../components/Label';
 import ErrorMessageComponent from '../../../components/ErrorMessage';
 import InputContainerComponent from '../../../components/InputContainer';
@@ -65,8 +64,6 @@ export default function RegisterSecondStep({
   return (
     <View style={styles.register}>
       <Container justifyContent="center">
-        <RegisterSteps currentStep={1} />
-
         <InputContainerComponent>
           <LabelComponent>{t('register.secondStep.emailLabel')}</LabelComponent>
           <Controller

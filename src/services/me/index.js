@@ -98,6 +98,26 @@ export const getMyFriends = async ({ offset, limit }) => {
   });
 };
 
+export const getFriendStatus = async (friendId) => {
+  const token = await getToken();
+
+  return api.get(`/me/friend/${friendId}/status`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const removeMyFriend = async (friendId) => {
+  const token = await getToken();
+
+  return api.delete(`/me/friend/${friendId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const getMyEvents = async ({ offset, limit, type }) => {
   const token = await getToken();
 

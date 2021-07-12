@@ -7,16 +7,16 @@ import { COLORS, METRICS } from '../../../constants';
 export default function Settings({ navigation }) {
   const { t } = useTranslation();
 
-  const navigateToNewChat = () => navigation.navigate('NewChat');
+  // const navigateToNewChat = () => navigation.navigate('NewChat');
   const navigateToNewGroupChat = () => navigation.navigate('NewGroupChat');
 
   return (
     <View style={styles.settings}>
-      <TouchableOpacity style={styles.settingsItem} onPress={navigateToNewChat}>
+      {/* <TouchableOpacity style={styles.settingsItem} onPress={navigateToNewChat}>
         <Text style={styles.settingsItemText}>
           {t('chatsSettings.newChat')}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         style={styles.settingsItem}

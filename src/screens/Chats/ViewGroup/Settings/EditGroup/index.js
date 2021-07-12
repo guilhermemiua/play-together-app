@@ -47,8 +47,7 @@ export default function EditGroup({ route, navigation }) {
 
       notify({ message: t('editGroupChat.successMessage'), type: 'success' });
 
-      await navigation.goBack();
-      await navigation.goBack();
+      await navigation.navigate('Chats');
     } catch (error) {
       console.log(error);
       notify({ message: t('editGroupChat.errorMessage'), type: 'danger' });

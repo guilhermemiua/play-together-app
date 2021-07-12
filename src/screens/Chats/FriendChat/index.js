@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View, StyleSheet } from 'react-native';
 
@@ -6,72 +6,9 @@ import ChatMessageInput from '../../../components/ChatMessageInput';
 import ChatMessage from '../../../components/ChatMessage';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import { useAuth } from '../../../hooks/useAuth';
-
-const messages = [
-  {
-    id: 1,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'sent',
-    time: '23h32',
-  },
-  {
-    id: 2,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 3,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 4,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 5,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-  {
-    id: 6,
-    content: `- Ajustes gerais do sistema (Cores, fontes, nomenclaturas)
-    - Arrumado bug de não voltar para página correta após entrar em indicadores do serviço como cliente
-    Commit: `,
-    type: 'received',
-    user: {
-      name: 'Guilherme Eiti',
-    },
-    time: '23h34',
-  },
-];
+import { firebaseDB } from '../../../services/firebase';
+import { formatFullName, notify } from '../../../helpers';
+import { sendFriendMessage } from '../../../services';
 
 export default function FriendChat({ route, navigation }) {
   const { t } = useTranslation();
@@ -80,10 +17,92 @@ export default function FriendChat({ route, navigation }) {
 
   const { loggedUser } = useAuth();
 
+  const [messages, setMessages] = useState([]);
+
+  let listener;
+
+  const submitMessage = async (message) => {
+    try {
+      if (friend.id > loggedUser.id) {
+        await sendFriendMessage({
+          message,
+          senderId: loggedUser.id,
+          senderName: formatFullName(loggedUser),
+          chatRoomId: `friend-${loggedUser.id}-${friend.id}`,
+        });
+      } else {
+        await sendFriendMessage({
+          message,
+          senderId: loggedUser.id,
+          senderName: formatFullName(loggedUser),
+          chatRoomId: `friend-${friend.id}-${loggedUser.id}`,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      notify({ type: 'danger', message: t('friendChat.errorMessage') });
+    }
+  };
+
+  const getMessages = async () => {
+    if (friend.id > loggedUser.id) {
+      listener = firebaseDB
+        .collection(`friend-${loggedUser.id}-${friend.id}`)
+        .orderBy('created_at', 'desc')
+        .onSnapshot((snap) => {
+          const messageList = [];
+
+          snap.forEach((doc) => {
+            messageList.push({
+              id: doc.id,
+              user_name: doc.data().sender_name,
+              type:
+                loggedUser.id === doc.data().sender_id ? 'sent' : 'received',
+              content: doc.data().message,
+              time: new Date(doc.data().created_at * 1000),
+            });
+          });
+
+          setMessages(messageList);
+        });
+    } else {
+      listener = firebaseDB
+        .collection(`friend-${friend.id}-${loggedUser.id}`)
+        .orderBy('created_at', 'desc')
+        .onSnapshot((snap) => {
+          const messageList = [];
+
+          snap.forEach((doc) => {
+            messageList.push({
+              id: doc.id,
+              user_name: doc.data().sender_name,
+              type:
+                loggedUser.id === doc.data().sender_id ? 'sent' : 'received',
+              content: doc.data().message,
+              time: new Date(doc.data().created_at * 1000),
+            });
+          });
+
+          setMessages(messageList);
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (friend && loggedUser) {
+      getMessages();
+    }
+
+    return () => {
+      listener();
+    };
+  }, [friend, loggedUser]);
+
   return (
     <>
       <View style={styles.chat}>
         <FlatList
+          inverted
           style={styles.messages}
           data={messages}
           keyExtractor={(item) => item.id}
@@ -92,7 +111,7 @@ export default function FriendChat({ route, navigation }) {
           )}
         />
       </View>
-      <ChatMessageInput />
+      <ChatMessageInput onSubmitMessage={submitMessage} />
     </>
   );
 }

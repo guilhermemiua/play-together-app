@@ -69,6 +69,7 @@ export default function GroupChat({ route }) {
     <>
       <View style={styles.chat}>
         <FlatList
+          inverted
           style={styles.messages}
           data={messages}
           keyExtractor={(item) => item.id}

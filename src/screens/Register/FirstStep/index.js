@@ -10,7 +10,6 @@ import Select from '../../../components/Select';
 import Button from '../../../components/Button';
 import { COLORS, METRICS } from '../../../constants';
 import schema from './schema';
-import RegisterSteps from '../../../components/RegisterSteps';
 import Label from '../../../components/Label';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputContainer from '../../../components/InputContainer';
@@ -72,8 +71,6 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
   return (
     <View style={styles.register}>
       <Container justifyContent="center">
-        <RegisterSteps currentStep={0} />
-
         <InputContainer>
           <Label>{t('register.firstStep.firstNameLabel')}</Label>
           <Controller

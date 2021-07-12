@@ -33,7 +33,7 @@ export default {
       secondStep: {
         emailLabel: 'Email',
         passwordLabel: 'Password',
-        submitButton: 'Next',
+        submitButton: 'Register',
         error: {
           emailType: 'Invalid email',
           emailRequired: 'Enter an email',
@@ -205,10 +205,22 @@ export default {
       ageLabel: 'Age',
       cityStateLabel: 'City/State',
       sendFriendRequestButton: 'Send friend request',
+      answerFriendRequestButton: 'Answer friend request',
+      removeFriendButton: 'Remove friend',
+      cancelFriendRequestButton: 'Cancel friend request',
+      sendFriendRequestSuccess: 'Friend request sent successfully!',
+      sendFriendRequestError: 'Send friend request error',
+      removeFriendSuccess: 'Friend removed successfully!',
+      removeFriendError: 'Remove friend error',
+      cancelFriendRequestSuccess: 'Friend request cancelled successfully!',
+      cancelFriendRequestError: 'Cancel friend request error',
     },
     addFriend: {
       nameLabel: 'Name',
       nameInputPlaceholder: 'Search..',
+    },
+    friendsNotifications: {
+      sentFriendRequest: 'Sent you a friend request.',
     },
     settings: {
       changeLanguage: 'Change language',

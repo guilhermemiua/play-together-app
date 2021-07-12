@@ -9,6 +9,7 @@ function Button({
   title,
   onPress,
   containerStyle,
+  color,
   ...props
 }) {
   return (
