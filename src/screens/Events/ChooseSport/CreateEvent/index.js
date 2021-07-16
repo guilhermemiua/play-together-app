@@ -67,7 +67,9 @@ export default function CreateEvent({ route, navigation }) {
 
       notify({ message: t('createEvent.successMessage'), type: 'success' });
 
-      await navigation.navigate('Events');
+      await navigation.navigate('Events', {
+        refetch: true,
+      });
     } catch (error) {
       notify({ message: t('createEvent.errorMessage'), type: 'danger' });
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
@@ -6,8 +6,11 @@ import { getMyFriends } from '../../services';
 import UserItem from '../../components/UserItem';
 
 export default function Friends({ navigation }) {
+  const firstUpdate = useRef(true);
+
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
   const [myFriends, setMyFriends] = useState([]);
 
   const navigateToNotifications = () =>
@@ -24,12 +27,23 @@ export default function Friends({ navigation }) {
   const handleGetMyFriends = async () => {
     const { data } = await getMyFriends({ offset, limit });
 
-    setMyFriends(data?.results);
+    setTotal(data?.total);
+    setMyFriends([...myFriends, ...data?.results]);
+  };
+
+  const fetchMore = () => {
+    if (offset * limit <= total) {
+      setOffset((oldOffset) => oldOffset + 1);
+    }
   };
 
   useEffect(() => {
-    handleGetMyFriends();
-  }, []);
+    if ((offset || offset === 0) && limit) {
+      if (!firstUpdate.current) {
+        handleGetMyFriends();
+      }
+    }
+  }, [offset, limit]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -37,6 +51,12 @@ export default function Friends({ navigation }) {
     });
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+    }
+  }, []);
 
   return (
     <View style={styles.friends}>
@@ -59,7 +79,9 @@ export default function Friends({ navigation }) {
       {/* TODO: APPLY INFINITE */}
       <FlatList
         data={myFriends}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={fetchMore}
+        onEndReachedThreshold={0.8}
         renderItem={({ item, index }) => (
           <UserItem
             user={item?.friend}

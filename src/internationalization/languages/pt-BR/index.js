@@ -1,5 +1,10 @@
 export default {
   translation: {
+    home: {
+      welcome: 'Bem vindo,',
+      upcomingEvents: 'Próximos eventos',
+      eventHistory: 'Histórico de eventos',
+    },
     login: {
       emailLabel: 'E-mail',
       passwordLabel: 'Senha',
@@ -160,6 +165,14 @@ export default {
         leftErrorMessage: 'Erro ao sair do evento',
       },
     },
+    reviewPlayers: {
+      submitButton: 'Salvar',
+      successMessage: 'Avaliação feita com sucesso!',
+      errorMessage: 'Erro na avaliação dos usuários',
+      error: {
+        ratingRequired: 'Insira a avaliação',
+      },
+    },
     eventChat: {
       errorMessage: 'Erro ao enviar a mensagem',
     },
@@ -185,8 +198,13 @@ export default {
         nameRequired: 'Insira o nome',
       },
     },
+    addUserToGroup: {
+      successMessage: 'Usuário adicionado com sucesso!',
+      errorMessage: 'Erro na adição do usuário',
+    },
     viewGroup: {
       settings: {
+        addUsers: 'Adicionar usuários',
         editGroup: 'Editar grupo',
         deleteGroup: 'Deletar grupo',
         leftGroup: 'Sair do grupo',
@@ -194,6 +212,8 @@ export default {
         deleteErrorMessage: 'Erro ao deletar o grupo',
         leftSuccessMessage: 'Você saiu do grupo com sucesso!',
         leftErrorMessage: 'Erro ao sair do grupo',
+        removeUserFromGroupSuccessMessage: 'Usuário removido com sucesso!',
+        removeUserFromGroupErrorMessage: 'Erro ao remover usuário do grupo',
       },
     },
     profile: {
@@ -255,6 +275,8 @@ export default {
       newGroupChat: 'Novo chat em grupo',
       reviewPlayers: 'Avaliar participantes',
       editGroup: 'Editar grupo',
+      selectCity: 'Selecionar cidade',
+      addUsers: 'Adicionar usuários',
     },
     sports: {
       soccer: 'Futebol',
@@ -272,7 +294,7 @@ export default {
     selectCity: {
       placeholder: 'Buscar cidade...',
     },
-    selectCityModal: {
+    eventSelectCity: {
       title: 'Selecionar cidade',
       stateLabel: 'Estado',
       cityLabel: 'Cidade',

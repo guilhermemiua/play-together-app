@@ -71,7 +71,7 @@ export default function Chat({ route }) {
         <FlatList
           style={styles.messages}
           data={messages}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <ChatMessage message={item} />}
           inverted
         />

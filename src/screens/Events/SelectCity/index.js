@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../hooks';
+import { useEventFilter } from '../../../hooks';
 
 import schema from './schema';
 import InputContainer from '../../../components/InputContainer';
@@ -10,14 +11,14 @@ import Label from '../../../components/Label';
 import ErrorMessage from '../../../components/ErrorMessage';
 import SelectCity from '../../../components/SelectCity';
 import SelectStates from '../../../components/SelectStates';
-import Modal from '../../../components/Modal';
 import { notify } from '../../../helpers';
 import Button from '../../../components/Button';
 import { getCityById } from '../../../services';
+import { COLORS, METRICS } from '../../../constants';
 
-export default function SelectCityModal({ isOpen, toggle, setSelectedCity }) {
+export default function EventSelectCity({ navigation }) {
   const { t } = useTranslation();
-  const { loggedUser } = useAuth();
+  const { setCity, stateId, cityId, setCityId, setStateId } = useEventFilter();
 
   const {
     handleSubmit,
@@ -37,36 +38,35 @@ export default function SelectCityModal({ isOpen, toggle, setSelectedCity }) {
 
   const submit = async (values) => {
     try {
-      const { city_id } = values;
+      const { city_id, state_id } = values;
 
       const { data } = await getCityById(city_id);
 
-      setSelectedCity(data?.name);
+      setCity(data?.name);
+      setCityId(parseInt(city_id, 10));
+      setStateId(parseInt(state_id, 10));
 
-      toggle();
+      await navigation.navigate('Events');
     } catch (error) {
+      console.log(error);
       notify({
-        message: t('selectCityModal.errorMessage'),
+        message: t('eventSelectCity.errorMessage'),
         type: 'danger',
       });
     }
   };
 
   useEffect(() => {
-    if (loggedUser) {
-      setValue('state_id', loggedUser?.state_id);
-      setValue('city_id', loggedUser?.city_id);
+    if (stateId && cityId) {
+      setValue('state_id', stateId);
+      setValue('city_id', cityId);
     }
-  }, [loggedUser]);
+  }, [stateId, cityId]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      toggle={toggle}
-      title={t('changeLanguageModal.title')}
-    >
+    <View style={styles.container}>
       <InputContainer>
-        <Label>{t('selectCityModal.stateLabel')}</Label>
+        <Label>{t('eventSelectCity.stateLabel')}</Label>
         <Controller
           name="state_id"
           control={control}
@@ -78,7 +78,7 @@ export default function SelectCityModal({ isOpen, toggle, setSelectedCity }) {
       </InputContainer>
 
       <InputContainer>
-        <Label>{t('selectCityModal.cityLabel')}</Label>
+        <Label>{t('eventSelectCity.cityLabel')}</Label>
         <Controller
           name="city_id"
           control={control}
@@ -94,9 +94,20 @@ export default function SelectCityModal({ isOpen, toggle, setSelectedCity }) {
       </InputContainer>
 
       <Button
-        title={t('selectCityModal.submitButton')}
+        title={t('eventSelectCity.submitButton')}
         onPress={handleSubmit(submit)}
       />
-    </Modal>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  selectCity: {
+    flex: 1,
+    backgroundColor: COLORS.screenBackgroundColor,
+  },
+  container: {
+    marginVertical: METRICS.containerMarginVertical,
+    marginHorizontal: METRICS.containerMarginHorizontal,
+  },
+});

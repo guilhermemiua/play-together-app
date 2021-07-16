@@ -105,7 +105,7 @@ export default function FriendChat({ route, navigation }) {
           inverted
           style={styles.messages}
           data={messages}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <ChatMessage type={item?.type} message={item} />
           )}

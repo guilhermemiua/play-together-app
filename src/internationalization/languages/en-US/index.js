@@ -1,5 +1,10 @@
 export default {
   translation: {
+    home: {
+      welcome: 'Welcome,',
+      upcomingEvents: 'Upcoming events',
+      eventHistory: 'Event history',
+    },
     login: {
       emailLabel: 'Email',
       passwordLabel: 'Password',
@@ -140,7 +145,7 @@ export default {
     viewEvent: {
       participantsText: 'Participants',
       settingsText: 'Settings',
-      reviewUsersText: 'Review users',
+      reviewUsersText: 'Rate users',
       joinText: 'Join',
       joinEventSuccessMessage: 'You joined the event!',
       joinEventErrorMessage: 'Erro joining event',
@@ -158,6 +163,14 @@ export default {
         deleteErrorMessage: 'Delete event error',
         leftSuccessMessage: 'You left the event',
         leftErrorMessage: 'Left event error',
+      },
+    },
+    reviewPlayers: {
+      submitButton: 'Save',
+      successMessage: 'Rating made successfully!',
+      errorMessage: 'Rating players error',
+      error: {
+        ratingRequired: 'Enter rating',
       },
     },
     eventChat: {
@@ -185,8 +198,13 @@ export default {
         nameRequired: 'Enter a name',
       },
     },
+    addUserToGroup: {
+      successMessage: 'User added successfully!',
+      errorMessage: 'Add user error',
+    },
     viewGroup: {
       settings: {
+        addUsers: 'Add users',
         editGroup: 'Edit group',
         deleteGroup: 'Delete group',
         leftGroup: 'Left group',
@@ -194,6 +212,8 @@ export default {
         deleteErrorMessage: 'Delete group error',
         leftSuccessMessage: 'You left the group',
         leftErrorMessage: 'Left group error',
+        removeUserFromGroupSuccessMessage: 'User removed successfully!',
+        removeUserFromGroupErrorMessage: 'Remove user from group error',
       },
     },
     profile: {
@@ -252,8 +272,10 @@ export default {
       notifications: 'Notifications',
       newChat: 'New chat',
       newGroupChat: 'New group chat',
-      reviewPlayers: 'Review players',
+      reviewPlayers: 'Rating players',
       editGroup: 'Edit group',
+      selectCity: 'Select city',
+      addUsers: 'Add users',
     },
     sports: {
       soccer: 'Soccer',
@@ -271,7 +293,7 @@ export default {
     selectCity: {
       placeholder: 'Search city...',
     },
-    selectCityModal: {
+    eventSelectCity: {
       title: 'Select city',
       stateLabel: 'State',
       cityLabel: 'City',

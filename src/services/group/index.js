@@ -89,6 +89,23 @@ export const removeUserFromGroup = async (groupId, userId) => {
   });
 };
 
+export const addUserToGroup = async (groupId, userId) => {
+  const token = await getToken();
+
+  return api.post(
+    '/group/add-user',
+    {
+      group_id: groupId,
+      user_id: userId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export const joinGroup = async (groupId) => {
   const token = await getToken();
 

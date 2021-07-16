@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     marginTop: normalize(METRICS.margin / 2),
     // borderColor: COLORS.borderColor,
     // borderWidth: normalize(3),
+    // height: 400,
   },
   cardButton: {
     flexDirection: 'row',

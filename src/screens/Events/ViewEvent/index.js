@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import Title from '../../../components/Title';
 import Text from '../../../components/Text';
-import EventUserItem from '../../../components/EventUserItem';
+import UserItem from '../../../components/UserItem';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../hooks/useAuth';
 import {
@@ -157,11 +157,11 @@ export default function ViewEvent({ navigation, route }) {
 
         <View style={{ backgroundColor: COLORS.white }}>
           {participants.map((participant) => (
-            <EventUserItem
+            <UserItem
               user={participant}
               key={participant.id}
               owner={participant.id === event?.user_id}
-              canDelete={event?.user_id === loggedUser?.id}
+              canDelete={type !== 'past' && event?.user_id === loggedUser?.id}
               handleDelete={() => handleRemoveUserFromEvent(participant?.id)}
             />
           ))}

@@ -16,7 +16,7 @@ import {
 } from '../../../services';
 import Button from '../../../components/Button';
 
-export default function Notifications({ navigation }) {
+export default function Notifications() {
   const { t } = useTranslation();
 
   const [offset, setOffset] = useState(0);
@@ -52,7 +52,7 @@ export default function Notifications({ navigation }) {
       {/* TODO: APPLY INFINITE */}
       <FlatList
         data={friendRequestsReceived}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         // onEndReachedThreshold={0.1}
         // onEndReached={searchUsers}
         renderItem={({ item }) => (

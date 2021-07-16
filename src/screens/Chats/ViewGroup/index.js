@@ -3,11 +3,12 @@ import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, METRICS, normalize } from '../../../constants';
 import DefaultProfileImage from '../../../assets/images/DefaultProfile.png';
-import { getImage } from '../../../helpers';
+import { getImage, notify } from '../../../helpers';
 import Title from '../../../components/Title';
 import Button from '../../../components/Button';
-import EventUserItem from '../../../components/EventUserItem';
+import UserItem from '../../../components/UserItem';
 import { useAuth } from '../../../hooks/useAuth';
+import { removeUserFromGroup } from '../../../services';
 
 export default function ViewGroup({ route, navigation }) {
   const { group } = route.params;
@@ -16,6 +17,26 @@ export default function ViewGroup({ route, navigation }) {
   const { t } = useTranslation();
 
   const [participants, setParticipants] = useState([]);
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await removeUserFromGroup(group.id, userId);
+
+      setParticipants(
+        participants.filter((participant) => participant.id !== userId)
+      );
+
+      notify({
+        type: 'success',
+        message: t('viewGroup.settings.removeUserFromGroupSuccessMessage'),
+      });
+    } catch (error) {
+      notify({
+        type: 'danger',
+        message: t('viewGroup.settings.removeUserFromGroupErrorMessage'),
+      });
+    }
+  };
 
   const navigateToSettings = () =>
     navigation.navigate('GroupSettings', {
@@ -62,10 +83,12 @@ export default function ViewGroup({ route, navigation }) {
 
         <View style={{ backgroundColor: COLORS.white }}>
           {participants.map((participant) => (
-            <EventUserItem
+            <UserItem
               user={participant}
               key={participant.id}
               owner={participant.id === group.user_id}
+              canDelete={participant.id !== group.user_id}
+              handleDelete={() => handleDeleteUser(participant.id)}
             />
           ))}
         </View>

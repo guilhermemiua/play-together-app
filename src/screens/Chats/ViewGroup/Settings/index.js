@@ -19,6 +19,11 @@ export default function Settings({ route, navigation }) {
       group,
     });
 
+  const navigateToAddUsers = () =>
+    navigation.navigate('AddUserToGroup', {
+      group,
+    });
+
   const handleDisjoin = async () => {
     try {
       await disjoinGroup(group?.id);
@@ -57,22 +62,35 @@ export default function Settings({ route, navigation }) {
 
   return (
     <View style={styles.settings}>
-      <TouchableOpacity
-        style={styles.settingsItem}
-        onPress={navigateToEditGroup}
-      >
-        <Text style={styles.settingsItemText}>
-          {t('viewGroup.settings.editGroup')}
-        </Text>
-      </TouchableOpacity>
+      {group?.user_id === loggedUser?.id && (
+        <>
+          <TouchableOpacity
+            style={styles.settingsItem}
+            onPress={navigateToAddUsers}
+          >
+            <Text style={styles.settingsItemText}>
+              {t('viewGroup.settings.addUsers')}
+            </Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity style={styles.settingsItem} onPress={handleDelete}>
-        <Text style={styles.settingsItemText}>
-          {t('viewGroup.settings.deleteGroup')}
-        </Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.settingsItem}
+            onPress={navigateToEditGroup}
+          >
+            <Text style={styles.settingsItemText}>
+              {t('viewGroup.settings.editGroup')}
+            </Text>
+          </TouchableOpacity>
 
-      {group?.user_id !== loggedUser.id && (
+          <TouchableOpacity style={styles.settingsItem} onPress={handleDelete}>
+            <Text style={styles.settingsItemText}>
+              {t('viewGroup.settings.deleteGroup')}
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
+
+      {group?.user_id !== loggedUser?.id && (
         <TouchableOpacity style={styles.settingsItem} onPress={handleDisjoin}>
           <Text style={styles.settingsItemText}>
             {t('viewGroup.settings.leftGroup')}

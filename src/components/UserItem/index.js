@@ -1,38 +1,88 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { normalize } from 'react-native-elements';
+import { StyleSheet, Image, View } from 'react-native';
+import { normalize, Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import { COLORS, METRICS } from '../../constants';
 import { getImage } from '../../helpers';
 import Title from '../Title';
 
-export default function UserItem({ user, onPress, borderTop }) {
+export default function UserItem({
+  user,
+  onPress,
+  borderTop,
+  bordered = false,
+  owner = false,
+  canDelete = false,
+  handleDelete,
+  RightIcon,
+}) {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+
+  const navigateToViewUser = () => {
+    navigation.navigate('ViewUser', {
+      title: `${user?.first_name} ${user?.last_name}`,
+      user,
+    });
+  };
+
   return (
-    <TouchableOpacity
+    <View
       style={[
         styles.user,
         borderTop && {
           borderColor: COLORS.borderColor,
           borderTopWidth: normalize(1),
         },
+        bordered && {
+          borderColor: COLORS.borderColor,
+          borderRadius: METRICS.borderRadius,
+          borderBottomWidth: normalize(1),
+        },
       ]}
-      onPress={onPress}
+      // onPress={onPress || navigateToViewUser}
     >
-      <Image
-        source={
-          user?.profile_image
-            ? {
-                uri: getImage(user.profile_image),
-              }
-            : DefaultProfileImage
-        }
-        style={styles.userImage}
-      />
-      <Title h4 color={COLORS.black} textAlign="left">
-        {user.first_name} {user.last_name}
-      </Title>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+        onPress={onPress || navigateToViewUser}
+      >
+        <Image
+          source={
+            user?.profile_image
+              ? {
+                  uri: getImage(user.profile_image),
+                }
+              : DefaultProfileImage
+          }
+          style={styles.userImage}
+        />
+        <Title h4 color={COLORS.black} textAlign="left">
+          {user.first_name} {user.last_name}
+        </Title>
+      </TouchableOpacity>
+
+      {owner && (
+        <Title h4 color={COLORS.primary}>
+          {t('viewEvent.userItem.hostLabel')}
+        </Title>
+      )}
+
+      {canDelete && !owner && (
+        <TouchableOpacity onPress={handleDelete}>
+          <Title h4 color={COLORS.danger}>
+            {t('viewEvent.userItem.removeLabel')}
+          </Title>
+        </TouchableOpacity>
+      )}
+
+      {RightIcon && <RightIcon />}
+    </View>
   );
 }
 
@@ -43,9 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: METRICS.padding,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: COLORS.borderColor,
-    borderRadius: METRICS.borderRadius,
-    borderBottomWidth: normalize(1),
+    justifyContent: 'space-between',
   },
   userImage: {
     width: normalize(45),

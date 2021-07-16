@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: METRICS.padding,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: COLORS.borderColor,
-    borderRadius: METRICS.borderRadius,
-    borderBottomWidth: normalize(1),
+    // borderColor: COLORS.borderColor,
+    // borderRadius: METRICS.borderRadius,
+    // borderBottomWidth: normalize(1),
   },
   chatImage: {
     width: normalize(45),

@@ -11,6 +11,7 @@ import Settings from '../../screens/Profile/Settings';
 import { COLORS, HEADER_STYLE, HEADER_TITLE_STYLE } from '../../constants';
 import CreateEvent from '../../screens/Events/ChooseSport/CreateEvent';
 import EditEvent from '../../screens/Events/EditEvent';
+import EventSelectCity from '../../screens/Events/SelectCity';
 import ViewEvent from '../../screens/Events/ViewEvent';
 import EventChat from '../../screens/Events/ViewEvent/Chat';
 import ViewEventSettings from '../../screens/Events/ViewEvent/Settings';
@@ -34,6 +35,7 @@ import ViewGroup from '../../screens/Chats/ViewGroup';
 import GroupChat from '../../screens/Chats/GroupChat';
 import GroupSettings from '../../screens/Chats/ViewGroup/Settings';
 import EditGroup from '../../screens/Chats/ViewGroup/Settings/EditGroup';
+import AddUser from '../../screens/Chats/ViewGroup/Settings/AddUser';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,19 +72,6 @@ function HomeStackNavigator() {
             ...HEADER_STYLE,
           },
           title: i18next.t('routes.eventHistory'),
-        }}
-      />
-      <Stack.Screen
-        name="ReviewPlayers"
-        component={ReviewPlayers}
-        options={{
-          headerTitleStyle: {
-            ...HEADER_TITLE_STYLE,
-          },
-          headerStyle: {
-            ...HEADER_STYLE,
-          },
-          title: i18next.t('routes.reviewPlayers'),
         }}
       />
     </Stack.Navigator>
@@ -549,6 +538,48 @@ export default function AuthenticatedRoutes() {
           },
           title: i18next.t('routes.notifications'),
         })}
+      />
+
+      <Stack.Screen
+        name="ReviewPlayers"
+        component={ReviewPlayers}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.reviewPlayers'),
+        }}
+      />
+
+      <Stack.Screen
+        name="EventSelectCity"
+        component={EventSelectCity}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.selectCity'),
+        }}
+      />
+
+      <Stack.Screen
+        name="AddUserToGroup"
+        component={AddUser}
+        options={{
+          headerTitleStyle: {
+            ...HEADER_TITLE_STYLE,
+          },
+          headerStyle: {
+            ...HEADER_STYLE,
+          },
+          title: i18next.t('routes.addUsers'),
+        }}
       />
     </Stack.Navigator>
   );

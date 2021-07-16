@@ -126,7 +126,7 @@ export const disjoinEvent = async (eventId) => {
   );
 };
 
-export const getEvents = async ({ offset, limit, type }) => {
+export const getEvents = async ({ offset, limit, type, cityId }) => {
   const token = await getToken();
 
   const params = new URLSearchParams('');
@@ -134,6 +134,7 @@ export const getEvents = async ({ offset, limit, type }) => {
   if (offset || offset === 0) params.append('offset', offset);
   if (limit) params.append('limit', limit);
   if (type) params.append('type', type);
+  if (cityId) params.append('cityId', cityId);
 
   return api.get(`/event${params && `?${params.toString()}`}`, {
     headers: {

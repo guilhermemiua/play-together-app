@@ -72,7 +72,7 @@ export default function GroupChat({ route }) {
           inverted
           style={styles.messages}
           data={messages}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <ChatMessage type={item?.type} message={item} />
           )}

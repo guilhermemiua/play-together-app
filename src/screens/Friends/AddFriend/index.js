@@ -50,7 +50,7 @@ export default function AddFriend({ navigation }) {
       {/* TODO: APPLY INFINITE */}
       <FlatList
         data={users}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         // onEndReachedThreshold={0.1}
         // onEndReached={searchUsers}
         renderItem={({ item, index }) => (

@@ -22,6 +22,7 @@ import {
 import AppLoading from 'expo-app-loading';
 import Routes from './routes';
 import AuthProvider from './contexts/AuthContext';
+import FilterEventProvider from './contexts/FilterEventContext';
 import theme from './styles/theme';
 
 import './internationalization';
@@ -49,11 +50,13 @@ export default function App() {
     >
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <NavigationContainer>
-            <StatusBar style="auto" />
+          <FilterEventProvider>
+            <NavigationContainer>
+              <StatusBar style="auto" />
 
-            <Routes />
-          </NavigationContainer>
+              <Routes />
+            </NavigationContainer>
+          </FilterEventProvider>
         </AuthProvider>
       </ThemeProvider>
 

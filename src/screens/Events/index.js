@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { normalize } from 'react-native-elements';
@@ -9,48 +9,61 @@ import Text from '../../components/Text';
 import Header from '../../components/Header';
 import EventCard from '../../components/EventCard';
 import { getEvents } from '../../services';
-import SelectCityModal from './SelectCityModal';
-import { useAuth } from '../../hooks';
+import { useEventFilter } from '../../hooks';
 
-export default function Events({ navigation }) {
+export default function Events({ navigation, route }) {
   const { t } = useTranslation();
-  const { loggedUser } = useAuth();
+  const { cityId, city } = useEventFilter();
+
+  const firstUpdate = useRef(true);
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
   const [events, setEvents] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState('');
 
-  const toggleSelectCityModal = () => setIsOpen(!isOpen);
-
+  const goToSelectCity = () => navigation.navigate('EventSelectCity');
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
 
   // TODO: ADD PAGINATION
-  const getAndSetEvents = async () => {
-    const { data } = await getEvents({ offset, limit, type: 'upcoming' });
+  const handleGetEvents = async () => {
+    const { data } = await getEvents({
+      offset,
+      limit,
+      type: 'upcoming',
+      cityId,
+    });
 
-    setEvents(data?.results);
+    setTotal(data.total);
+    setEvents([...events, ...data.results]);
   };
 
-  // useEffect(() => {
-  //   if ((offset || offset === 0) && limit) {
-  //     getAndSetEvents();
-  //   }
-  // }, [offset, limit]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getAndSetEvents();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
-    if (loggedUser) {
-      setSelectedCity(loggedUser?.city?.name);
+  const fetchMore = () => {
+    if (offset * limit <= total) {
+      setOffset((oldOffset) => oldOffset + 1);
     }
-  }, [loggedUser]);
+  };
+
+  useEffect(() => {
+    if ((offset || offset === 0) && limit) {
+      // if (!firstUpdate.current) {
+      handleGetEvents();
+      // }
+    }
+  }, [offset, limit, cityId]);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     handleGetEvents();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  // useEffect(() => {
+  //   if (firstUpdate.current) {
+  //     firstUpdate.current = false;
+  //   }
+  // }, []);
 
   return (
     <View style={styles.events}>
@@ -59,9 +72,9 @@ export default function Events({ navigation }) {
       <View style={styles.subHeader}>
         <TouchableOpacity
           style={styles.subheaderButton}
-          onPress={toggleSelectCityModal}
+          onPress={goToSelectCity}
         >
-          <Text style={styles.locationText}>{selectedCity}</Text>
+          <Text style={styles.locationText}>{city}</Text>
           <Icon
             name="chevron-down"
             type="feather"
@@ -71,13 +84,24 @@ export default function Events({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.subheaderButton}
+          style={[
+            styles.subheaderButton,
+            // {
+            //   // marginLeft: normalize(10),
+            // },
+          ]}
           onPress={navigateToChooseSport}
         >
           <Icon name="plus" type="feather" color={COLORS.black} size={20} />
           <Text style={styles.newEventText}>{t('events.createEvent')}</Text>
         </TouchableOpacity>
 
+        <View
+          style={{
+            width: normalize(80),
+          }}
+        />
+        {/* 
         <TouchableOpacity style={styles.subheaderButton}>
           <Icon
             name="align-justify"
@@ -86,33 +110,19 @@ export default function Events({ navigation }) {
             size={20}
           />
           <Text style={styles.filtersText}>{t('events.filters')}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      {/* TODO: APPLY INFINITE */}
       <FlatList
         style={styles.eventList}
         data={events}
-        keyExtractor={(item) => item.id}
-        // onRefresh={async () => {
-        //   await dispatch(setRefresh(true));
-        //   await dispatch(fetchBooks());
-        //   await dispatch(setRefresh(false));
-        // }}
-        // refreshing={refreshing}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={fetchMore}
+        onEndReachedThreshold={0.8}
         renderItem={({ item }) => (
           <EventCard event={item} navigation={navigation} />
         )}
       />
-
-      {isOpen && (
-        <SelectCityModal
-          isOpen={isOpen}
-          toggle={toggleSelectCityModal}
-          navigation={navigation}
-          setSelectedCity={setSelectedCity}
-        />
-      )}
     </View>
   );
 }

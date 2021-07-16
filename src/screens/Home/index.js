@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { normalize } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS, METRICS } from '../../constants';
 import Text from '../../components/Text';
-import Header from '../../components/Header';
-import EventCard from '../../components/EventCard';
-import { getEvents } from '../../services';
+
 import Title from '../../components/Title';
 import { useAuth } from '../../hooks';
 
@@ -16,28 +14,8 @@ export default function Home({ navigation }) {
   const { t } = useTranslation();
   const { loggedUser } = useAuth();
 
-  const [events, setEvents] = useState([]);
-
   const navigateToCalendar = () => navigation.navigate('Calendar');
   const navigateToEventHistory = () => navigation.navigate('EventHistory');
-
-  // TODO: ADD PAGINATION
-  const getAndSetEvents = async () => {
-    const { data } = await getEvents({});
-
-    setEvents(data);
-  };
-
-  useEffect(() => {
-    getAndSetEvents();
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getAndSetEvents();
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   return (
     <View style={styles.home}>
@@ -50,7 +28,7 @@ export default function Home({ navigation }) {
             fontFamily: METRICS.fontFamilyBold,
           }}
         >
-          Welcome,
+          {t('home.welcome')}
         </Text>
         <Title
           h1
@@ -63,7 +41,7 @@ export default function Home({ navigation }) {
 
         <TouchableOpacity style={styles.card} onPress={navigateToCalendar}>
           <Title h3 color={COLORS.black} textAlign="left">
-            Upcoming events
+            {t('home.upcomingEvents')}
           </Title>
 
           <Icon
@@ -76,25 +54,11 @@ export default function Home({ navigation }) {
 
         <TouchableOpacity style={styles.card} onPress={navigateToEventHistory}>
           <Title h3 color={COLORS.black} textAlign="left">
-            Event history
+            {t('home.eventHistory')}
           </Title>
 
           <Icon name="map" type="feather" color={COLORS.primary} size={30} />
         </TouchableOpacity>
-        {/* TODO: APPLY INFINITE */}
-        {/* <FlatList
-          data={events}
-          keyExtractor={(item) => item.id}
-          // onRefresh={async () => {
-          //   await dispatch(setRefresh(true));
-          //   await dispatch(fetchBooks());
-          //   await dispatch(setRefresh(false));
-          // }}
-          // refreshing={refreshing}
-          renderItem={({ item }) => (
-            <EventCard event={item} navigation={navigation} />
-          )}
-        /> */}
       </View>
     </View>
   );
