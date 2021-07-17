@@ -14,7 +14,12 @@ import {
   getSportName,
   notify,
 } from '../../../helpers';
-import { getEvent, joinEvent, removeUserFromEvent } from '../../../services';
+import {
+  getEvent,
+  getMyReviewsByEvent,
+  joinEvent,
+  removeUserFromEvent,
+} from '../../../services';
 
 export default function ViewEvent({ navigation, route }) {
   const { t } = useTranslation();
@@ -24,6 +29,7 @@ export default function ViewEvent({ navigation, route }) {
   const [event, setEvent] = useState(null);
   const [participants, setParticipants] = useState([]);
   const [isParticipant, setIsParticipant] = useState(false);
+  const [hasReviewedUsers, setHasReviewedUsers] = useState(false);
 
   const { loggedUser } = useAuth();
 
@@ -83,7 +89,11 @@ export default function ViewEvent({ navigation, route }) {
 
   const fetchAndSetEvent = async () => {
     const { data: eventData } = await getEvent(eventId);
+    const { data: userReviews } = await getMyReviewsByEvent(eventId);
 
+    console.log(userReviews);
+
+    setHasReviewedUsers(userReviews.length);
     setEvent(eventData);
     setParticipants([eventData.user, ...eventData.users]);
 
@@ -178,13 +188,17 @@ export default function ViewEvent({ navigation, route }) {
               onPress={navigateToChat}
             />
             {type === 'past' ? (
-              <Button
-                title={t('viewEvent.reviewUsersText')}
-                containerStyle={{ flex: 1 }}
-                style={{ marginLeft: normalize(5) }}
-                type="outline"
-                onPress={navigateToReviewPlayers}
-              />
+              <>
+                {!hasReviewedUsers && (
+                  <Button
+                    title={t('viewEvent.reviewUsersText')}
+                    containerStyle={{ flex: 1 }}
+                    style={{ marginLeft: normalize(5) }}
+                    type="outline"
+                    onPress={navigateToReviewPlayers}
+                  />
+                )}
+              </>
             ) : (
               <Button
                 title={t('viewEvent.settingsText')}

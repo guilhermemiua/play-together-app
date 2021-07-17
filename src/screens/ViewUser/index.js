@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Icon } from 'react-native-elements';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Text from '../../components/Text';
 import Button from '../../components/Button';
@@ -10,6 +11,7 @@ import { getImage, notify } from '../../helpers';
 import {
   cancelFriendRequest,
   getFriendStatus,
+  getMyRating,
   removeMyFriend,
   sendFriendRequest,
 } from '../../services';
@@ -19,9 +21,18 @@ export default function ViewUser({ route, navigation }) {
   const { user } = route.params;
 
   const [friendStatus, setFriendStatus] = useState(null);
+  const [rating, setRating] = useState(5);
 
   const goToFriendsNotifications = () =>
     navigation.navigate('FriendsNotifications');
+
+  const handleGetMyRating = async () => {
+    const { data } = await getMyRating();
+
+    if (data?.rating > 0) {
+      setRating(data.rating);
+    }
+  };
 
   const handleSendFriendRequest = async () => {
     try {
@@ -85,6 +96,7 @@ export default function ViewUser({ route, navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       if (user) {
         handleGetFriendStatus();
+        handleGetMyRating();
       }
     });
     return unsubscribe;
@@ -128,6 +140,18 @@ export default function ViewUser({ route, navigation }) {
           <Text>
             {user?.city?.name}, {user?.state?.name}
           </Text>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: normalize(5),
+          }}
+        >
+          <Text bold>{t('viewUser.ratingLabel')}: </Text>
+
+          <Text>{rating} </Text>
+          <Icon name="star" type="feather" color={COLORS.yellow} size={15} />
         </View>
 
         <Divider />

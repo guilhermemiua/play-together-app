@@ -14,7 +14,7 @@ export default function EventHistory({ navigation }) {
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
-    const { data } = await getMyEvents({ offset, limit, type: 'upcoming' });
+    const { data } = await getMyEvents({ offset, limit, type: 'past' });
 
     setTotal(data?.total);
     setEvents([...events, ...data.results]);

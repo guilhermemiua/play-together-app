@@ -8,6 +8,7 @@ import DefaultProfileImage from '../../assets/images/DefaultProfile.png';
 import { COLORS, METRICS } from '../../constants';
 import { getImage } from '../../helpers';
 import Title from '../Title';
+import { useAuth } from '../../hooks';
 
 export default function UserItem({
   user,
@@ -20,6 +21,7 @@ export default function UserItem({
   RightIcon,
 }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
   const navigation = useNavigation();
 
   const navigateToViewUser = () => {
@@ -43,14 +45,15 @@ export default function UserItem({
           borderBottomWidth: normalize(1),
         },
       ]}
-      // onPress={onPress || navigateToViewUser}
     >
       <TouchableOpacity
         style={{
           flexDirection: 'row',
           alignItems: 'center',
         }}
-        onPress={onPress || navigateToViewUser}
+        onPress={
+          loggedUser?.id !== user?.id ? onPress || navigateToViewUser : () => {}
+        }
       >
         <Image
           source={

@@ -9,12 +9,12 @@ import { COLORS, normalize, METRICS } from '../../../../constants';
 import Divider from '../../../../components/Divider';
 import Title from '../../../../components/Title';
 import DefaultProfileImage from '../../../../assets/images/DefaultProfile.png';
-import Text from '../../../../components/Text';
 import { getImage, notify } from '../../../../helpers';
 import schema from './schema';
 import { useAuth } from '../../../../hooks/useAuth';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import Button from '../../../../components/Button';
+import { reviewEventUsers } from '../../../../services';
 
 export default function ReviewPlayers({ route, navigation }) {
   const { event } = route.params;
@@ -33,18 +33,14 @@ export default function ReviewPlayers({ route, navigation }) {
 
   const submit = async (values) => {
     try {
-      console.log(values);
-      // const { first_name, last_name, age, gender, state_id, city_id } = values;
+      const { review_users } = values;
 
-      // await updateProfile({
-      //   first_name,
-      //   last_name,
-      //   age,
-      //   gender,
-      //   state_id: parseInt(state_id, 10),
-      //   city_id: parseInt(city_id, 10),
-      //   profile_image: image,
-      // });
+      const reviewUsers = review_users.map((reviewUser, index) => ({
+        rating: reviewUser.rating,
+        user_id: eventParticipants[index].id,
+      }));
+
+      await reviewEventUsers(event.id, reviewUsers);
 
       notify({ message: t('reviewPlayers.successMessage'), type: 'success' });
 
@@ -59,19 +55,16 @@ export default function ReviewPlayers({ route, navigation }) {
     handleSubmit,
     control,
     formState: { errors },
-    watch,
   } = useForm({
     defaultValues: {
-      ratings: [],
+      review_users: [],
     },
     resolver: yupResolver(schema),
   });
 
-  const test = watch('ratings');
-
   useFieldArray({
-    control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'ratings',
+    control,
+    name: 'review_users',
   });
 
   useEffect(() => {
@@ -84,19 +77,13 @@ export default function ReviewPlayers({ route, navigation }) {
         newEventParticipants.push(event.user);
       }
 
-      console.log(newEventParticipants);
       setEventParticipants(newEventParticipants);
     }
   }, [event]);
 
-  useEffect(() => {
-    console.log(test);
-  }, [test]);
-
   return (
     <>
       <View style={styles.players}>
-        {/* TODO: APPLY INFINITE */}
         <FlatList
           data={eventParticipants}
           keyExtractor={(item) => item.id.toString()}
@@ -131,7 +118,7 @@ export default function ReviewPlayers({ route, navigation }) {
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Controller
                   control={control}
-                  name={`ratings[${index}].rating`}
+                  name={`review_users[${index}].rating`}
                   defaultValue={5}
                   key={item.id}
                   render={({ field: { onChange, value } }) => (

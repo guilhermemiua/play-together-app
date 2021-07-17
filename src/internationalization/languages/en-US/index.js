@@ -224,6 +224,7 @@ export default {
     viewUser: {
       ageLabel: 'Age',
       cityStateLabel: 'City/State',
+      ratingLabel: 'Rating',
       sendFriendRequestButton: 'Send friend request',
       answerFriendRequestButton: 'Answer friend request',
       removeFriendButton: 'Remove friend',

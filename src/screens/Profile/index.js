@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Avatar } from 'react-native-elements';
+import { Avatar, Icon } from 'react-native-elements';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../../components/Title';
 import Text from '../../components/Text';
@@ -46,7 +46,6 @@ export default function Profile({ navigation: { navigate } }) {
             size={150}
             containerStyle={styles.profileImage}
           />
-
           <Title h3 color={COLORS.black}>
             {loggedUser?.first_name} {loggedUser?.last_name},{' '}
             <Text
@@ -67,9 +66,7 @@ export default function Profile({ navigation: { navigate } }) {
           >
             {loggedUser?.city?.name}, {loggedUser?.state?.name}
           </Text>
-
           <Divider type="horizontal" />
-
           <Button
             title={t('profile.editProfileButton')}
             onPress={navigateToEditProfile}

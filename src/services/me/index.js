@@ -134,6 +134,26 @@ export const getMyEvents = async ({ offset, limit, type }) => {
   });
 };
 
+export const getMyRating = async () => {
+  const token = await getToken();
+
+  return api.get(`/me/rating`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getMyReviewsByEvent = async (eventId) => {
+  const token = await getToken();
+
+  return api.get(`/me/event/${eventId}/reviews`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const getMyGroups = async ({ offset, limit }) => {
   const token = await getToken();
 

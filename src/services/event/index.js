@@ -94,6 +94,23 @@ export const removeUserFromEvent = async (eventId, userId) => {
   });
 };
 
+export const reviewEventUsers = async (eventId, reviewUsers) => {
+  const token = await getToken();
+
+  return api.post(
+    '/event/review-users',
+    {
+      event_id: eventId,
+      review_users: reviewUsers,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export const joinEvent = async (eventId) => {
   const token = await getToken();
 
