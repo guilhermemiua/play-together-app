@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   removeUserFromAsyncStorage,
   setUserToAsyncStorage,
   getUserFromAsyncStorage,
   setTokenToAsyncStorage,
   removeTokenFromAsyncStorage,
+  notify,
 } from '../../helpers';
 import { login, getLoggedUser } from '../../services';
 
 export const AuthContext = React.createContext({});
 
 const AuthProvider = ({ children }) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedUser, setLoggedUser] = useState();
@@ -25,6 +29,7 @@ const AuthProvider = ({ children }) => {
 
       setIsAuthenticated(true);
     } catch (error) {
+      notify({ message: t('login.errorMessage'), type: 'danger' });
       console.log(error);
     }
   };

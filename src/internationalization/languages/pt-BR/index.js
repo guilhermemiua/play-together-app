@@ -11,9 +11,40 @@ export default {
       submitButton: 'Login',
       forgotPassword: 'Esqueceu a senha?',
       forgotPasswordButton: 'Clique aqui!',
+      errorMessage: 'Credenciais inválidas',
       error: {
         emailType: 'Insira um email válido',
         emailRequired: 'Insira o email',
+        passwordRequired: 'Insira a senha',
+      },
+    },
+    forgotPassword: {
+      userNotFound: 'Usuário não encontrado',
+      successMessage:
+        'Um email com um token foi enviado para o email digitado!',
+      errorMessage: 'Erro no envio do email',
+      emailLabel: 'Email',
+      submitButton: 'Enviar',
+      error: {
+        emailType: 'Insira um email válido',
+        emailRequired: 'Insira um email',
+      },
+    },
+    forgotPasswordToken: {
+      successMessage: 'Token validado com sucesso!',
+      errorMessage: 'Token inválido',
+      tokenLabel: 'Insira o token enviado ao email',
+      submitButton: 'Enviar',
+      error: {
+        tokenRequired: 'Insira o token',
+      },
+    },
+    forgotPasswordNewPassword: {
+      successMessage: 'Senha alterada com sucesso!',
+      errorMessage: 'Erro na alteração da senha',
+      passwordLabel: 'Insira a nova senha',
+      submitButton: 'Enviar',
+      error: {
         passwordRequired: 'Insira a senha',
       },
     },
@@ -278,6 +309,9 @@ export default {
       editGroup: 'Editar grupo',
       selectCity: 'Selecionar cidade',
       addUsers: 'Adicionar usuários',
+      forgotPassword: 'Esqueci minha senha',
+      forgotPasswordToken: 'Insira o token',
+      forgotPasswordNewPassword: 'Nova senha',
     },
     sports: {
       soccer: 'Futebol',

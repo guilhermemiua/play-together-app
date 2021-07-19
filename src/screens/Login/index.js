@@ -18,7 +18,7 @@ export default function Login({ navigation: { navigate } }) {
   const { t } = useTranslation();
   const { authenticate } = useAuth();
 
-  const navigateToForgotPassword = () => navigate('Login');
+  const navigateToForgotPassword = () => navigate('ForgotPassword');
 
   const {
     handleSubmit,

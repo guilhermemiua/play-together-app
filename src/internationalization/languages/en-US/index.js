@@ -11,10 +11,40 @@ export default {
       submitButton: 'Login',
       forgotPassword: 'Forgot password?',
       forgotPasswordButton: 'Click here!',
+      errorMessage: 'Invalid credentials',
       error: {
         emailType: 'Email must be a valid email',
         emailRequired: 'Enter an email',
         passwordRequired: 'Enter a password',
+      },
+    },
+    forgotPassword: {
+      userNotFound: 'User not found',
+      successMessage: 'An email with a token was sent to the email typed!',
+      errorMessage: 'Send email error',
+      emailLabel: 'Email',
+      submitButton: 'Send',
+      error: {
+        emailType: 'Invalid email',
+        emailRequired: 'Enter an email',
+      },
+    },
+    forgotPasswordToken: {
+      successMessage: 'Token validated successfully!',
+      errorMessage: 'Token invalid',
+      tokenLabel: 'Insert the token sent to your email',
+      submitButton: 'Send',
+      error: {
+        tokenRequired: 'Enter token',
+      },
+    },
+    forgotPasswordNewPassword: {
+      successMessage: 'Password changed successfully!',
+      errorMessage: 'Change password error',
+      passwordLabel: 'Insert new password',
+      submitButton: 'Send',
+      error: {
+        passwordRequired: 'Enter password',
       },
     },
     register: {
@@ -277,6 +307,9 @@ export default {
       editGroup: 'Edit group',
       selectCity: 'Select city',
       addUsers: 'Add users',
+      forgotPassword: 'Forgot password',
+      forgotPasswordToken: 'Enter token',
+      forgotPasswordNewPassword: 'New password',
     },
     sports: {
       soccer: 'Soccer',
