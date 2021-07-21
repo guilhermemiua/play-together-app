@@ -13,7 +13,7 @@ import InputContainer from '../../../components/InputContainer';
 import Label from '../../../components/Label';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Select from '../../../components/Select';
-import { useAuth } from '../../../hooks';
+import { useAuth, useLoader } from '../../../hooks';
 import DefaultProfileImage from '../../../assets/images/DefaultProfile.png';
 import { updateProfile } from '../../../services';
 import { getImage, notify } from '../../../helpers';
@@ -22,6 +22,7 @@ import SelectCity from '../../../components/SelectCity';
 
 export default function EditProfile({ navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
   const { loggedUser, getAndSetLoggedUser } = useAuth();
 
   const [image, setImage] = useState(null);
@@ -48,6 +49,8 @@ export default function EditProfile({ navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { first_name, last_name, age, gender, state_id, city_id } = values;
 
       await updateProfile({
@@ -64,8 +67,11 @@ export default function EditProfile({ navigation }) {
 
       notify({ message: t('editProfile.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigation.navigate('Profile');
     } catch (error) {
+      setLoading(false);
       console.log(error);
       notify({ message: t('editProfile.errorMessage'), type: 'danger' });
     }

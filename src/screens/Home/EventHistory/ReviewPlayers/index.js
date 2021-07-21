@@ -15,12 +15,14 @@ import { useAuth } from '../../../../hooks/useAuth';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import Button from '../../../../components/Button';
 import { reviewEventUsers } from '../../../../services';
+import { useLoader } from '../../../../hooks';
 
 export default function ReviewPlayers({ route, navigation }) {
   const { event } = route.params;
 
   const { t } = useTranslation();
   const { loggedUser } = useAuth();
+  const { setLoading } = useLoader();
 
   const [eventParticipants, setEventParticipants] = useState([]);
 
@@ -33,6 +35,8 @@ export default function ReviewPlayers({ route, navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { review_users } = values;
 
       const reviewUsers = review_users.map((reviewUser, index) => ({
@@ -44,8 +48,11 @@ export default function ReviewPlayers({ route, navigation }) {
 
       notify({ message: t('reviewPlayers.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigation.goBack();
     } catch (error) {
+      setLoading(false);
       console.log(error);
       notify({ message: t('reviewPlayers.errorMessage'), type: 'danger' });
     }

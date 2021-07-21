@@ -12,9 +12,11 @@ import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import { notify } from '../../../../helpers';
 import { updatePassword } from '../../../../services';
+import { useLoader } from '../../../../hooks';
 
 export default function ChangePassword({ navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const {
     handleSubmit,
@@ -30,14 +32,19 @@ export default function ChangePassword({ navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { password, confirm_password } = values;
 
       await updatePassword(password, confirm_password);
 
       notify({ message: t('changePassword.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigation.navigate('Settings');
     } catch (error) {
+      setLoading(false);
       notify({ message: t('changePassword.errorMessage'), type: 'danger' });
     }
   };

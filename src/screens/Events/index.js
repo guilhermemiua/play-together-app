@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { normalize } from 'react-native-elements';
@@ -8,62 +8,20 @@ import { COLORS, METRICS } from '../../constants';
 import Text from '../../components/Text';
 import Header from '../../components/Header';
 import EventCard from '../../components/EventCard';
-import { getEvents } from '../../services';
 import { useEventFilter } from '../../hooks';
 
-export default function Events({ navigation, route }) {
+export default function Events({ navigation }) {
   const { t } = useTranslation();
-  const { cityId, city } = useEventFilter();
-
-  const firstUpdate = useRef(true);
-
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [total, setTotal] = useState(0);
-  const [events, setEvents] = useState([]);
+  const { city, setOffset, offset, limit, total, events } = useEventFilter();
 
   const goToSelectCity = () => navigation.navigate('EventSelectCity');
   const navigateToChooseSport = () => navigation.navigate('ChooseSport');
-
-  // TODO: ADD PAGINATION
-  const handleGetEvents = async () => {
-    const { data } = await getEvents({
-      offset,
-      limit,
-      type: 'upcoming',
-      cityId,
-    });
-
-    setTotal(data.total);
-    setEvents([...events, ...data.results]);
-  };
 
   const fetchMore = () => {
     if (offset * limit <= total) {
       setOffset((oldOffset) => oldOffset + 1);
     }
   };
-
-  useEffect(() => {
-    if ((offset || offset === 0) && limit) {
-      // if (!firstUpdate.current) {
-      handleGetEvents();
-      // }
-    }
-  }, [offset, limit, cityId]);
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     handleGetEvents();
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
-
-  // useEffect(() => {
-  //   if (firstUpdate.current) {
-  //     firstUpdate.current = false;
-  //   }
-  // }, []);
 
   return (
     <View style={styles.events}>

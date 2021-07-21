@@ -16,9 +16,11 @@ import { editEvent } from '../../../services/event';
 import { notify } from '../../../helpers';
 import SelectStates from '../../../components/SelectStates';
 import SelectCity from '../../../components/SelectCity';
+import { useLoader } from '../../../hooks';
 
 export default function EditEvent({ route, navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const { event } = route.params;
 
@@ -45,6 +47,8 @@ export default function EditEvent({ route, navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const {
         local,
         state_id,
@@ -67,10 +71,13 @@ export default function EditEvent({ route, navigation }) {
 
       notify({ message: t('editEvent.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigation.navigate('ViewEvent', {
         eventId: event.id,
       });
     } catch (error) {
+      setLoading(false);
       notify({ message: t('editEvent.errorMessage'), type: 'danger' });
     }
   };

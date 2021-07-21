@@ -15,9 +15,11 @@ import {
   removeMyFriend,
   sendFriendRequest,
 } from '../../services';
+import { useLoader } from '../../hooks';
 
 export default function ViewUser({ route, navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
   const { user } = route.params;
 
   const [friendStatus, setFriendStatus] = useState(null);
@@ -26,55 +28,82 @@ export default function ViewUser({ route, navigation }) {
   const goToFriendsNotifications = () =>
     navigation.navigate('FriendsNotifications');
 
-  const handleGetMyRating = async () => {
-    const { data } = await getMyRating();
+  const handleFetchData = async () => {
+    try {
+      setLoading(true);
 
-    if (data?.rating > 0) {
-      setRating(data.rating);
+      const { data: ratingData } = await getMyRating();
+      const { data: friendStatusData } = await getFriendStatus(user.id);
+
+      if (ratingData?.rating > 0) {
+        setRating(ratingData.rating);
+      }
+
+      setFriendStatus(friendStatusData);
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
   const handleSendFriendRequest = async () => {
     try {
+      setLoading(true);
+
       await sendFriendRequest(user.id);
 
-      await handleGetFriendStatus();
+      await handleFetchData();
+
+      setLoading(false);
 
       notify({
         type: 'success',
         message: t('viewUser.sendFriendRequestSuccess'),
       });
     } catch (error) {
+      setLoading(false);
+
       notify({ type: 'danger', message: t('viewUser.sendFriendRequestError') });
     }
   };
 
   const handleRemoveFriend = async () => {
     try {
+      setLoading(true);
       await removeMyFriend(user.id);
 
-      await handleGetFriendStatus();
+      await handleFetchData();
+
+      setLoading(false);
 
       notify({
         type: 'success',
         message: t('viewUser.removeFriendSuccess'),
       });
     } catch (error) {
+      setLoading(false);
+
       notify({ type: 'danger', message: t('viewUser.removeFriendError') });
     }
   };
 
   const handleRemoveFriendRequest = async () => {
     try {
+      setLoading(true);
       await cancelFriendRequest(friendStatus?.friend_request?.id);
 
-      await handleGetFriendStatus();
+      await handleFetchData();
+
+      setLoading(false);
 
       notify({
         type: 'success',
         message: t('viewUser.cancelFriendRequestSuccess'),
       });
     } catch (error) {
+      setLoading(false);
+
       notify({
         type: 'danger',
         message: t('viewUser.cancelFriendRequestError'),
@@ -82,21 +111,10 @@ export default function ViewUser({ route, navigation }) {
     }
   };
 
-  const handleGetFriendStatus = async () => {
-    try {
-      const { data } = await getFriendStatus(user.id);
-
-      setFriendStatus(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (user) {
-        handleGetFriendStatus();
-        handleGetMyRating();
+        handleFetchData();
       }
     });
     return unsubscribe;

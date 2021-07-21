@@ -20,9 +20,13 @@ import {
   joinEvent,
   removeUserFromEvent,
 } from '../../../services';
+import { useEventFilter, useLoader } from '../../../hooks';
 
 export default function ViewEvent({ navigation, route }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
+  const { setRefetch } = useEventFilter();
+  const { setLoading } = useLoader();
 
   const { eventId, type } = route.params;
 
@@ -30,8 +34,6 @@ export default function ViewEvent({ navigation, route }) {
   const [participants, setParticipants] = useState([]);
   const [isParticipant, setIsParticipant] = useState(false);
   const [hasReviewedUsers, setHasReviewedUsers] = useState(false);
-
-  const { loggedUser } = useAuth();
 
   const navigateToSettings = () =>
     navigation.navigate('ViewEventSettings', {
@@ -59,6 +61,8 @@ export default function ViewEvent({ navigation, route }) {
         ...currentParticipants,
         loggedUser,
       ]);
+
+      setRefetch(true);
 
       notify({
         type: 'success',
@@ -88,21 +92,29 @@ export default function ViewEvent({ navigation, route }) {
   };
 
   const fetchAndSetEvent = async () => {
-    const { data: eventData } = await getEvent(eventId);
-    const { data: userReviews } = await getMyReviewsByEvent(eventId);
+    try {
+      setLoading(true);
 
-    console.log(userReviews);
+      const { data: eventData } = await getEvent(eventId);
+      const { data: userReviews } = await getMyReviewsByEvent(eventId);
 
-    setHasReviewedUsers(userReviews.length);
-    setEvent(eventData);
-    setParticipants([eventData.user, ...eventData.users]);
+      setHasReviewedUsers(userReviews.length);
+      setEvent(eventData);
+      setParticipants([eventData.user, ...eventData.users]);
 
-    if (loggedUser.id === eventData.user_id) {
-      setIsParticipant(true);
-    } else {
-      setIsParticipant(
-        eventData.users.some((participant) => participant.id === loggedUser.id)
-      );
+      if (loggedUser.id === eventData.user_id) {
+        setIsParticipant(true);
+      } else {
+        setIsParticipant(
+          eventData.users.some(
+            (participant) => participant.id === loggedUser.id
+          )
+        );
+      }
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 

@@ -14,9 +14,11 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import InputContainer from '../../../components/InputContainer';
 import { notify } from '../../../helpers/showMessage';
 import { updatePasswordByEmail } from '../../../services';
+import { useLoader } from '../../../hooks';
 
 export default function ForgotPasswordNewPassword({ navigation, route }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const { email } = route.params;
 
@@ -35,6 +37,8 @@ export default function ForgotPasswordNewPassword({ navigation, route }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { password } = values;
 
       await updatePasswordByEmail(email, password);
@@ -44,8 +48,12 @@ export default function ForgotPasswordNewPassword({ navigation, route }) {
         type: 'success',
       });
 
+      setLoading(false);
+
       await navigateToLogin();
     } catch (error) {
+      setLoading(false);
+
       notify({
         message: t('forgotPasswordNewPassword.errorMessage'),
         type: 'danger',

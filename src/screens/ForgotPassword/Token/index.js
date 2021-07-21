@@ -14,9 +14,11 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import InputContainer from '../../../components/InputContainer';
 import { notify } from '../../../helpers/showMessage';
 import { validateToken } from '../../../services';
+import { useLoader } from '../../../hooks';
 
 export default function ForgotPasswordToken({ navigation, route }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const { email } = route.params;
 
@@ -38,6 +40,8 @@ export default function ForgotPasswordToken({ navigation, route }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { token } = values;
 
       await validateToken(email, token);
@@ -47,9 +51,13 @@ export default function ForgotPasswordToken({ navigation, route }) {
         type: 'success',
       });
 
+      setLoading(false);
+
       await navigateToNewPassword();
     } catch (error) {
       console.log(error);
+      setLoading(false);
+
       notify({
         message: t('forgotPasswordToken.errorMessage'),
         type: 'danger',

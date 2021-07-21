@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, View, StyleSheet, FlatList } from 'react-native';
 import { normalize } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,12 +15,17 @@ import {
   getReceivedFriendRequests,
 } from '../../../services';
 import Button from '../../../components/Button';
+import { useLoader } from '../../../hooks';
 
-export default function Notifications() {
+export default function Notifications({ navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
+
+  const firstUpdate = useRef(true);
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
   const [friendRequestsReceived, setFriendRequestsReceived] = useState([]);
 
   const handleGetReceivedFriendRequests = async () => {
@@ -31,21 +36,46 @@ export default function Notifications() {
 
   const handleAcceptFriendRequest = async (friendRequestId) => {
     try {
+      setLoading(true);
+
       const { data } = await acceptFriendRequest(friendRequestId);
 
       setFriendRequestsReceived(data.results);
+      setLoading(false);
 
       await handleGetReceivedFriendRequests();
     } catch (error) {
+      setLoading(false);
       console.log(error);
+    }
+  };
+
+  const fetchMore = () => {
+    if (offset * limit <= total) {
+      setOffset((oldOffset) => oldOffset + 1);
     }
   };
 
   useEffect(() => {
     if ((offset || offset === 0) && limit) {
-      handleGetReceivedFriendRequests();
+      if (!firstUpdate.current) {
+        handleGetReceivedFriendRequests();
+      }
     }
   }, [offset, limit]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleGetReceivedFriendRequests();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+    }
+  }, []);
 
   return (
     <View style={styles.notifications}>
@@ -53,8 +83,8 @@ export default function Notifications() {
       <FlatList
         data={friendRequestsReceived}
         keyExtractor={(item) => item.id.toString()}
-        // onEndReachedThreshold={0.1}
-        // onEndReached={searchUsers}
+        onEndReached={fetchMore}
+        onEndReachedThreshold={0.8}
         renderItem={({ item }) => (
           <View style={[styles.notification]}>
             <TouchableOpacity

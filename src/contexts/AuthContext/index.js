@@ -8,6 +8,7 @@ import {
   removeTokenFromAsyncStorage,
   notify,
 } from '../../helpers';
+import { useLoader } from '../../hooks';
 import { login, getLoggedUser } from '../../services';
 
 export const AuthContext = React.createContext({});
@@ -15,12 +16,16 @@ export const AuthContext = React.createContext({});
 const AuthProvider = ({ children }) => {
   const { t } = useTranslation();
 
+  const { setLoading } = useLoader();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedUser, setLoggedUser] = useState();
 
   const authenticate = async (email, password) => {
     try {
+      setLoading(true);
+
       const { data } = await login(email, password);
 
       await setTokenToAsyncStorage(data.token);
@@ -28,7 +33,9 @@ const AuthProvider = ({ children }) => {
       await getAndSetLoggedUser();
 
       setIsAuthenticated(true);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       notify({ message: t('login.errorMessage'), type: 'danger' });
       console.log(error);
     }

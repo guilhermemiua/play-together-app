@@ -9,18 +9,28 @@ import { COLORS, LANGUAGES_ARRAY, METRICS } from '../../../../constants';
 import TextComponent from '../../../../components/Text';
 import Modal from '../../../../components/Modal';
 import { setLanguageToAsyncStorage } from '../../../../helpers';
+import { useLoader } from '../../../../hooks';
 
 export default function ChangeLanguageModal({ isOpen, toggle, navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const changeLanguage = async (language) => {
-    await setLanguageToAsyncStorage(language);
-    await i18next.changeLanguage(language);
+    try {
+      setLoading(true);
 
-    // Changing navigation title due to not updating automatically when the language is changed
-    await navigation.setParams({
-      title: i18next.t('routes.settings'),
-    });
+      await setLanguageToAsyncStorage(language);
+      await i18next.changeLanguage(language);
+
+      setLoading(false);
+
+      // Changing navigation title due to not updating automatically when the language is changed
+      await navigation.setParams({
+        title: i18next.t('routes.settings'),
+      });
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (

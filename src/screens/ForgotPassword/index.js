@@ -14,9 +14,11 @@ import ErrorMessageComponent from '../../components/ErrorMessage';
 import InputContainerComponent from '../../components/InputContainer';
 import { notify } from '../../helpers/showMessage';
 import { forgotPassword } from '../../services';
+import { useLoader } from '../../hooks';
 
 export default function ForgotPassword({ navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const navigateToToken = (email) =>
     navigation.navigate('ForgotPasswordToken', {
@@ -36,14 +38,20 @@ export default function ForgotPassword({ navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { email } = values;
 
       await forgotPassword(email);
 
       notify({ message: t('forgotPassword.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigateToToken(email);
     } catch (error) {
+      setLoading(false);
+
       if (error.response.status === 404) {
         notify({ message: t('forgotPassword.userNotFound'), type: 'danger' });
 

@@ -1,5 +1,8 @@
 export default {
   translation: {
+    initialPage: {
+      alreadyAPlayer: 'Já é um jogador?',
+    },
     home: {
       welcome: 'Bem vindo,',
       upcomingEvents: 'Próximos eventos',

@@ -4,9 +4,12 @@ import { COLORS } from '../../constants';
 import Header from '../../components/Header';
 import { getMyFriends } from '../../services';
 import UserItem from '../../components/UserItem';
+import { useLoader } from '../../hooks';
 
 export default function Friends({ navigation }) {
   const firstUpdate = useRef(true);
+
+  const { setLoading } = useLoader();
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -25,10 +28,16 @@ export default function Friends({ navigation }) {
 
   // TODO: ADD PAGINATION
   const handleGetMyFriends = async () => {
-    const { data } = await getMyFriends({ offset, limit });
+    try {
+      setLoading(true);
+      const { data } = await getMyFriends({ offset, limit });
 
-    setTotal(data?.total);
-    setMyFriends([...myFriends, ...data?.results]);
+      setLoading(false);
+      setTotal(data?.total);
+      setMyFriends([...myFriends, ...data?.results]);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const fetchMore = () => {

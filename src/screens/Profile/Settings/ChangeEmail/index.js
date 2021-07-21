@@ -12,9 +12,11 @@ import Label from '../../../../components/Label';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import { updateEmail } from '../../../../services';
 import { notify } from '../../../../helpers';
+import { useLoader } from '../../../../hooks';
 
 export default function ChangeEmail({ navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const {
     handleSubmit,
@@ -29,14 +31,18 @@ export default function ChangeEmail({ navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
       const { email } = values;
 
       await updateEmail(email);
 
       notify({ message: t('changeEmail.successMessage'), type: 'success' });
 
+      setLoading(false);
+
       await navigation.navigate('Settings');
     } catch (error) {
+      setLoading(false);
       notify({ message: t('changeEmail.errorMessage'), type: 'danger' });
     }
   };

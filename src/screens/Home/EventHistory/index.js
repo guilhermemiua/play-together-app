@@ -3,9 +3,12 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS, METRICS } from '../../../constants';
 import EventCard from '../../../components/EventCard';
 import { getMyEvents } from '../../../services';
+import Loader from '../../../components/Loader';
+import { useLoader } from '../../../hooks';
 
 export default function EventHistory({ navigation }) {
   const firstUpdate = useRef(true);
+  const { setLoading } = useLoader();
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -14,10 +17,18 @@ export default function EventHistory({ navigation }) {
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
-    const { data } = await getMyEvents({ offset, limit, type: 'past' });
+    try {
+      setLoading(true);
 
-    setTotal(data?.total);
-    setEvents([...events, ...data.results]);
+      const { data } = await getMyEvents({ offset, limit, type: 'past' });
+
+      setTotal(data?.total);
+      setEvents([...events, ...data.results]);
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const fetchMore = () => {
@@ -50,6 +61,7 @@ export default function EventHistory({ navigation }) {
   return (
     <View style={styles.calendar}>
       {/* TODO: APPLY INFINITE */}
+
       <FlatList
         style={styles.eventList}
         data={events}

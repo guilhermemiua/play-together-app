@@ -3,9 +3,11 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS, METRICS } from '../../../constants';
 import EventCard from '../../../components/EventCard';
 import { getMyEvents } from '../../../services';
+import { useLoader } from '../../../hooks';
 
 export default function Calendar({ navigation }) {
   const firstUpdate = useRef(true);
+  const { setLoading } = useLoader();
 
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -14,10 +16,17 @@ export default function Calendar({ navigation }) {
 
   // TODO: ADD PAGINATION
   const getAndSetEvents = async () => {
-    const { data } = await getMyEvents({ offset, limit, type: 'upcoming' });
+    try {
+      setLoading(true);
 
-    setTotal(data?.total);
-    setEvents([...events, ...data.results]);
+      const { data } = await getMyEvents({ offset, limit, type: 'upcoming' });
+
+      setTotal(data?.total);
+      setEvents([...events, ...data.results]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const fetchMore = () => {

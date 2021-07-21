@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import InitialPageImage from '../../assets/images/InitialPage.jpg';
 import { COLORS } from '../../constants/colors';
 import ButtonComponent from '../../components/Button';
@@ -14,6 +15,8 @@ import { METRICS } from '../../constants';
 import TextComponent from '../../components/Text';
 
 function InitialPage({ navigation: { navigate } }) {
+  const { t } = useTranslation();
+
   const navigateToLogin = () => navigate('Login');
   const navigateToRegister = () => navigate('RegisterFirstStep');
 
@@ -44,7 +47,7 @@ function InitialPage({ navigation: { navigate } }) {
 
         <View style={styles.loginView}>
           <TextComponent style={styles.loginText}>
-            Already a player?{' '}
+            {t('initialPage.alreadyAPlayer')}{' '}
           </TextComponent>
           <TouchableOpacity onPress={navigateToLogin}>
             <TextComponent style={styles.loginButton}>Login</TextComponent>

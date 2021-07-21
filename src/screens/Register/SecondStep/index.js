@@ -14,12 +14,14 @@ import ErrorMessageComponent from '../../../components/ErrorMessage';
 import InputContainerComponent from '../../../components/InputContainer';
 import { notify } from '../../../helpers/showMessage';
 import { register } from '../../../services';
+import { useLoader } from '../../../hooks';
 
 export default function RegisterSecondStep({
   navigation: { navigate },
   route,
 }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const { first_name, last_name, age, gender, state_id, city_id } =
     route.params;
@@ -40,6 +42,8 @@ export default function RegisterSecondStep({
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { email, password } = values;
 
       await register({
@@ -53,10 +57,14 @@ export default function RegisterSecondStep({
         city_id,
       });
 
+      setLoading(false);
+
       notify({ message: t('register.successMessage'), type: 'success' });
 
       await navigateToInitialPage();
     } catch (error) {
+      setLoading(false);
+
       notify({ message: t('register.errorMessage'), type: 'danger' });
     }
   };

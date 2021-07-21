@@ -26,6 +26,7 @@ import FilterEventProvider from './contexts/FilterEventContext';
 import theme from './styles/theme';
 
 import './internationalization';
+import LoaderProvider from './contexts/LoaderContext';
 
 export default function App() {
   LogBox.ignoreAllLogs();
@@ -49,15 +50,17 @@ export default function App() {
       }}
     >
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <FilterEventProvider>
-            <NavigationContainer>
-              <StatusBar style="auto" />
+        <LoaderProvider>
+          <AuthProvider>
+            <FilterEventProvider>
+              <NavigationContainer>
+                <StatusBar style="auto" />
 
-              <Routes />
-            </NavigationContainer>
-          </FilterEventProvider>
-        </AuthProvider>
+                <Routes />
+              </NavigationContainer>
+            </FilterEventProvider>
+          </AuthProvider>
+        </LoaderProvider>
       </ThemeProvider>
 
       <FlashMessage position="top" hideStatusBar />

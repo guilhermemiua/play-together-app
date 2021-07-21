@@ -7,13 +7,15 @@ import { notify } from '../../../../helpers';
 import { useAuth } from '../../../../hooks/useAuth';
 import { deleteEvent, disjoinEvent } from '../../../../services';
 import Text from '../../../../components/Text';
+import { useEventFilter, useLoader } from '../../../../hooks';
 
 export default function Settings({ route, navigation }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
+  const { setRefetch } = useEventFilter();
+  const { setLoading } = useLoader();
 
   const { event } = route.params;
-
-  const { loggedUser } = useAuth();
 
   const navigateToEditEvent = () =>
     navigation.navigate('EditEvent', {
@@ -22,15 +24,21 @@ export default function Settings({ route, navigation }) {
 
   const handleDisjoin = async () => {
     try {
+      setLoading(true);
+
       await disjoinEvent(event?.id);
 
-      await navigation.navigate('Events');
+      await navigation.goBack();
 
       notify({
         type: 'success',
         message: t('viewEvent.settings.leftSuccessMessage'),
       });
+
+      setRefetch(true);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       notify({
         type: 'danger',
         message: t('viewEvent.settings.leftErrorMessage'),
@@ -40,6 +48,8 @@ export default function Settings({ route, navigation }) {
 
   const handleDelete = async () => {
     try {
+      setLoading(true);
+
       await deleteEvent(event?.id);
 
       await navigation.navigate('Events');
@@ -48,7 +58,11 @@ export default function Settings({ route, navigation }) {
         type: 'success',
         message: t('viewEvent.settings.deleteSuccessMessage'),
       });
+
+      setRefetch(true);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       notify({
         type: 'danger',
         message: t('viewEvent.settings.deleteErrorMessage'),
