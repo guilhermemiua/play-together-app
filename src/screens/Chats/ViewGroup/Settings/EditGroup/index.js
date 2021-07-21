@@ -16,9 +16,11 @@ import DefaultProfileImage from '../../../../../assets/images/DefaultProfile.png
 
 import { editGroup } from '../../../../../services';
 import { getImage, notify } from '../../../../../helpers';
+import { useLoader } from '../../../../../hooks';
 
 export default function EditGroup({ route, navigation }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
 
   const { group } = route.params;
 
@@ -38,6 +40,8 @@ export default function EditGroup({ route, navigation }) {
 
   const submit = async (values) => {
     try {
+      setLoading(true);
+
       const { name } = values;
 
       await editGroup(group.id, {
@@ -45,10 +49,13 @@ export default function EditGroup({ route, navigation }) {
         group_image: image,
       });
 
+      setLoading(false);
+
       notify({ message: t('editGroupChat.successMessage'), type: 'success' });
 
       await navigation.navigate('Chats');
     } catch (error) {
+      setLoading(false);
       console.log(error);
       notify({ message: t('editGroupChat.errorMessage'), type: 'danger' });
     }

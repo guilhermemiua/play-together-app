@@ -4,15 +4,16 @@ import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 
 import { COLORS, METRICS } from '../../../../constants';
 import { notify } from '../../../../helpers';
+import { useLoader } from '../../../../hooks';
 import { useAuth } from '../../../../hooks/useAuth';
 import { deleteGroup, disjoinGroup } from '../../../../services';
 
 export default function Settings({ route, navigation }) {
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
+  const { setLoading } = useLoader();
 
   const { group } = route.params;
-
-  const { loggedUser } = useAuth();
 
   const navigateToEditGroup = () =>
     navigation.navigate('EditGroup', {
@@ -26,7 +27,11 @@ export default function Settings({ route, navigation }) {
 
   const handleDisjoin = async () => {
     try {
+      setLoading(true);
+
       await disjoinGroup(group?.id);
+
+      setLoading(false);
 
       await navigation.navigate('Chats');
 
@@ -35,6 +40,7 @@ export default function Settings({ route, navigation }) {
         message: t('viewGroup.settings.leftSuccessMessage'),
       });
     } catch (error) {
+      setLoading(false);
       notify({
         type: 'danger',
         message: t('viewGroup.settings.leftErrorMessage'),
@@ -44,7 +50,11 @@ export default function Settings({ route, navigation }) {
 
   const handleDelete = async () => {
     try {
+      setLoading(true);
+
       await deleteGroup(group?.id);
+
+      setLoading(false);
 
       await navigation.navigate('Chats');
 
@@ -53,6 +63,7 @@ export default function Settings({ route, navigation }) {
         message: t('viewGroup.settings.deleteSuccessMessage'),
       });
     } catch (error) {
+      setLoading(false);
       notify({
         type: 'danger',
         message: t('viewGroup.settings.deleteErrorMessage'),

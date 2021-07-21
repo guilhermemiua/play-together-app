@@ -4,8 +4,11 @@ import { COLORS } from '../../constants';
 import Header from '../../components/Header';
 import { getMyFriends, getMyGroups } from '../../services';
 import ChatItem from '../../components/ChatItem';
+import { useLoader } from '../../hooks';
 
 export default function Chats({ navigation }) {
+  const { setLoading } = useLoader();
+
   const [chats, setChats] = useState([]);
 
   const navigateToChatsSettings = () => navigation.navigate('ChatsSettings');
@@ -21,19 +24,26 @@ export default function Chats({ navigation }) {
     });
 
   const handleGetChats = async () => {
-    const { data: groupsData } = await getMyGroups({});
-    const { data: friendsData } = await getMyFriends({});
+    try {
+      setLoading(true);
 
-    setChats([
-      ...groupsData.map((group) => ({
-        ...group,
-        type: 'group',
-      })),
-      ...friendsData.map((friend) => ({
-        ...friend.friend,
-        type: 'friend',
-      })),
-    ]);
+      const { data: groupsData } = await getMyGroups({});
+      const { data: friendsData } = await getMyFriends({});
+
+      setChats([
+        ...groupsData.map((group) => ({
+          ...group,
+          type: 'group',
+        })),
+        ...friendsData.map((friend) => ({
+          ...friend.friend,
+          type: 'friend',
+        })),
+      ]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

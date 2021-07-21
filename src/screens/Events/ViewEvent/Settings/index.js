@@ -28,15 +28,15 @@ export default function Settings({ route, navigation }) {
 
       await disjoinEvent(event?.id);
 
+      setRefetch(true);
+      setLoading(false);
+
       await navigation.goBack();
 
       notify({
         type: 'success',
         message: t('viewEvent.settings.leftSuccessMessage'),
       });
-
-      setRefetch(true);
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       notify({
@@ -52,15 +52,15 @@ export default function Settings({ route, navigation }) {
 
       await deleteEvent(event?.id);
 
-      await navigation.navigate('Events');
+      setRefetch(true);
+      setLoading(false);
+
+      await navigation.goBack();
 
       notify({
         type: 'success',
         message: t('viewEvent.settings.deleteSuccessMessage'),
       });
-
-      setRefetch(true);
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       notify({

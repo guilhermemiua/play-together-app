@@ -6,10 +6,13 @@ import UserItem from '../../../../../components/UserItem';
 
 import { COLORS, METRICS } from '../../../../../constants';
 import { notify } from '../../../../../helpers';
+import { useLoader } from '../../../../../hooks';
 import { addUserToGroup, getMyFriends } from '../../../../../services';
 
 export default function AddUser({ navigation, route }) {
   const { t } = useTranslation();
+  const { setLoading } = useLoader();
+
   const { group } = route.params;
 
   const firstUpdate = useRef(true);
@@ -21,7 +24,13 @@ export default function AddUser({ navigation, route }) {
 
   const handleAddUserToGroup = async (user) => {
     try {
+      setLoading(true);
+
       await addUserToGroup(group.id, user.id);
+
+      setLoading(false);
+
+      notify({ message: t('addUserToGroup.successMessage'), type: 'success' });
 
       await navigation.navigate('ViewGroup', {
         group: {
@@ -30,18 +39,24 @@ export default function AddUser({ navigation, route }) {
         },
         title: group.name,
       });
-
-      notify({ message: t('addUserToGroup.successMessage'), type: 'success' });
     } catch (error) {
+      setLoading(false);
       notify({ message: t('addUserToGroup.errorMessage'), type: 'danger' });
     }
   };
 
   const handleGetMyFriends = async () => {
-    const { data } = await getMyFriends({ offset, limit });
+    try {
+      setLoading(true);
 
-    setTotal(data?.total);
-    setFriends([...friends, ...data?.results]);
+      const { data } = await getMyFriends({ offset, limit });
+
+      setTotal(data?.total);
+      setFriends([...friends, ...data?.results]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const fetchMore = () => {

@@ -9,28 +9,35 @@ import Button from '../../../components/Button';
 import UserItem from '../../../components/UserItem';
 import { useAuth } from '../../../hooks/useAuth';
 import { removeUserFromGroup } from '../../../services';
+import { useLoader } from '../../../hooks';
 
 export default function ViewGroup({ route, navigation }) {
   const { group } = route.params;
 
-  const { loggedUser } = useAuth();
   const { t } = useTranslation();
+  const { loggedUser } = useAuth();
+  const { setLoading } = useLoader();
 
   const [participants, setParticipants] = useState([]);
 
   const handleDeleteUser = async (userId) => {
     try {
+      setLoading(true);
+
       await removeUserFromGroup(group.id, userId);
 
       setParticipants(
         participants.filter((participant) => participant.id !== userId)
       );
 
+      setLoading(false);
+
       notify({
         type: 'success',
         message: t('viewGroup.settings.removeUserFromGroupSuccessMessage'),
       });
     } catch (error) {
+      setLoading(false);
       notify({
         type: 'danger',
         message: t('viewGroup.settings.removeUserFromGroupErrorMessage'),
