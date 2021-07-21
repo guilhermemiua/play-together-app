@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.0.16:3333';
+const BASE_URL = 'https://guilherme-eiti-tcc-api.herokuapp.com';
 
 const api = axios.create({
   baseURL: BASE_URL,
