@@ -29,9 +29,15 @@ export default function Notifications({ navigation }) {
   const [friendRequestsReceived, setFriendRequestsReceived] = useState([]);
 
   const handleGetReceivedFriendRequests = async () => {
-    const { data } = await getReceivedFriendRequests({ offset, limit });
+    try {
+      setLoading(true);
+      const { data } = await getReceivedFriendRequests({ offset, limit });
 
-    setFriendRequestsReceived(data.results);
+      setFriendRequestsReceived([...friendRequestsReceived, ...data.results]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const handleAcceptFriendRequest = async (friendRequestId) => {

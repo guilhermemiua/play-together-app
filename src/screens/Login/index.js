@@ -47,10 +47,11 @@ export default function Login({ navigation: { navigate } }) {
             render={({ field: { onChange, value, ref } }) => (
               <InputComponent
                 onChangeText={(text) => {
-                  onChange(text);
+                  onChange(text.trim());
                 }}
                 value={value}
                 inputRef={ref}
+                autoCapitalize="none"
               />
             )}
           />
@@ -70,6 +71,7 @@ export default function Login({ navigation: { navigate } }) {
                 onChangeText={(text) => onChange(text)}
                 value={value}
                 inputRef={ref}
+                autoCapitalize="none"
               />
             )}
           />

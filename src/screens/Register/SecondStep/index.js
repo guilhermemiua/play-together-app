@@ -80,10 +80,11 @@ export default function RegisterSecondStep({
             render={({ field: { onChange, value, ref } }) => (
               <InputComponent
                 onChangeText={(text) => {
-                  onChange(text);
+                  onChange(text.trim());
                 }}
                 value={value}
                 inputRef={ref}
+                autoCapitalize="none"
               />
             )}
           />
@@ -105,6 +106,7 @@ export default function RegisterSecondStep({
                 value={value}
                 inputRef={ref}
                 secureTextEntry
+                autoCapitalize="none"
               />
             )}
           />

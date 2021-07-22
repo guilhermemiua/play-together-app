@@ -29,7 +29,7 @@ export default function AddFriend({ navigation }) {
 
       setLoading(false);
       setTotal(data?.total);
-      setUsers(data.results);
+      setUsers([...users, ...data.results]);
     } catch (error) {
       setLoading(false);
     }

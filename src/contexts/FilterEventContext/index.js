@@ -76,6 +76,7 @@ const FilterEventProvider = ({ children }) => {
 
   useEffect(() => {
     if (loggedUser) {
+      handleGetEvents();
       setStateId(loggedUser?.state_id);
       setCityId(loggedUser?.city_id);
       setCurrentCityId(loggedUser?.city_id);
@@ -90,10 +91,6 @@ const FilterEventProvider = ({ children }) => {
       setRefetch(false);
     }
   }, [refetch]);
-
-  useEffect(() => {
-    handleGetEvents();
-  }, []);
 
   return (
     <FilterEventContext.Provider
