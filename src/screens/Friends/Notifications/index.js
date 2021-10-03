@@ -44,12 +44,13 @@ export default function Notifications({ navigation }) {
     try {
       setLoading(true);
 
-      const { data } = await acceptFriendRequest(friendRequestId);
+      await acceptFriendRequest(friendRequestId);
 
-      setFriendRequestsReceived(data.results);
+      setFriendRequestsReceived(
+        friendRequestsReceived.filter((item) => item.id !== friendRequestId)
+      );
+
       setLoading(false);
-
-      await handleGetReceivedFriendRequests();
     } catch (error) {
       setLoading(false);
       console.log(error);

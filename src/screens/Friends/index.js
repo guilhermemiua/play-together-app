@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
-import { getMyFriends } from '../../services';
+import { getMyFriends, getTotalReceivedFriendRequests } from '../../services';
 import UserItem from '../../components/UserItem';
 import { useLoader } from '../../hooks';
 
@@ -14,6 +14,7 @@ export default function Friends({ navigation }) {
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState(0);
+  const [totalNotifications, setTotalNotifications] = useState(0);
   const [myFriends, setMyFriends] = useState([]);
 
   const navigateToNotifications = () =>
@@ -27,13 +28,16 @@ export default function Friends({ navigation }) {
   };
 
   // TODO: ADD PAGINATION
-  const handleGetMyFriends = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
       const { data } = await getMyFriends({ offset, limit });
+      const { data: totalFriendRequestsReceived } =
+        await getTotalReceivedFriendRequests();
 
       setLoading(false);
       setTotal(data?.total);
+      setTotalNotifications(totalFriendRequestsReceived?.count);
       setMyFriends([...myFriends, ...data?.results]);
     } catch (error) {
       setLoading(false);
@@ -49,14 +53,14 @@ export default function Friends({ navigation }) {
   useEffect(() => {
     if ((offset || offset === 0) && limit) {
       if (!firstUpdate.current) {
-        handleGetMyFriends();
+        fetchData();
       }
     }
   }, [offset, limit]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      handleGetMyFriends();
+      fetchData();
     });
     return unsubscribe;
   }, [navigation]);
@@ -76,6 +80,8 @@ export default function Friends({ navigation }) {
             name: 'bell',
             type: 'feather',
             onPress: navigateToNotifications,
+            badge: true,
+            badgeValue: totalNotifications,
           },
           {
             name: 'user-plus',

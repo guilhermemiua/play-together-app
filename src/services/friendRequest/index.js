@@ -50,6 +50,16 @@ export const getReceivedFriendRequests = async ({ offset, limit }) => {
   );
 };
 
+export const getTotalReceivedFriendRequests = async () => {
+  const token = await getToken();
+
+  return api.get(`/friend-request/received/total`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const acceptFriendRequest = async (friendRequestId) => {
   const token = await getToken();
 

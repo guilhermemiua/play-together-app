@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
+import { Badge } from 'react-native-elements';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Title from '../Title';
 
@@ -12,15 +13,37 @@ export default function Header({ style, title = '', icons = [] }) {
       </Title>
       <View style={{ flexDirection: 'row' }}>
         {icons.map((icon) => (
-          <Icon
-            key={icon.name}
-            name={icon.name}
-            type={icon.type}
-            color={COLORS.black}
-            size={25}
-            onPress={icon.onPress}
-            containerStyle={{ marginLeft: normalize(20) }}
-          />
+          <>
+            {icon.badge && icon.badgeValue ? (
+              <View>
+                <Icon
+                  key={icon.name}
+                  name={icon.name}
+                  type={icon.type}
+                  color={COLORS.black}
+                  size={25}
+                  onPress={icon.onPress}
+                  containerStyle={{ marginLeft: normalize(20) }}
+                />
+
+                <Badge
+                  status="success"
+                  containerStyle={{ position: 'absolute', top: -5, right: -7 }}
+                  value={icon.badgeValue}
+                />
+              </View>
+            ) : (
+              <Icon
+                key={icon.name}
+                name={icon.name}
+                type={icon.type}
+                color={COLORS.black}
+                size={25}
+                onPress={icon.onPress}
+                containerStyle={{ marginLeft: normalize(20) }}
+              />
+            )}
+          </>
         ))}
       </View>
     </View>
