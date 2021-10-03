@@ -56,7 +56,7 @@ export default function EditGroup({ route, navigation }) {
       await navigation.navigate('Chats');
     } catch (error) {
       setLoading(false);
-      console.log(error);
+
       notify({ message: t('editGroupChat.errorMessage'), type: 'danger' });
     }
   };

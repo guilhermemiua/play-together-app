@@ -29,8 +29,6 @@ const FilterEventProvider = ({ children }) => {
         cityId,
       });
 
-      console.log(data);
-
       setLoading(false);
       setTotal(data.total);
       setEvents(data.results);

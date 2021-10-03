@@ -53,7 +53,7 @@ export default function ReviewPlayers({ route, navigation }) {
       await navigation.goBack();
     } catch (error) {
       setLoading(false);
-      console.log(error);
+
       notify({ message: t('reviewPlayers.errorMessage'), type: 'danger' });
     }
   };

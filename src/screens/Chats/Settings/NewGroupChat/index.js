@@ -46,7 +46,7 @@ export default function NewGroupChat({ navigation }) {
       await navigation.goBack();
       await navigation.goBack();
     } catch (error) {
-      console.log(error);
+
       notify({ message: t('newGroupChat.errorMessage'), type: 'danger' });
     }
   };

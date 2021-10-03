@@ -29,7 +29,7 @@ export default function Chat({ route }) {
         chatRoomId: `event-${event.id}`,
       });
     } catch (error) {
-      console.log(error);
+
       notify({ type: 'danger', message: t('eventChat.errorMessage') });
     }
   };

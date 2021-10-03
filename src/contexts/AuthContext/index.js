@@ -37,7 +37,6 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       setLoading(false);
       notify({ message: t('login.errorMessage'), type: 'danger' });
-      console.log(error);
     }
   };
 

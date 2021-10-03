@@ -53,7 +53,6 @@ export default function Notifications({ navigation }) {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
 

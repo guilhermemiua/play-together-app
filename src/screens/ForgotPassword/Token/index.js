@@ -55,7 +55,7 @@ export default function ForgotPasswordToken({ navigation, route }) {
 
       await navigateToNewPassword();
     } catch (error) {
-      console.log(error);
+
       setLoading(false);
 
       notify({

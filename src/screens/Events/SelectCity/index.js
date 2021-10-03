@@ -48,7 +48,6 @@ export default function EventSelectCity({ navigation }) {
 
       await navigation.navigate('Events');
     } catch (error) {
-      console.log(error);
       notify({
         message: t('eventSelectCity.errorMessage'),
         type: 'danger',

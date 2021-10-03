@@ -29,7 +29,6 @@ export default function GroupChat({ route }) {
         chatRoomId: `group-${group.id}`,
       });
     } catch (error) {
-      console.log(error);
       notify({ type: 'danger', message: t('groupChat.errorMessage') });
     }
   };

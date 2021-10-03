@@ -72,7 +72,7 @@ export default function EditProfile({ navigation }) {
       await navigation.navigate('Profile');
     } catch (error) {
       setLoading(false);
-      console.log(error);
+
       notify({ message: t('editProfile.errorMessage'), type: 'danger' });
     }
   };

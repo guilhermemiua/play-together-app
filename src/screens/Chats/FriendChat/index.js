@@ -39,7 +39,7 @@ export default function FriendChat({ route, navigation }) {
         });
       }
     } catch (error) {
-      console.log(error);
+
       notify({ type: 'danger', message: t('friendChat.errorMessage') });
     }
   };
