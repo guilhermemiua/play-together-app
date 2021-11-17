@@ -15,10 +15,12 @@ const schema = yup.object().shape({
     .required(i18next.t('register.firstStep.error.genderRequired')),
   state_id: yup
     .string()
-    .required(i18next.t('register.firstStep.error.stateRequired')),
+    .required(i18next.t('register.firstStep.error.stateRequired'))
+    .nullable(),
   city_id: yup
     .string()
-    .required(i18next.t('register.firstStep.error.cityRequired')),
+    .required(i18next.t('register.firstStep.error.cityRequired'))
+    .nullable(),
 });
 
 export default schema;
