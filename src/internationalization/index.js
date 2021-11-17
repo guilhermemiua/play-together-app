@@ -31,7 +31,7 @@ i18n
   .init({
     initImmediate: false,
     resources,
-    fallbackLng: 'pt-BR',
+    fallbackLng: 'en-US',
     interpolation: {
       escapeValue: false,
     },
