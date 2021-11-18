@@ -1,4 +1,4 @@
-import i18next from '../../internationalization';
+import i18next from 'i18next';
 
 const SPORTS_OBJECT = {};
 

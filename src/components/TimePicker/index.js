@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Platform, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Icon } from 'react-native-elements';
-import i18next from '../../internationalization';
+import i18next from 'i18next';
 import { COLORS, METRICS, normalize } from '../../constants';
 import Text from '../Text';
 import { formatTimeToLocale } from '../../helpers';
