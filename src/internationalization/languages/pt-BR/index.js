@@ -280,6 +280,8 @@ export default {
     },
     friendsNotifications: {
       sentFriendRequest: 'Enviou uma solicitação de amizade.',
+      accept: 'Aceitar',
+      decline: 'Recusar',
     },
     settings: {
       changeLanguage: 'Alterar idioma',

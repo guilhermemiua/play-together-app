@@ -122,12 +122,12 @@ export default function Notifications({ navigation }) {
 
             <View style={{ flexDirection: 'row' }}>
               <Button
-                title="Accept"
+                title={t('friendsNotifications.accept')}
                 containerStyle={{ flex: 1, marginRight: normalize(5) }}
                 onPress={() => handleAcceptFriendRequest(item.id)}
               />
               <Button
-                title="Decline"
+                title={t('friendsNotifications.decline')}
                 containerStyle={{ flex: 1, marginLeft: normalize(5) }}
                 type="outline"
               />

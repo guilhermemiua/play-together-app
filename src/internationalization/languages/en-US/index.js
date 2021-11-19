@@ -278,6 +278,8 @@ export default {
     },
     friendsNotifications: {
       sentFriendRequest: 'Sent you a friend request.',
+      accept: 'Accept',
+      decline: 'Decline',
     },
     settings: {
       changeLanguage: 'Change language',
