@@ -269,6 +269,9 @@ export default {
       cancelFriendRequestSuccess: 'Friend request cancelled successfully!',
       cancelFriendRequestError: 'Cancel friend request error',
     },
+    friends: {
+      title: 'Friends',
+    },
     addFriend: {
       nameLabel: 'Name',
       nameInputPlaceholder: 'Search..',

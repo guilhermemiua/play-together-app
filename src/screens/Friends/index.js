@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../constants';
 import Header from '../../components/Header';
 import { getMyFriends, getTotalReceivedFriendRequests } from '../../services';
@@ -7,6 +8,7 @@ import UserItem from '../../components/UserItem';
 import { useLoader } from '../../hooks';
 
 export default function Friends({ navigation }) {
+  const { t } = useTranslation();
   const firstUpdate = useRef(true);
 
   const { setLoading } = useLoader();
@@ -74,7 +76,7 @@ export default function Friends({ navigation }) {
   return (
     <View style={styles.friends}>
       <Header
-        title="Friends"
+        title={t('friends.title')}
         icons={[
           {
             name: 'bell',

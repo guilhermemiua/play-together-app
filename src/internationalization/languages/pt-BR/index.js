@@ -271,6 +271,9 @@ export default {
         'Solicitação de amizade cancelada com sucesso!',
       cancelFriendRequestError: 'Erro ao cancelar solicitação de amizade',
     },
+    friends: {
+      title: 'Amizades',
+    },
     addFriend: {
       nameLabel: 'Nome',
       nameInputPlaceholder: 'Pesquisar..',
