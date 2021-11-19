@@ -1,12 +1,11 @@
 import * as yup from 'yup';
 
-import i18next from 'i18next';
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email(i18next.t('changeEmail.error.emailType'))
-    .required(i18next.t('changeEmail.error.emailInvalid')),
-});
+const schema = (t) =>
+  yup.object().shape({
+    email: yup
+      .string()
+      .email(t('changeEmail.error.emailInvalid'))
+      .required(t('changeEmail.error.emailRequired')),
+  });
 
 export default schema;

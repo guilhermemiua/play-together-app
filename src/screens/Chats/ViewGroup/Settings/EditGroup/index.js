@@ -35,7 +35,7 @@ export default function EditGroup({ route, navigation }) {
     defaultValues: {
       name: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {

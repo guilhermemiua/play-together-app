@@ -40,7 +40,7 @@ function InitialPage({ navigation: { navigate } }) {
         </TitleComponent>
 
         <ButtonComponent
-          title="Register"
+          title={t('initialPage.register')}
           style={styles.registerButton}
           onPress={navigateToRegister}
         />

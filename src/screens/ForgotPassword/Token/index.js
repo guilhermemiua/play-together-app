@@ -35,7 +35,7 @@ export default function ForgotPasswordToken({ navigation, route }) {
     defaultValues: {
       token: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {
@@ -55,7 +55,6 @@ export default function ForgotPasswordToken({ navigation, route }) {
 
       await navigateToNewPassword();
     } catch (error) {
-
       setLoading(false);
 
       notify({

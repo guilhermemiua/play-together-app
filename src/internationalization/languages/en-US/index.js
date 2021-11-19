@@ -1,6 +1,7 @@
 export default {
   translation: {
     initialPage: {
+      register: 'Register',
       alreadyAPlayer: 'Already a player?',
     },
     home: {
@@ -139,6 +140,7 @@ export default {
         startTimeRequired: 'Enter start time',
         endTimeRequired: 'Enter end time',
         playersQuantityRequired: 'Enter players quantity',
+        playersQuantityMin: 'Minimum 2 players',
         startTimeGreaterThanCurrentTime:
           'Start time should be greather than current time',
         endTimeGreaterThanStartTime:

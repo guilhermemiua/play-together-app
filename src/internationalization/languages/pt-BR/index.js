@@ -1,6 +1,7 @@
 export default {
   translation: {
     initialPage: {
+      register: 'Cadastrar',
       alreadyAPlayer: 'Já é um jogador?',
     },
     home: {
@@ -140,6 +141,7 @@ export default {
         startTimeRequired: 'Insira a hora de início',
         endTimeRequired: 'Insira a hora de término',
         playersQuantityRequired: 'Insira a quantidade de jogadores',
+        playersQuantityMin: 'Mínimo de 2 jogadores',
         startTimeGreaterThanCurrentTime:
           'Hora de início deve ser maior que a hora atual',
         endTimeGreaterThanStartTime:

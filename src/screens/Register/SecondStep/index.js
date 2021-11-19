@@ -37,7 +37,7 @@ export default function RegisterSecondStep({
       email: '',
       password: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {

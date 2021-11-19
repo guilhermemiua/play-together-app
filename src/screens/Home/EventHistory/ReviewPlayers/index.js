@@ -66,7 +66,7 @@ export default function ReviewPlayers({ route, navigation }) {
     defaultValues: {
       review_users: [],
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   useFieldArray({

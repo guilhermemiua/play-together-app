@@ -33,7 +33,7 @@ export default function RegisterFirstStep({ navigation: { navigate } }) {
       state_id: '',
       city_id: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const watchStateId = watch('state_id');

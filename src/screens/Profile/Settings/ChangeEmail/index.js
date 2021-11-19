@@ -26,7 +26,7 @@ export default function ChangeEmail({ navigation }) {
     defaultValues: {
       email: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {

@@ -37,7 +37,7 @@ export default function CreateEvent({ route, navigation }) {
       end_time: null,
       players_quantity: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const watchStateId = watch('state_id');

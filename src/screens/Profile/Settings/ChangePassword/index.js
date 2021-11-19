@@ -27,7 +27,7 @@ export default function ChangePassword({ navigation }) {
       password: '',
       confirm_password: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {

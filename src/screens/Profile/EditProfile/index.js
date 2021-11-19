@@ -42,7 +42,7 @@ export default function EditProfile({ navigation }) {
       state_id: '',
       city_id: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const watchStateId = watch('state_id');

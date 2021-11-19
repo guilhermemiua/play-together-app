@@ -29,7 +29,7 @@ export default function NewGroupChat({ navigation }) {
     defaultValues: {
       name: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {
@@ -46,7 +46,6 @@ export default function NewGroupChat({ navigation }) {
       await navigation.goBack();
       await navigation.goBack();
     } catch (error) {
-
       notify({ message: t('newGroupChat.errorMessage'), type: 'danger' });
     }
   };

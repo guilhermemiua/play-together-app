@@ -32,7 +32,7 @@ export default function ForgotPasswordNewPassword({ navigation, route }) {
     defaultValues: {
       password: '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(t)),
   });
 
   const submit = async (values) => {
