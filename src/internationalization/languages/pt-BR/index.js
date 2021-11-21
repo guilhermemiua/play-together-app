@@ -336,6 +336,10 @@ export default {
       baseball: 'Beisebol',
       golf: 'Golfe',
     },
+    language: {
+      portuguese: 'Português',
+      english: 'Inglês',
+    },
     chatMessageInput: {
       messageLabel: 'Mensagem...',
     },
