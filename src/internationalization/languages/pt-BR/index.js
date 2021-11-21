@@ -50,6 +50,7 @@ export default {
       submitButton: 'Enviar',
       error: {
         passwordRequired: 'Insira a senha',
+        passwordMin: 'Ao menos 8 caracteres',
       },
     },
     register: {
@@ -78,6 +79,7 @@ export default {
           emailType: 'Insira um email válido',
           emailRequired: 'Insira um email',
           passwordRequired: 'Insira uma senha',
+          passwordMin: 'Ao menos 8 caracteres',
         },
       },
     },
@@ -110,6 +112,7 @@ export default {
         passwordRequired: 'Insira a nova senha',
         confirmPasswordRequired: 'Insira a confirmação da nova senha',
         equalPassword: 'As senhas devem ser iguais',
+        passwordMin: 'Ao menos 8 caracteres',
       },
     },
     changeEmail: {

@@ -8,6 +8,7 @@ const schema = (t) =>
       .email(t('register.secondStep.error.emailType')),
     password: yup
       .string()
+      .min(8, t('register.secondStep.error.passwordMin'))
       .required(t('register.secondStep.error.passwordRequired')),
   });
 

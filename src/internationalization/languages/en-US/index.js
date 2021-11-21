@@ -49,6 +49,7 @@ export default {
       submitButton: 'Send',
       error: {
         passwordRequired: 'Enter password',
+        passwordMin: 'At least 8 characters',
       },
     },
     register: {
@@ -77,6 +78,7 @@ export default {
           emailType: 'Invalid email',
           emailRequired: 'Enter an email',
           passwordRequired: 'Enter a password',
+          passwordMin: 'At least 8 characters',
         },
       },
     },
@@ -119,6 +121,7 @@ export default {
         passwordRequired: 'Enter new password',
         confirmPasswordRequired: 'Enter confirm new password',
         equalPassword: 'The passwords should be equal',
+        passwordMin: 'At least 8 characters',
       },
     },
     createEvent: {
